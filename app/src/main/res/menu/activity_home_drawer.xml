@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/news" />
+        <item
+            android:id="@+id/nav_table"
+            android:icon="@drawable/ic_view_list_black_24dp"
+            android:title="@string/table" />
+        <item
+            android:id="@+id/nav_match"
+            android:icon="@drawable/ic_soccer"
+            android:title="@string/matches" />
+        <item
+            android:id="@+id/nav_team"
+            android:icon="@drawable/ic_team"
+            android:title="@string/team" />
+    </group>
+
+    <item
+        android:id="@+id/tools"
+        android:title="@string/other">
+        <menu>
+            <item
+                android:id="@+id/nav_team_info"
+                android:icon="@drawable/globe"
+                android:title="@string/fcb_barcelona_info" />
+            <item
+                android:id="@+id/nav_exit"
+                android:icon="@drawable/ic_clear_black_24dp"
+                android:title="@string/exit_app" />
+        </menu>
+    </item>
+
+</menu>

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "153465855725",
+    "firebase_url": "https://fc-barcelona-shqip.firebaseio.com",
+    "project_id": "fc-barcelona-shqip",
+    "storage_bucket": "fc-barcelona-shqip.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:153465855725:android:7670adf9e0d5f85e",
+        "android_client_info": {
+          "package_name": "com.stavro_xhardha.fcbarcelonashqip"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "153465855725-855dkt57n34df8put63u5t4od91b5ipo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCR80j_oQLR3otEkrSj-ltPEY22aVDaUfY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "153465855725-855dkt57n34df8put63u5t4od91b5ipo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

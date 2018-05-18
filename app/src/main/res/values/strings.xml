@@ -1,0 +1,87 @@
+<resources>
+    <string name="app_name">Fc Barcelona Shqip</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="news">Kanali i Barcelones</string>
+    <string name="table">Renditja</string>
+    <string name="matches">Ndeshje</string>
+    <string name="team">Ekipi</string>
+    <string name="share">Shperndaje</string>
+    <string name="exit_app">Dil</string>
+    <string name="other">Te tjera</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="rank_number">Nr.</string>
+    <string name="team_Name">Emri i Ekipit</string>
+    <string name="nr_matches">Ndeshje</string>
+    <string name="points">Piket</string>
+    <string name="goals">Gola +/-</string>
+    <string name="rankNrOne">1</string>
+    <string name="rankNrTwo">2</string>
+    <string name="rankNrThree">3</string>
+    <string name="rankNrFour">4</string>
+    <string name="rankNrFive">5</string>
+    <string name="rankNrSix">6</string>
+    <string name="rankNrSeven">7</string>
+    <string name="rankNrEight">8</string>
+    <string name="rankNrNine">9</string>
+    <string name="rankNrTen">10</string>
+    <string name="rankNrEleven">11</string>
+    <string name="rankNrTwelve">12</string>
+    <string name="rankNrThirteen">13</string>
+    <string name="rankNrFourteen">14</string>
+    <string name="rankNrFifteen">15</string>
+    <string name="rankNrSixteen">16</string>
+    <string name="rankNrSeventeen">17</string>
+    <string name="rankNrEighteen">18</string>
+    <string name="rankNrNineteen">19</string>
+    <string name="rankNrTwenty">20</string>
+    <string name="progress_dialog">Duke marre te dhenat</string>
+    <string name="please_wait">Ju lutem prisni</string>
+    <string name="title_ranking">Renditja</string>
+    <string name="player_name">Emer Mbiemer</string>
+    <string name="player_position">Position</string>
+    <string name="shirt_number_key">Numri i fanelles</string>
+    <string name="shirt_number_value">1</string>
+    <string name="birthday_key">Datelindja</string>
+    <string name="nationality_key">Kombesia</string>
+    <string name="contract_key">Mbarimi i kontrates</string>
+    <string name="title_team">Ekipi</string>
+    <string name="scheduled_match">Ndeshje ne vijim</string>
+    <string name="history_match">Historiku</string>
+    <string name="team_a">Team A</string>
+    <string name="goal_home">1</string>
+    <string name="division_line">-</string>
+    <string name="away_result">2</string>
+    <string name="time">2017-08-20T18:15:00Z</string>
+    <string name="title_match">Ndeshje</string>
+    <string name="video_title">Title</string>
+    <string name="video_description">Description</string>
+    <string name="action_share">Shperndaje</string>
+    <string name="action_explore">Shiko Videon</string>
+    <string name="share_type">text/plain</string>
+    <string name="error_network_title">Kujdes</string>
+    <string name="check_internet_connection">Kontrolloni lidhjen me internetin</string>
+    <string name="agree">Hap Internetin</string>
+    <string name="dissagree">Rifresko</string>
+    <string name="fcb_barcelona_official_page">Faqja Zyrtare</string>
+    <string name="barcelona_history">Ekipi i FC Barcelona është një ekip futbollistik spanjoll.Një klub i madh si në ligën spanjolle ashtu edhe në Europë.E themeluar në vitin 1899 nga një grup zviceranësh, anglezësh dhe katalonezësh në krye me Joan Gamper klubi u bë simbol i kulturës katalunase dhe Katalunizmit, nga vjen edhe motoja Més que un club (Më shumë se klub).
+Bacelona ishte anëtare themeluese e ligës spanjolle La Liga në vitin 1928 dhe sëbashku me ekipet Madrid dhe Athletic Bilbao asnjëherë nuk kan qenë të larguara nga liga e parë. Klubi gjithashtu ishte klubi i parë kampion i ligës spanjolle duke fituar gjithësej 24 herë La Liga, 29 herë Copa del Rey, 12 herë Supercopa de España, 5 herë UEFA Liga e Kampionëve, 4 herë UEFA Kupa e Fituesve të Kupave, 3 herë Inter-Cities Fairs Cup dhe 3 UEFA Super Cup. Po ashtu ekipi ka lojtarin më të mirë në Botë Lionel Messi.
+    </string>
+    <string name="description_header">Pershkrimi</string>
+    <string name="barcelona_header_location">Vendndodhja</string>
+    <string name="camp_nou_adress">C. d\'Aristides Maillol, 12, 08028 Barcelona, Spain</string>
+    <string name="la_liga">La Liga : 25</string>
+    <string name="champions_league">Champions League : 5</string>
+    <string name="copa_del_rey">Copa Del Rey : 30</string>
+    <string name="spanish_super_cup">Superkupa e Spanjes : 12 </string>
+    <string name="fb_barcelona">Fc Barcelona</string>
+    <string name="fcb_barcelona_info">Rreth Ekipit</string>
+    <string name="tophies">Trofetë</string>
+    <string name="barcelona_team_info">Rreth Barcelones</string>
+
+</resources>

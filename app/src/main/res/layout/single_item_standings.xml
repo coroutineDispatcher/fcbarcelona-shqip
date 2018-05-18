@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/single_item_row"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:orientation="horizontal"
+        android:padding="@dimen/global_unit_smaller_xxx"
+        android:weightSum="6">
+
+        <TextView
+            android:id="@+id/single_item_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.3"
+            android:text="@string/rank_number"
+            android:textAlignment="center"
+            android:textColor="@color/grey_900"
+            android:textSize="@dimen/text_global_unit_normal" />
+
+        <TextView
+            android:id="@+id/single_item_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:text="@string/team_Name"
+            android:textColor="@color/grey_700"
+            android:textSize="@dimen/text_global_unit_normal" />
+
+        <TextView
+            android:id="@+id/single_item_match"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:text="@string/nr_matches"
+            android:textAlignment="center"
+            android:textColor="@color/grey_900"
+            android:textSize="@dimen/text_global_unit_normal" />
+
+        <TextView
+            android:id="@+id/single_item_goals"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:text="@string/goals"
+            android:textAlignment="center"
+            android:textColor="@color/grey_900"
+            android:textSize="@dimen/text_global_unit_normal" />
+
+        <TextView
+            android:id="@+id/single_item_points"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.3"
+            android:text="@string/points"
+            android:textAlignment="center"
+            android:textColor="@color/grey_900"
+            android:textSize="@dimen/text_global_unit_normal" />
+    </LinearLayout>
+    <View
+        android:background="@color/grey_500"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+</android.support.constraint.ConstraintLayout>
