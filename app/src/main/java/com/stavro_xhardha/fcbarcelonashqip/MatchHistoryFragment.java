@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -49,6 +50,7 @@ public class MatchHistoryFragment extends Fragment {
     private HistoryMatchAdapter adapter;
     private RecyclerView rvMatchDetails;
     private SwipeRefreshLayout historyRefresh;
+    private LinearLayout emptyListContainer;
 
     public MatchHistoryFragment() {
     }
@@ -102,6 +104,7 @@ public class MatchHistoryFragment extends Fragment {
     private void initializeComponents(View view) {
         rvMatchDetails = view.findViewById(R.id.history_rv);
         historyRefresh = view.findViewById(R.id.history_refresh);
+        emptyListContainer = view.findViewById(R.id.empty_list_content);
     }
 
     private void afterInitialize() {
@@ -178,8 +181,12 @@ public class MatchHistoryFragment extends Fragment {
                 historyRefresh.setRefreshing(false);
                 if (code == 200) {
                     details = mApiResponse.getFixtures();
-                    adapter.setItemList(details);
-                    Collections.reverse(details);
+                    if (details.size() == 0) {
+                        emptyListContainer.setVisibility(View.VISIBLE);
+                    } else {
+                        adapter.setItemList(details);
+                        Collections.reverse(details);
+                    }
                 } else {
                     Toast.makeText(getActivity(), "Can't get table data", Toast.LENGTH_SHORT).show();
                 }

@@ -1,5 +1,6 @@
 package com.stavro_xhardha.fcbarcelonashqip;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -49,6 +51,7 @@ public class ScheduledMatchesFragment extends Fragment {
     private ScheduledMatchAdapter adapter;
     private RecyclerView rvMatchDetails;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private LinearLayout emptyListContentContainer;
 
 
     public ScheduledMatchesFragment() {
@@ -105,6 +108,7 @@ public class ScheduledMatchesFragment extends Fragment {
     private void initializeComponents(View view) {
         rvMatchDetails = view.findViewById(R.id.schaduled_match_rv);
         swipeRefreshLayout = view.findViewById(R.id.schedule_refresh);
+        emptyListContentContainer = view.findViewById(R.id.empty_list_content);
     }
 
     private void afterInitialize() {
@@ -127,13 +131,16 @@ public class ScheduledMatchesFragment extends Fragment {
     }
 
     private void getApiData() {
-        if (Brain.isNetworkAvailable(getContext())) {
-            new GetMatchesAsync().execute(MATCH_URL);
-        }else{
-            EventBus.getDefault().post(new CheckNetworkEvent());
+        if (getContext() != null) {
+            if (Brain.isNetworkAvailable(getContext())) {
+                new GetMatchesAsync().execute(MATCH_URL);
+            } else {
+                EventBus.getDefault().post(new CheckNetworkEvent());
+            }
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     class GetMatchesAsync extends AsyncTask<String, String, String> {
         private ResultResponse mApiResponse;
         private int code;
@@ -185,7 +192,11 @@ public class ScheduledMatchesFragment extends Fragment {
                 swipeRefreshLayout.setRefreshing(false);
                 if (code == 200) {
                     details = mApiResponse.getFixtures();
-                    adapter.setItemList(details);
+                    if (details.size() == 0){
+                        emptyListContentContainer.setVisibility(View.VISIBLE);
+                    }else {
+                         adapter.setItemList(details);
+                    }
                 } else {
                     Toast.makeText(getActivity(), "Can't get table data", Toast.LENGTH_SHORT).show();
                 }

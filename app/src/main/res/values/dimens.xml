@@ -47,5 +47,6 @@
 
     <dimen name="spacing_large">15dp</dimen>
     <dimen name="spacing_xmlarge">40dp</dimen>
+    <dimen name="empty_list_icon">50dp</dimen>
 
 </resources>

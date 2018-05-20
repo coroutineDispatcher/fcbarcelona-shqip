@@ -11,15 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.stavro_xhardha.fcbarcelonashqip.R;
-import com.stavro_xhardha.fcbarcelonashqip.events.SendDateToFirebaseEvent;
 import com.stavro_xhardha.fcbarcelonashqip.model.MatchDetails;
-
-import org.greenrobot.eventbus.EventBus;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDateTime;
-import org.joda.time.LocalTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 
@@ -28,11 +20,9 @@ import java.util.ArrayList;
  */
 
 public class ScheduledMatchAdapter extends RecyclerView.Adapter<ScheduledMatchAdapter.MatchResultViewHolder> {
-    private Context mContex;
     private ArrayList<MatchDetails> detailsList;
-    private boolean isExpanded = false;
 
-    public class MatchResultViewHolder extends RecyclerView.ViewHolder {
+    class MatchResultViewHolder extends RecyclerView.ViewHolder {
         LinearLayout row;
         TextView homeTeam;
         TextView awayTeam;
@@ -41,7 +31,7 @@ public class ScheduledMatchAdapter extends RecyclerView.Adapter<ScheduledMatchAd
         TextView dateAndTime;
         LinearLayout hiddenRow;
 
-        public MatchResultViewHolder(View itemView) {
+        MatchResultViewHolder(View itemView) {
             super(itemView);
             row = itemView.findViewById(R.id.match_container);
             homeResult = itemView.findViewById(R.id.home_result);
@@ -51,7 +41,7 @@ public class ScheduledMatchAdapter extends RecyclerView.Adapter<ScheduledMatchAd
             dateAndTime = itemView.findViewById(R.id.time);
             hiddenRow = itemView.findViewById(R.id.lyt_expand);
 
-            mContex = itemView.getContext();
+            Context mContex = itemView.getContext();
         }
     }
 
@@ -77,7 +67,7 @@ public class ScheduledMatchAdapter extends RecyclerView.Adapter<ScheduledMatchAd
         String date = details.getDate().substring(0, 10);
         String time = details.getDate().substring(11, 16);
 
-        holder.dateAndTime.setText(date + "    " + time);
+        holder.dateAndTime.setText(String.valueOf(date + "    " + time));
         holder.homeTeam.setText(details.getHomeTeamNanme());
         holder.awayTeam.setText(details.getAwayTeamName());
         holder.homeResult.setText(String.valueOf(details.getResult().getGoalsHometeam()));
@@ -92,20 +82,6 @@ public class ScheduledMatchAdapter extends RecyclerView.Adapter<ScheduledMatchAd
         } else {
             holder.row.setVisibility(View.GONE);
         }
-
-        holder.row.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!isExpanded) {
-                    isExpanded = true;
-                    holder.hiddenRow.setVisibility(View.VISIBLE);
-                } else {
-                    isExpanded = false;
-                    holder.hiddenRow.setVisibility(View.GONE);
-                }
-            }
-        });
-
     }
 
     @Override
@@ -121,7 +97,7 @@ public class ScheduledMatchAdapter extends RecyclerView.Adapter<ScheduledMatchAd
         notifyDataSetChanged();
     }
 
-    public void setFadeAnimation(View view) {
+    private void setFadeAnimation(View view) {
         AlphaAnimation anim = new AlphaAnimation(1.0f, 10.0f);
         anim.setDuration(500);
         view.startAnimation(anim);

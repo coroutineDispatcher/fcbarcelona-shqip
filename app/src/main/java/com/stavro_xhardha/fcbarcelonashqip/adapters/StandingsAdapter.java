@@ -1,6 +1,7 @@
 package com.stavro_xhardha.fcbarcelonashqip.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,6 @@ import java.util.ArrayList;
  */
 
 public class StandingsAdapter extends RecyclerView.Adapter<StandingsAdapter.StandingsViewHolder> {
-    private Context mContex;
     private ArrayList<Standing> standingsList;
 
     class StandingsViewHolder extends RecyclerView.ViewHolder {
@@ -30,7 +30,7 @@ public class StandingsAdapter extends RecyclerView.Adapter<StandingsAdapter.Stan
         TextView points;
         TextView time;
 
-        public StandingsViewHolder(View itemView) {
+        StandingsViewHolder(View itemView) {
             super(itemView);
             row = itemView.findViewById(R.id.single_item_row);
             rank = itemView.findViewById(R.id.single_item_number);
@@ -39,32 +39,33 @@ public class StandingsAdapter extends RecyclerView.Adapter<StandingsAdapter.Stan
             goal = itemView.findViewById(R.id.single_item_goals);
             points = itemView.findViewById(R.id.single_item_points);
 
-            mContex = itemView.getContext();
+            Context mContex = itemView.getContext();
         }
     }
 
-    public StandingsAdapter(ArrayList<Standing> list){
+    public StandingsAdapter(ArrayList<Standing> list) {
         this.standingsList = list;
     }
 
-    public void setItemsList(ArrayList<Standing> list){
+    public void setItemsList(ArrayList<Standing> list) {
         this.standingsList = list;
         notifyDataSetChanged();
     }
 
-    public void add(Standing standing){
+    public void add(Standing standing) {
         standingsList.add(standing);
         notifyDataSetChanged();
     }
 
+    @NonNull
     @Override
-    public StandingsAdapter.StandingsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public StandingsAdapter.StandingsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_item_standings, parent, false);
         return new StandingsViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final StandingsAdapter.StandingsViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final StandingsAdapter.StandingsViewHolder holder, int position) {
         final Standing standing = standingsList.get(position);
 
         holder.points.setText(String.valueOf(standing.getPoints()));

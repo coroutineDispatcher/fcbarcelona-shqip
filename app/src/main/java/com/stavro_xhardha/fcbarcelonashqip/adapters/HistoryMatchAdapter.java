@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,9 +20,7 @@ import java.util.ArrayList;
  */
 
 public class HistoryMatchAdapter extends RecyclerView.Adapter<HistoryMatchAdapter.HistoryMatchViewholder> {
-    private Context mContex;
     private ArrayList<MatchDetails> historyList;
-    private boolean isExpanded = false;
 
     public class HistoryMatchViewholder extends RecyclerView.ViewHolder {
         LinearLayout row;
@@ -35,7 +31,7 @@ public class HistoryMatchAdapter extends RecyclerView.Adapter<HistoryMatchAdapte
         TextView dateAndTime;
         LinearLayout hiddenRow;
 
-        public HistoryMatchViewholder(View itemView) {
+        HistoryMatchViewholder(View itemView) {
             super(itemView);
             row = itemView.findViewById(R.id.match_container);
             homeResult = itemView.findViewById(R.id.home_result);
@@ -46,7 +42,7 @@ public class HistoryMatchAdapter extends RecyclerView.Adapter<HistoryMatchAdapte
             hiddenRow = itemView.findViewById(R.id.lyt_expand);
 
 
-            mContex = itemView.getContext();
+            Context mContex = itemView.getContext();
 
         }
     }
@@ -72,9 +68,9 @@ public class HistoryMatchAdapter extends RecyclerView.Adapter<HistoryMatchAdapte
         final MatchDetails details = historyList.get(position);
 
         String date = details.getDate().substring(0, 10);
-        String time = details.getDate().substring(11 , 16);
+        String time = details.getDate().substring(11, 16);
 
-        holder.dateAndTime.setText(date + "    " + time);
+        holder.dateAndTime.setText(String.valueOf(date + "    " + time));
         holder.homeTeam.setText(details.getHomeTeamNanme());
         holder.awayTeam.setText(details.getAwayTeamName());
         holder.homeResult.setText(String.valueOf(details.getResult().getGoalsHometeam()));
@@ -86,18 +82,6 @@ public class HistoryMatchAdapter extends RecyclerView.Adapter<HistoryMatchAdapte
             holder.row.setVisibility(View.GONE);
         }
 
-        holder.row.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!isExpanded) {
-                    isExpanded = true;
-                    holder.hiddenRow.setVisibility(View.VISIBLE);
-                } else {
-                    isExpanded = false;
-                    holder.hiddenRow.setVisibility(View.GONE);
-                }
-            }
-        });
     }
 
     @Override
@@ -108,7 +92,7 @@ public class HistoryMatchAdapter extends RecyclerView.Adapter<HistoryMatchAdapte
         return 0;
     }
 
-    public void setFadeAnimation(View view) {
+    private void setFadeAnimation(View view) {
         AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
         anim.setDuration(500);
         view.startAnimation(anim);

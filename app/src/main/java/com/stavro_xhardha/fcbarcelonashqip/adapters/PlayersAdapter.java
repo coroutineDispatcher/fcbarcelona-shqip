@@ -24,10 +24,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersViewHolder> {
-    private Context mContex;
     private ArrayList<Player> playerList;
 
-    public class PlayersViewHolder extends RecyclerView.ViewHolder {
+     class PlayersViewHolder extends RecyclerView.ViewHolder {
         LinearLayout container;
         TextView playerName;
         TextView position;
@@ -37,7 +36,7 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersV
         TextView contract;
         CircleImageView playerImage;
 
-        public PlayersViewHolder(View itemView) {
+        PlayersViewHolder(View itemView) {
             super(itemView);
             container = itemView.findViewById(R.id.player_container);
             playerName = itemView.findViewById(R.id.player_name);
@@ -48,7 +47,7 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersV
             contract = itemView.findViewById(R.id.contract);
             playerImage = itemView.findViewById(R.id.player_image);
 
-            mContex = itemView.getContext();
+            Context mContex = itemView.getContext();
         }
     }
 
@@ -69,10 +68,6 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersV
     public void removeTopElement() {
         playerList.remove(0);
         notifyDataSetChanged();
-    }
-
-    public Player getLastItem() {
-        return playerList.get(playerList.size() - 1);
     }
 
     @NonNull

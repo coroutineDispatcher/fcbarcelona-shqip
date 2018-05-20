@@ -20,7 +20,6 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain;
 import com.stavro_xhardha.fcbarcelonashqip.events.CheckNetworkEvent;
-import com.stavro_xhardha.fcbarcelonashqip.events.ProgressDialogEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.RefreshDataEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.SetFragmenTagEvent;
 
@@ -29,12 +28,11 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import com.crashlytics.android.Crashlytics;
+
 import io.fabric.sdk.android.Fabric;
 
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private MaterialDialog progressDialog;
-    private MaterialDialog mNetworkDialog;
     private String mCurrentFragmentTag;
     private NavigationView navigationView;
 
@@ -73,11 +71,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     || mCurrentFragmentTag.equalsIgnoreCase(Brain.TEAM_FRAGMENT_TAG)
                     || mCurrentFragmentTag.equalsIgnoreCase(Brain.SCHEDULED_MATCHES_FRAGMENT_TAG)
                     || mCurrentFragmentTag.equalsIgnoreCase(Brain.HISTORY_MATCH_FRAGMENT_TAG)
-                    || mCurrentFragmentTag.equalsIgnoreCase(Brain.FC_BARCELONA_PAGE_FRAGMENT_TAG)){
+                    || mCurrentFragmentTag.equalsIgnoreCase(Brain.FC_BARCELONA_PAGE_FRAGMENT_TAG)) {
 
                 openFragment(TeamInfo.newInstance());
 
-            }else{
+            } else {
                 super.onBackPressed();
             }
         }
@@ -122,8 +120,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void unselectMenuItems() {
-        for (int i = 0 ; i < 4 ; i ++)
-        navigationView.getMenu().getItem(i).setChecked(false);
+        for (int i = 0; i < 4; i++)
+            navigationView.getMenu().getItem(i).setChecked(false);
     }
 
 
@@ -138,17 +136,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.replace(R.id.home_container, mFragment)
                 .commit();
     }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(ProgressDialogEvent event) {
-        boolean showMinMax = false;
-        progressDialog = new MaterialDialog.Builder(this)
-                .title(R.string.progress_dialog)
-                .content(R.string.please_wait)
-                .progress(false, 100, showMinMax)
-                .show();
-    }
-
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(CheckNetworkEvent event) {
@@ -166,7 +153,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private void openNetworkErrorDialog() {
         if (!Brain.isNetworkAvailable(this)) {
-            mNetworkDialog = new MaterialDialog.Builder(this)
+            MaterialDialog mNetworkDialog = new MaterialDialog.Builder(this)
                     .title(R.string.error_network_title)
                     .content(R.string.check_internet_connection)
                     .positiveText(R.string.agree)

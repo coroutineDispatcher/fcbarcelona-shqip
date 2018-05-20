@@ -83,5 +83,6 @@ Bacelona ishte anëtare themeluese e ligës spanjolle La Liga në vitin 1928 dhe
     <string name="fcb_barcelona_info">Rreth Ekipit</string>
     <string name="tophies">Trofetë</string>
     <string name="barcelona_team_info">Rreth Barcelones</string>
+    <string name="no_matches_to_show">Nuk ka ndeshje për të shfaqur</string>
 
 </resources>

@@ -16,4 +16,27 @@
             android:layout_height="match_parent" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/empty_list_content"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/empty_list_icon"
+            android:layout_height="@dimen/empty_list_icon"
+            android:layout_gravity="center"
+            android:src="@drawable/no_items_on_list" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/global_unit_smaller_xx"
+            android:text="@string/no_matches_to_show"
+            android:textAlignment="center"
+            android:textColor="@color/grey_700" />
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

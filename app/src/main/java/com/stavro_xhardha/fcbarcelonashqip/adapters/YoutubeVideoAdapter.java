@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ import com.stavro_xhardha.fcbarcelonashqip.model.YoutubeVideo;
 
 import java.util.ArrayList;
 
-import static com.stavro_xhardha.fcbarcelonashqip.brain.Brain.TAG;
 import static com.stavro_xhardha.fcbarcelonashqip.brain.Brain.YOUTUBE_WATCH_URL;
 
 public class YoutubeVideoAdapter extends RecyclerView.Adapter<YoutubeVideoAdapter.YoutubeVideoViewHolder> {
@@ -35,7 +33,7 @@ public class YoutubeVideoAdapter extends RecyclerView.Adapter<YoutubeVideoAdapte
         Button share;
         Button watchVideo;
 
-        public YoutubeVideoViewHolder(View itemView) {
+        YoutubeVideoViewHolder(View itemView) {
             super(itemView);
             row = itemView.findViewById(R.id.single_item_row);
             youtubeThumbnail = itemView.findViewById(R.id.youtube_video_id);
@@ -119,7 +117,7 @@ public class YoutubeVideoAdapter extends RecyclerView.Adapter<YoutubeVideoAdapte
         notifyDataSetChanged();
     }
 
-    public void setFadeAnimation(View view) {
+    private void setFadeAnimation(View view) {
         AlphaAnimation anim = new AlphaAnimation(1.0f, 10.0f);
         anim.setDuration(500);
         view.startAnimation(anim);
