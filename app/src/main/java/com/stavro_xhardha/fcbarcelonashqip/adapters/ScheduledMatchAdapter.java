@@ -21,6 +21,8 @@ import java.util.ArrayList;
 
 public class ScheduledMatchAdapter extends RecyclerView.Adapter<ScheduledMatchAdapter.MatchResultViewHolder> {
     private ArrayList<MatchDetails> detailsList;
+    private int mExpandedPosition = -1;
+
 
     class MatchResultViewHolder extends RecyclerView.ViewHolder {
         LinearLayout row;
@@ -62,7 +64,7 @@ public class ScheduledMatchAdapter extends RecyclerView.Adapter<ScheduledMatchAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ScheduledMatchAdapter.MatchResultViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ScheduledMatchAdapter.MatchResultViewHolder holder, final int position) {
         final MatchDetails details = detailsList.get(position);
         String date = details.getDate().substring(0, 10);
         String time = details.getDate().substring(11, 16);
@@ -82,6 +84,19 @@ public class ScheduledMatchAdapter extends RecyclerView.Adapter<ScheduledMatchAd
         } else {
             holder.row.setVisibility(View.GONE);
         }
+
+        final boolean isExpanded = position == mExpandedPosition;
+        holder.hiddenRow.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+        holder.itemView.setActivated(isExpanded);
+
+
+        holder.row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mExpandedPosition = isExpanded ? -1 : position;
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override

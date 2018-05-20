@@ -3,6 +3,7 @@ package com.stavro_xhardha.fcbarcelonashqip.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 
 public class HistoryMatchAdapter extends RecyclerView.Adapter<HistoryMatchAdapter.HistoryMatchViewholder> {
     private ArrayList<MatchDetails> historyList;
+    private int mExpandedPosition = -1;
 
     public class HistoryMatchViewholder extends RecyclerView.ViewHolder {
         LinearLayout row;
@@ -64,7 +66,7 @@ public class HistoryMatchAdapter extends RecyclerView.Adapter<HistoryMatchAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final HistoryMatchAdapter.HistoryMatchViewholder holder, int position) {
+    public void onBindViewHolder(@NonNull final HistoryMatchAdapter.HistoryMatchViewholder holder, final int position) {
         final MatchDetails details = historyList.get(position);
 
         String date = details.getDate().substring(0, 10);
@@ -76,11 +78,22 @@ public class HistoryMatchAdapter extends RecyclerView.Adapter<HistoryMatchAdapte
         holder.homeResult.setText(String.valueOf(details.getResult().getGoalsHometeam()));
         holder.awayResult.setText(String.valueOf(details.getResult().getGoalsAwayTeam()));
 
-        setFadeAnimation(holder.row);
 
         if (details.getResult().getGoalsAwayTeam() == null || details.getResult().getGoalsHometeam() == null) {
             holder.row.setVisibility(View.GONE);
         }
+
+        final boolean isExpanded = position == mExpandedPosition;
+        holder.hiddenRow.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+        holder.itemView.setActivated(isExpanded);
+
+        holder.row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mExpandedPosition = isExpanded ? -1 : position;
+                notifyDataSetChanged();
+            }
+        });
 
     }
 
