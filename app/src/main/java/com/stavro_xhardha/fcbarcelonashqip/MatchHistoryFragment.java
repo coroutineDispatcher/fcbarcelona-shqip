@@ -20,6 +20,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.stavro_xhardha.fcbarcelonashqip.adapters.HistoryMatchAdapter;
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain;
+import com.stavro_xhardha.fcbarcelonashqip.events.ConfirmEmptyMatchHistorySetEvent;
+import com.stavro_xhardha.fcbarcelonashqip.events.ConfirmEmptyMatchScheduleSetEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.RefreshDataEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.SetFragmenTagEvent;
 import com.stavro_xhardha.fcbarcelonashqip.model.MatchDetails;
@@ -35,7 +37,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 import okhttp3.OkHttpClient;
@@ -51,6 +52,8 @@ public class MatchHistoryFragment extends Fragment {
     private RecyclerView rvMatchDetails;
     private SwipeRefreshLayout historyRefresh;
     private LinearLayout emptyListContainer;
+
+    private boolean isSetEmpty;
 
     public MatchHistoryFragment() {
     }
@@ -101,10 +104,22 @@ public class MatchHistoryFragment extends Fragment {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(ConfirmEmptyMatchHistorySetEvent event) {
+        if (event != null) {
+            isSetEmpty = event.isSetEmpty();
+            if (isSetEmpty) {
+                emptyListContainer.setVisibility(View.VISIBLE);
+            } else {
+                emptyListContainer.setVisibility(View.GONE);
+            }
+        }
+    }
+
     private void initializeComponents(View view) {
         rvMatchDetails = view.findViewById(R.id.history_rv);
         historyRefresh = view.findViewById(R.id.history_refresh);
-        emptyListContainer = view.findViewById(R.id.empty_list_content);
+        emptyListContainer = view.findViewById(R.id.empty_list_content_history);
     }
 
     private void afterInitialize() {

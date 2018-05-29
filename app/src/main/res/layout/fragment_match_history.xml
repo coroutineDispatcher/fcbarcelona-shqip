@@ -19,7 +19,7 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout
-        android:id="@+id/empty_list_content"
+        android:id="@+id/empty_list_content_history"
         android:visibility="gone"
         android:orientation="vertical"
         android:layout_gravity="center"

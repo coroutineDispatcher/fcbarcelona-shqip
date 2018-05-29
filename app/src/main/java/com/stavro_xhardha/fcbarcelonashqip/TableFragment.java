@@ -62,6 +62,12 @@ public class TableFragment extends Fragment {
         if (getActivity() != null) {
             getActivity().setTitle(getResources().getString(R.string.title_ranking));
         }
+        HomeActivity activity = (HomeActivity) getActivity();
+        if (activity != null) {
+            if (activity.getSupportActionBar() != null) {
+                activity.getSupportActionBar().show();
+            }
+        }
     }
 
     @Override

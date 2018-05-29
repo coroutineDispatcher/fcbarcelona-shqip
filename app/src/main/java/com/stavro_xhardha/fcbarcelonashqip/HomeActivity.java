@@ -20,6 +20,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain;
 import com.stavro_xhardha.fcbarcelonashqip.events.CheckNetworkEvent;
+import com.stavro_xhardha.fcbarcelonashqip.events.OpenNewFragmentEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.RefreshDataEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.SetFragmenTagEvent;
 
@@ -35,7 +36,8 @@ import io.fabric.sdk.android.Fabric;
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private String mCurrentFragmentTag;
     private NavigationView navigationView;
-
+    DrawerLayout drawer;
+    ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +46,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Fabric.with(this, new Crashlytics());
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer = findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -58,7 +60,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         s.setSpan(new TextAppearanceSpan(this, R.style.menu_item_color), 0, s.length(), 0);
         tools.setTitle(s);
         navigationView.setNavigationItemSelectedListener(this);
-        openFragment(TeamInfo.newInstance());
+        openFragment(SplashWelcomeFragment.newInstance());
     }
 
     @Override
@@ -137,6 +139,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 .commit();
     }
 
+    private void openNewFragmentWithAnimation(Fragment mFragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.home_container, mFragment)
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
+                .commit();
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(CheckNetworkEvent event) {
         if (event != null) {
@@ -148,6 +157,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public void onMessageEvent(SetFragmenTagEvent event) {
         if (event != null) {
             mCurrentFragmentTag = event.getFragmentTag();
+        }
+        if (mCurrentFragmentTag.equalsIgnoreCase(Brain.SPLASH_FRAGMENT_TAG)) {
+            toggle.setDrawerIndicatorEnabled(false);
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        } else {
+            toggle.setDrawerIndicatorEnabled(true);
+            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(OpenNewFragmentEvent event) {
+        if (event != null) {
+            openNewFragmentWithAnimation(event.getFragment());
         }
     }
 

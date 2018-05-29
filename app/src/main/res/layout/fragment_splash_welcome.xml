@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/splash_background"
+    android:layout_height="match_parent"
+    tools:context=".SplashWelcomeFragment">
+
+    <TextView
+        android:id="@+id/fc_barcelona_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:fontFamily="@font/alfa_slab_one"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_global_unit_bigger_xxxxxx" />
+
+</RelativeLayout>

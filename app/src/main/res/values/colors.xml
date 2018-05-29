@@ -317,4 +317,7 @@
 
     <color name="white">#FFFFFF</color>
     <color name="black_75">#BF000000</color>
+    <color name="fcbarcelona_red">#a50044</color>
+    <color name="fcbarcelona_blue">#004d98</color>
+    <color name="fcbarcelona_yellow">#ffed02</color>
 </resources>

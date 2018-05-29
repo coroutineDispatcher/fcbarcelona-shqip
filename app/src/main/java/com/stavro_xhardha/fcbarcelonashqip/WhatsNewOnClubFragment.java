@@ -72,6 +72,12 @@ public class WhatsNewOnClubFragment extends Fragment {
         if (getActivity() != null) {
             getActivity().setTitle(R.string.news);
         }
+        HomeActivity activity = (HomeActivity) getActivity();
+        if (activity != null) {
+            if (activity.getSupportActionBar() != null) {
+                activity.getSupportActionBar().show();
+            }
+        }
     }
 
     @Override

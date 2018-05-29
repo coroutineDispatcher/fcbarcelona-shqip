@@ -32,6 +32,7 @@ public class Brain {
     public static final String SCHEDULED_MATCHES_FRAGMENT_TAG =  "Scheduled Matches";
     public static final String HISTORY_MATCH_FRAGMENT_TAG = "History Matches";
     public static final String FC_BARCELONA_PAGE_FRAGMENT_TAG = "Barcelona Page Fragment";
+    public static final String SPLASH_FRAGMENT_TAG = "Splash Fragment ";
 
     //Api
     public static final String YOUTUBE_API_KEY = "&key=AIzaSyAmxLV2RcpoW2EOe51NbeWvWrRGD7QZgM8";

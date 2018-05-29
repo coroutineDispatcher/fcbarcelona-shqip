@@ -65,6 +65,12 @@ public class TeamFragment extends Fragment {
             getActivity().setTitle(getResources().getString(R.string.title_team));
             EventBus.getDefault().post(new CheckNetworkEvent());
         }
+        HomeActivity activity = (HomeActivity) getActivity();
+        if (activity != null) {
+            if (activity.getSupportActionBar() != null) {
+                activity.getSupportActionBar().show();
+            }
+        }
     }
 
     @Override

@@ -1,20 +1,28 @@
 package com.stavro_xhardha.fcbarcelonashqip.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.stavro_xhardha.fcbarcelonashqip.R;
+import com.stavro_xhardha.fcbarcelonashqip.events.ConfirmEmptyMatchHistorySetEvent;
+import com.stavro_xhardha.fcbarcelonashqip.events.ConfirmEmptyMatchScheduleSetEvent;
 import com.stavro_xhardha.fcbarcelonashqip.model.MatchDetails;
 
+import org.greenrobot.eventbus.EventBus;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.TimeZone;
 
 /**
  * Created by stavro_xhardha on 24/04/2018.
@@ -61,7 +69,7 @@ public class HistoryMatchAdapter extends RecyclerView.Adapter<HistoryMatchAdapte
     @NonNull
     @Override
     public HistoryMatchAdapter.HistoryMatchViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_item_result, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_item_history_result, parent, false);
         return new HistoryMatchViewholder(itemView);
     }
 
@@ -69,10 +77,14 @@ public class HistoryMatchAdapter extends RecyclerView.Adapter<HistoryMatchAdapte
     public void onBindViewHolder(@NonNull final HistoryMatchAdapter.HistoryMatchViewholder holder, final int position) {
         final MatchDetails details = historyList.get(position);
 
-        String date = details.getDate().substring(0, 10);
-        String time = details.getDate().substring(11, 16);
+        String timeStamp = details.getDate();
+        DateTime dateTime = new DateTime(timeStamp, DateTimeZone.UTC);
+        DateTime newDate = dateTime.withZone(DateTimeZone.forID("Europe/Paris"));
 
-        holder.dateAndTime.setText(String.valueOf(date + "    " + time));
+        String date = newDate.toString().substring(0, 10);
+        String time = newDate.toString().substring(11, 16);
+
+        holder.dateAndTime.setText(date + "    " + time);
         holder.homeTeam.setText(details.getHomeTeamNanme());
         holder.awayTeam.setText(details.getAwayTeamName());
         holder.homeResult.setText(String.valueOf(details.getResult().getGoalsHometeam()));
@@ -95,6 +107,9 @@ public class HistoryMatchAdapter extends RecyclerView.Adapter<HistoryMatchAdapte
             }
         });
 
+        if (countNumberOfHistoryMatches(details) == 0) {
+            EventBus.getDefault().post(new ConfirmEmptyMatchHistorySetEvent(true));
+        }
     }
 
     @Override
@@ -105,9 +120,13 @@ public class HistoryMatchAdapter extends RecyclerView.Adapter<HistoryMatchAdapte
         return 0;
     }
 
-    private void setFadeAnimation(View view) {
-        AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
-        anim.setDuration(500);
-        view.startAnimation(anim);
+    private int countNumberOfHistoryMatches(MatchDetails details) {
+        int count = 0;
+        for (int i = 0; i < historyList.size(); i++) {
+            if (details.getResult().getGoalsAwayTeam() != null || details.getResult().getGoalsHometeam() != null) {
+                count++;
+            }
+        }
+        return count;
     }
 }

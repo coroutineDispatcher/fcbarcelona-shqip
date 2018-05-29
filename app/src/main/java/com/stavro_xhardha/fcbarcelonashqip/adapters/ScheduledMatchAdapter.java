@@ -11,7 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.stavro_xhardha.fcbarcelonashqip.R;
+import com.stavro_xhardha.fcbarcelonashqip.events.ConfirmEmptyMatchScheduleSetEvent;
 import com.stavro_xhardha.fcbarcelonashqip.model.MatchDetails;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -22,6 +25,8 @@ import java.util.ArrayList;
 public class ScheduledMatchAdapter extends RecyclerView.Adapter<ScheduledMatchAdapter.MatchResultViewHolder> {
     private ArrayList<MatchDetails> detailsList;
     private int mExpandedPosition = -1;
+    ArrayList<String> homeResultsArrayList = new ArrayList<>();
+    ArrayList<String> awayResultArrayList = new ArrayList<>();
 
 
     class MatchResultViewHolder extends RecyclerView.ViewHolder {
@@ -97,6 +102,20 @@ public class ScheduledMatchAdapter extends RecyclerView.Adapter<ScheduledMatchAd
                 notifyDataSetChanged();
             }
         });
+
+        if (countNumberOfScheduledMatches(details) == 0){
+            EventBus.getDefault().post(new ConfirmEmptyMatchScheduleSetEvent(true));
+        }
+    }
+
+    private int countNumberOfScheduledMatches(MatchDetails details) {
+        int count = 0;
+        for(int i=0; i < detailsList.size(); i++){
+            if (details.getResult().getGoalsAwayTeam() == null || details.getResult().getGoalsHometeam() == null){
+                count++;
+            }
+        }
+        return count;
     }
 
     @Override

@@ -42,29 +42,17 @@ public class TeamInfo extends Fragment {
         if (getActivity() != null) {
             getActivity().setTitle(getResources().getString(R.string.barcelona_team_info));
         }
+        HomeActivity activity = (HomeActivity) getActivity();
+        if (activity != null) {
+            if (activity.getSupportActionBar() != null) {
+                activity.getSupportActionBar().show();
+            }
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
         EventBus.getDefault().post(new SetFragmenTagEvent(FC_BARCELONA_PAGE_FRAGMENT_TAG));
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(RefreshDataEvent event) {
-        if (event != null) {
-        }
     }
 }

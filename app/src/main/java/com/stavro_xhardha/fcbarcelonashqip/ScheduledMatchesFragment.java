@@ -22,6 +22,7 @@ import com.google.gson.reflect.TypeToken;
 import com.stavro_xhardha.fcbarcelonashqip.adapters.ScheduledMatchAdapter;
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain;
 import com.stavro_xhardha.fcbarcelonashqip.events.CheckNetworkEvent;
+import com.stavro_xhardha.fcbarcelonashqip.events.ConfirmEmptyMatchScheduleSetEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.RefreshDataEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.SetFragmenTagEvent;
 import com.stavro_xhardha.fcbarcelonashqip.model.MatchDetails;
@@ -53,6 +54,7 @@ public class ScheduledMatchesFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private LinearLayout emptyListContentContainer;
 
+    private boolean isScheduleSetEmpty;
 
     public ScheduledMatchesFragment() {
     }
@@ -104,6 +106,15 @@ public class ScheduledMatchesFragment extends Fragment {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(ConfirmEmptyMatchScheduleSetEvent event) {
+        if (event != null) {
+            isScheduleSetEmpty = event.isSetEmpty();
+            if (isScheduleSetEmpty){
+                emptyListContentContainer.setVisibility(View.VISIBLE);
+            }
+        }
+    }
 
     private void initializeComponents(View view) {
         rvMatchDetails = view.findViewById(R.id.schaduled_match_rv);
