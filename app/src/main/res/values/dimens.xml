@@ -44,6 +44,7 @@
     <dimen name="video_hight">180dp</dimen>
     <dimen name="crad_radius">0dp</dimen>
     <dimen name="card_margin">5dp</dimen>
+    <dimen name="spacing_small">3dp</dimen>
 
     <dimen name="spacing_large">15dp</dimen>
     <dimen name="spacing_xmlarge">40dp</dimen>

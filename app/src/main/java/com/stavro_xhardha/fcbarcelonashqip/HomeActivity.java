@@ -15,6 +15,7 @@ import android.text.SpannableString;
 import android.text.style.TextAppearanceSpan;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -111,8 +112,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_team_info) {
             openFragment(TeamInfo.newInstance());
             unselectMenuItems();
-
-        } else if (id == R.id.nav_exit) {
+        } else if (id == R.id.nav_news){
+            unselectMenuItems();
+        }else if (id == R.id.nav_exit) {
             finish();
         }
 
@@ -122,7 +124,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void unselectMenuItems() {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 5; i++)
             navigationView.getMenu().getItem(i).setChecked(false);
     }
 

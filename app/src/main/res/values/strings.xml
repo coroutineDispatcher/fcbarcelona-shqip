@@ -5,7 +5,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <string name="news">Kanali i Barcelones</string>
+    <string name="barca_channel">Kanali i Barcelones</string>
     <string name="table">Renditja</string>
     <string name="matches">Ndeshje</string>
     <string name="team">Ekipi</string>
@@ -84,5 +84,6 @@ Bacelona ishte anëtare themeluese e ligës spanjolle La Liga në vitin 1928 dhe
     <string name="tophies">Trofetë</string>
     <string name="barcelona_team_info">Rreth Barcelones</string>
     <string name="no_matches_to_show">Nuk ka ndeshje për të shfaqur</string>
+    <string name="news">Lajme</string>
 
 </resources>

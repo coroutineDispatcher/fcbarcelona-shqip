@@ -70,7 +70,7 @@ public class WhatsNewOnClubFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getActivity() != null) {
-            getActivity().setTitle(R.string.news);
+            getActivity().setTitle(R.string.barca_channel);
         }
         HomeActivity activity = (HomeActivity) getActivity();
         if (activity != null) {
