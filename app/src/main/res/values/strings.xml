@@ -85,5 +85,6 @@ Bacelona ishte anëtare themeluese e ligës spanjolle La Liga në vitin 1928 dhe
     <string name="barcelona_team_info">Rreth Barcelones</string>
     <string name="no_matches_to_show">Nuk ka ndeshje për të shfaqur</string>
     <string name="news">Lajme</string>
+    <string name="barca_news">Lajme</string>
 
 </resources>

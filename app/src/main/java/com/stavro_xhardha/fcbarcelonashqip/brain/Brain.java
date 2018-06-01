@@ -44,6 +44,7 @@ public class Brain {
     public static final String YOUTUBE_WATCH_URL = "https://www.youtube.com/watch?v=";
     public static final String PLAYERS_URL = "http://api.football-data.org/v1/teams/81/players";
     public static final String MATCH_URL = "http://api.football-data.org/v1/teams/81/fixtures";
+    public static final String NEWS_URL = "http://press.snet-al.com/index_sport.php?/api/get_latest_news/";
 
     //Player Names
     public static final String CUTINHO = "Philippe Coutinho";
@@ -94,8 +95,7 @@ public class Brain {
     public static final String URL_DIGNE = "https://images.performgroup.com/di/library/goal_de/88/7/lucas-digne-fc-barcelona-10082016_1htqbz1cmgt1g1ek31dngiae6w.jpg?t=-1479372730&w=940";
 
     //URL
-    public static final String BARCELONA_OFFICIAL_PAGE_URL = "https://www.fcbarcelona.com/tickets/things-to-do-in-barcelona";
-
+    public static final String NEWS_IMAGE_URL = "http://news.snet-al.com/app_press/public_html/uploads/";
 
     public static boolean isNetworkAvailable(Context mContext) {
         ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);

@@ -50,7 +50,7 @@ import static com.stavro_xhardha.fcbarcelonashqip.brain.Brain.YOUTUBE_PAGE_TOKEN
 import static com.stavro_xhardha.fcbarcelonashqip.brain.Brain.YOUTUBE_URL;
 
 
-public class WhatsNewOnClubFragment extends Fragment {
+public class TeamYoutubeChannelFragment extends Fragment {
     private RecyclerView recyclerView;
     private ArrayList<YoutubeVideo> videosList = new ArrayList<>();
     private YoutubeVideoAdapter videoAdapter;
@@ -58,12 +58,12 @@ public class WhatsNewOnClubFragment extends Fragment {
     final RecyclerView.LayoutManager manageer = new LinearLayoutManager(getActivity());
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    public WhatsNewOnClubFragment() {
+    public TeamYoutubeChannelFragment() {
     }
 
 
-    public static WhatsNewOnClubFragment newInstance() {
-        return new WhatsNewOnClubFragment();
+    public static TeamYoutubeChannelFragment newInstance() {
+        return new TeamYoutubeChannelFragment();
     }
 
     @Override
@@ -82,7 +82,7 @@ public class WhatsNewOnClubFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.barcelona_news, container, false);
+        return inflater.inflate(R.layout.fragment_youtube, container, false);
     }
 
     @Override
@@ -219,11 +219,10 @@ public class WhatsNewOnClubFragment extends Fragment {
                     videoAdapter.addArray(mYoutubeResponse.getItems());
                     nextPage = mYoutubeResponse.getNextPageToken();
                 } else {
-                    Toast.makeText(getActivity(), "Can't get table data", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Nuk mund te merren te dhenat", Toast.LENGTH_SHORT).show();
                 }
             } else
                 Snackbar.make(getView(), "Dicka Shkoi Gabim" , Snackbar.LENGTH_LONG).show();
-                Log.d(Brain.TAG, "Wrong");
         }
     }
 }

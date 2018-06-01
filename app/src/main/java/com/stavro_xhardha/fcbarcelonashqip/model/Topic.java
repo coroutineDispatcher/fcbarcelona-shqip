@@ -21,6 +21,16 @@ public class Topic {
     private String photoBase;
     @SerializedName("views")
     private String views;
+    @SerializedName("writer")
+    private String author;
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
     public int getId() {
         return id;

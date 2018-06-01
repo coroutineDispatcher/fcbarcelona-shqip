@@ -15,7 +15,6 @@ import android.text.SpannableString;
 import android.text.style.TextAppearanceSpan;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -74,7 +73,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     || mCurrentFragmentTag.equalsIgnoreCase(Brain.TEAM_FRAGMENT_TAG)
                     || mCurrentFragmentTag.equalsIgnoreCase(Brain.SCHEDULED_MATCHES_FRAGMENT_TAG)
                     || mCurrentFragmentTag.equalsIgnoreCase(Brain.HISTORY_MATCH_FRAGMENT_TAG)
-                    || mCurrentFragmentTag.equalsIgnoreCase(Brain.FC_BARCELONA_PAGE_FRAGMENT_TAG)) {
+                    || mCurrentFragmentTag.equalsIgnoreCase(Brain.FC_BARCELONA_PAGE_FRAGMENT_TAG)
+                    || mCurrentFragmentTag.equalsIgnoreCase(Brain.LATEST_NEWS_FRAGMENT_TAG)) {
 
                 openFragment(TeamInfo.newInstance());
 
@@ -102,7 +102,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            openFragment(WhatsNewOnClubFragment.newInstance());
+            openFragment(TeamYoutubeChannelFragment.newInstance());
         } else if (id == R.id.nav_table) {
             openFragment(TableFragment.newInstance());
         } else if (id == R.id.nav_match) {
@@ -112,9 +112,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_team_info) {
             openFragment(TeamInfo.newInstance());
             unselectMenuItems();
-        } else if (id == R.id.nav_news){
+        } else if (id == R.id.nav_news) {
+            openFragment(LatestNewsFragment.newInstance());
             unselectMenuItems();
-        }else if (id == R.id.nav_exit) {
+        } else if (id == R.id.nav_exit) {
             finish();
         }
 
