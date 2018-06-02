@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey_300"
-    android:padding="@dimen/global_unit_smaller_x"
+    android:paddingTop="@dimen/global_unit_smaller_xx"
+    android:paddingBottom="@dimen/global_unit_smaller_xx"
     tools:context="com.stavro_xhardha.fcbarcelonashqip.TeamFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout

@@ -8,14 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.stavro_xhardha.fcbarcelonashqip.R;
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain;
-import com.stavro_xhardha.fcbarcelonashqip.model.Standing;
+import com.stavro_xhardha.fcbarcelonashqip.events.ExpandNewsSelectedTopicEvent;
 import com.stavro_xhardha.fcbarcelonashqip.model.Topic;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -88,6 +89,13 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.TopicsView
         Picasso.get()
                 .load(imageUrl + imageEndpoint)
                 .into(holder.photoBase);
+
+        holder.row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EventBus.getDefault().post(new ExpandNewsSelectedTopicEvent(topic.getId()));
+            }
+        });
     }
 
     @Override

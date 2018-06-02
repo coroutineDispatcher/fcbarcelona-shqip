@@ -1,14 +1,14 @@
 package com.stavro_xhardha.fcbarcelonashqip;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,17 +20,19 @@ import com.google.gson.reflect.TypeToken;
 import com.stavro_xhardha.fcbarcelonashqip.adapters.TopicsAdapter;
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain;
 import com.stavro_xhardha.fcbarcelonashqip.events.CheckNetworkEvent;
+import com.stavro_xhardha.fcbarcelonashqip.events.ExpandNewsSelectedTopicEvent;
+import com.stavro_xhardha.fcbarcelonashqip.events.RefreshDataEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.SetFragmenTagEvent;
 import com.stavro_xhardha.fcbarcelonashqip.model.Topic;
 
 import org.greenrobot.eventbus.EventBus;
-import org.json.JSONArray;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
@@ -39,6 +41,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class LatestNewsFragment extends Fragment {
+    private SwipeRefreshLayout newsRefresher;
     private RecyclerView recyclerView;
     private ArrayList<Topic> topcsArrayList = new ArrayList<>();
     private TopicsAdapter topicsAdapter;
@@ -69,10 +72,17 @@ public class LatestNewsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.latest_news_id);
+        newsRefresher = view.findViewById(R.id.news_refresh);
         recyclerView.setLayoutManager(manageer);
         topicsAdapter = new TopicsAdapter(topcsArrayList);
         recyclerView.setAdapter(topicsAdapter);
         getApiData();
+        newsRefresher.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getApiData();
+            }
+        });
     }
 
     @Override
@@ -84,6 +94,45 @@ public class LatestNewsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         EventBus.getDefault().post(new SetFragmenTagEvent(Brain.LATEST_NEWS_FRAGMENT_TAG));
+        EventBus.getDefault().post(new CheckNetworkEvent());
+        getApiData();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(RefreshDataEvent event) {
+        if (event != null) {
+            getApiData();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(ExpandNewsSelectedTopicEvent event) {
+        if (event != null) {
+            updateViews(event.getId());
+            getApiData();
+        }
+    }
+
+    private void updateViews(int id) {
+        if (getActivity() != null) {
+            if (Brain.isNetworkAvailable(getActivity())) {
+                new UpdateViewTask().execute(Brain.VIEWS_URL + String.valueOf(id));
+            } else {
+                EventBus.getDefault().post(new CheckNetworkEvent());
+            }
+        }
     }
 
     private void getApiData() {
@@ -104,6 +153,9 @@ public class LatestNewsFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            if (getActivity() != null) {
+                newsRefresher.setRefreshing(true);
+            }
         }
 
         @Override
@@ -139,12 +191,44 @@ public class LatestNewsFragment extends Fragment {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if (topicResponse != null){
+                newsRefresher.setRefreshing(false);
                 if (code == 200){
                     topcsArrayList = topicResponse;
                     topicsAdapter.setItemsList(topcsArrayList);
                 }
             }else{
                 Toast.makeText(getActivity() , "Nuk mund të merren të dhënat" , Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    class UpdateViewTask extends AsyncTask<String , String , String>{
+        int responseFlag = 0;
+
+        @Override
+        protected String doInBackground(String... strings) {
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url(strings[0])
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+                if (response.isSuccessful()){
+                    responseFlag = 1;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (responseFlag == 1){
+                Toast.makeText(getActivity(), "View Updated", Toast.LENGTH_SHORT).show();
             }
         }
     }

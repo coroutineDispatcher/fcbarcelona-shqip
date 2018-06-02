@@ -90,6 +90,8 @@ public class TeamFragment extends Fragment {
     public void onResume() {
         super.onResume();
         EventBus.getDefault().post(new SetFragmenTagEvent(TEAM_FRAGMENT_TAG));
+        EventBus.getDefault().post(new CheckNetworkEvent());
+        getApiData();
     }
 
     @Override
@@ -156,7 +158,7 @@ public class TeamFragment extends Fragment {
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
-        recyclerView.setLayoutManager(new SwipeableLayoutManager().setAngle(30).setAnimationDuratuion(1000).setMaxShowCount(6).setScaleGap(-10f).setTransYGap(20));
+        recyclerView.setLayoutManager(new SwipeableLayoutManager().setAngle(20).setAnimationDuratuion(1000).setMaxShowCount(6).setScaleGap(-10f).setTransYGap(20));
         recyclerView.setAdapter(playersAdapter = new PlayersAdapter(playerArrayList));
     }
 

@@ -86,6 +86,8 @@ public class TableFragment extends Fragment {
     public void onResume() {
         super.onResume();
         EventBus.getDefault().post(new SetFragmenTagEvent(TABLE_FRAGMENT_TAG));
+        EventBus.getDefault().post(new CheckNetworkEvent());
+        getApiData();
     }
 
     @Override

@@ -85,6 +85,8 @@ public class ScheduledMatchesFragment extends Fragment {
     public void onResume() {
         super.onResume();
         EventBus.getDefault().post(new SetFragmenTagEvent(SCHEDULED_MATCHES_FRAGMENT_TAG));
+        EventBus.getDefault().post(new CheckNetworkEvent());
+        getApiData();
     }
 
     @Override

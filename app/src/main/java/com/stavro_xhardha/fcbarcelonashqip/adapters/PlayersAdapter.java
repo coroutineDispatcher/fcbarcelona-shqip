@@ -25,7 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersViewHolder> {
     private ArrayList<Player> playerList;
-
+    private Context mContex;
      class PlayersViewHolder extends RecyclerView.ViewHolder {
         LinearLayout container;
         TextView playerName;
@@ -47,7 +47,7 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersV
             contract = itemView.findViewById(R.id.contract);
             playerImage = itemView.findViewById(R.id.player_image);
 
-            Context mContex = itemView.getContext();
+            mContex = itemView.getContext();
         }
     }
 
@@ -181,6 +181,10 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersV
         } else if (player.getPlayerName().equalsIgnoreCase(Brain.MINA)) {
             Picasso.get()
                     .load(Brain.URL_MINA)
+                    .into(holder.playerImage);
+        }else{
+            Picasso.get()
+                    .load(Brain.URL_DEFAULT)
                     .into(holder.playerImage);
         }
     }

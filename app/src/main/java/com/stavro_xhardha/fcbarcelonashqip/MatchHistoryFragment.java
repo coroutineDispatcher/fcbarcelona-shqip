@@ -20,6 +20,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.stavro_xhardha.fcbarcelonashqip.adapters.HistoryMatchAdapter;
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain;
+import com.stavro_xhardha.fcbarcelonashqip.events.CheckNetworkEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.ConfirmEmptyMatchHistorySetEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.ConfirmEmptyMatchScheduleSetEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.RefreshDataEvent;
@@ -83,6 +84,8 @@ public class MatchHistoryFragment extends Fragment {
     public void onResume() {
         super.onResume();
         EventBus.getDefault().post(new SetFragmenTagEvent(HISTORY_MATCH_FRAGMENT_TAG));
+        EventBus.getDefault().post(new CheckNetworkEvent());
+        getApiData();
     }
 
     @Override

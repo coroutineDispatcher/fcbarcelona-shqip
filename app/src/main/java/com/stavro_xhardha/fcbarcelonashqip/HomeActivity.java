@@ -129,13 +129,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             navigationView.getMenu().getItem(i).setChecked(false);
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        openNetworkErrorDialog();
-    }
-
     private void openFragment(Fragment mFragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.home_container, mFragment)
@@ -179,7 +172,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private void openNetworkErrorDialog() {
         if (!Brain.isNetworkAvailable(this)) {
-            MaterialDialog mNetworkDialog = new MaterialDialog.Builder(this)
+            new MaterialDialog.Builder(this)
                     .title(R.string.error_network_title)
                     .content(R.string.check_internet_connection)
                     .positiveText(R.string.agree)

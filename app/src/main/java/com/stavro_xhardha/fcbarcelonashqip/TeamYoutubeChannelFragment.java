@@ -96,6 +96,8 @@ public class TeamYoutubeChannelFragment extends Fragment {
     public void onResume() {
         super.onResume();
         EventBus.getDefault().post(new SetFragmenTagEvent(WHATS_NEW_ON_CLUB_FRAGMENT_TAG));
+        EventBus.getDefault().post(new CheckNetworkEvent());
+        getApiData();
     }
 
     @Override

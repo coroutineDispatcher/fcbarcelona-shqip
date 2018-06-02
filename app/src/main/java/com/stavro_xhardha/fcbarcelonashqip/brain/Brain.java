@@ -45,6 +45,7 @@ public class Brain {
     public static final String PLAYERS_URL = "http://api.football-data.org/v1/teams/81/players";
     public static final String MATCH_URL = "http://api.football-data.org/v1/teams/81/fixtures";
     public static final String NEWS_URL = "http://press.snet-al.com/index_sport.php?/api/get_latest_news/";
+    public static final String VIEWS_URL = "http://press.snet-al.com/index_sport.php?/api/viewed/";
 
     //Player Names
     public static final String CUTINHO = "Philippe Coutinho";
@@ -93,6 +94,7 @@ public class Brain {
     public static final String URL_ROBERTO = "https://90l.tribuna.com/images/b6/5e/b4/b65eb4788c2540eb98db2efb219242b3.jpg";
     public static final String URL_VIDAL = "https://i0.wp.com/sportxclusive.com/wp-content/uploads/2018/01/fbl.jpg?fit=960%2C540";
     public static final String URL_DIGNE = "https://images.performgroup.com/di/library/goal_de/88/7/lucas-digne-fc-barcelona-10082016_1htqbz1cmgt1g1ek31dngiae6w.jpg?t=-1479372730&w=940";
+    public static final String URL_DEFAULT = "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png";
 
     //URL
     public static final String NEWS_IMAGE_URL = "http://news.snet-al.com/app_press/public_html/uploads/";
