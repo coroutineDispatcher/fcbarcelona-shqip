@@ -71,22 +71,22 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.TopicsView
 
     @Override
     public void onBindViewHolder(@NonNull TopicsViewHolder holder, int position) {
-        final Topic topic = latestNewsList.get(position);
+        final Topic newsTopic = latestNewsList.get(position);
 
         String imageUrl = Brain.NEWS_IMAGE_URL;
-        String imageEndpoint = topic.getPhotoBase();
+        String imageEndpoint = newsTopic.getPhotoBase();
 
-        holder.author.setText(topic.getAuthor());
-        holder.viewsNumber.setText(topic.getViews());
-        holder.description.setText(topic.getDescription());
-        holder.date.setText(topic.getDate());
-        holder.title.setText(topic.getTitle());
+        holder.author.setText(newsTopic.getAuthor());
+        holder.viewsNumber.setText(newsTopic.getViews());
+        holder.description.setText(newsTopic.getDescription());
+        holder.date.setText(newsTopic.getDate());
+        holder.title.setText(newsTopic.getTitle());
 
-        if (topic.getViews().isEmpty()) {
+        if (newsTopic.getViews().isEmpty()) {
             holder.viewsNumber.setText("0");
         }
 
-        if (!topic.getPhotoBase().isEmpty()) {
+        if (!newsTopic.getPhotoBase().isEmpty()) {
             Picasso.get()
                     .load(imageUrl + imageEndpoint)
                     .into(holder.photoBase);
@@ -95,7 +95,7 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.TopicsView
         holder.row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EventBus.getDefault().post(new ExpandNewsSelectedTopicEvent(topic.getId()));
+                EventBus.getDefault().post(new ExpandNewsSelectedTopicEvent(newsTopic.getId()));
             }
         });
     }
