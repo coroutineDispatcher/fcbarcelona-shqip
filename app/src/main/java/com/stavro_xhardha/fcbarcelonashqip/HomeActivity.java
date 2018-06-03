@@ -73,10 +73,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     || mCurrentFragmentTag.equalsIgnoreCase(Brain.TEAM_FRAGMENT_TAG)
                     || mCurrentFragmentTag.equalsIgnoreCase(Brain.SCHEDULED_MATCHES_FRAGMENT_TAG)
                     || mCurrentFragmentTag.equalsIgnoreCase(Brain.HISTORY_MATCH_FRAGMENT_TAG)
-                    || mCurrentFragmentTag.equalsIgnoreCase(Brain.FC_BARCELONA_PAGE_FRAGMENT_TAG)
-                    || mCurrentFragmentTag.equalsIgnoreCase(Brain.LATEST_NEWS_FRAGMENT_TAG)) {
+                    || mCurrentFragmentTag.equalsIgnoreCase(Brain.LATEST_NEWS_FRAGMENT_TAG)
+                    || mCurrentFragmentTag.equalsIgnoreCase(Brain.WHATS_NEW_ON_CLUB_FRAGMENT_TAG)) {
 
-                openFragment(TeamInfo.newInstance());
+                openFragment(TeamInfoFragment.newInstance());
 
             } else {
                 super.onBackPressed();
@@ -110,7 +110,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_team) {
             openFragment(TeamFragment.newInstance());
         } else if (id == R.id.nav_team_info) {
-            openFragment(TeamInfo.newInstance());
+            openFragment(TeamInfoFragment.newInstance());
             unselectMenuItems();
         } else if (id == R.id.nav_news) {
             openFragment(LatestNewsFragment.newInstance());

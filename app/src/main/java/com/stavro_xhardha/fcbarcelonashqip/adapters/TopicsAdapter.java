@@ -48,7 +48,7 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.TopicsView
         }
     }
 
-    public TopicsAdapter(ArrayList<Topic> list){
+    public TopicsAdapter(ArrayList<Topic> list) {
         this.latestNewsList = list;
     }
 
@@ -82,13 +82,15 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.TopicsView
         holder.date.setText(topic.getDate());
         holder.title.setText(topic.getTitle());
 
-        if (topic.getViews().isEmpty()){
+        if (topic.getViews().isEmpty()) {
             holder.viewsNumber.setText("0");
         }
 
-        Picasso.get()
-                .load(imageUrl + imageEndpoint)
-                .into(holder.photoBase);
+        if (!topic.getPhotoBase().isEmpty()) {
+            Picasso.get()
+                    .load(imageUrl + imageEndpoint)
+                    .into(holder.photoBase);
+        }
 
         holder.row.setOnClickListener(new View.OnClickListener() {
             @Override

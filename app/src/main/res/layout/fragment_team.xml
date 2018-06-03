@@ -1,8 +1,8 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_300"
+    android:background="@color/black_75"
     android:paddingTop="@dimen/global_unit_smaller_xx"
     android:paddingBottom="@dimen/global_unit_smaller_xx"
     tools:context="com.stavro_xhardha.fcbarcelonashqip.TeamFragment">
@@ -19,4 +19,4 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-</FrameLayout>
+</RelativeLayout>

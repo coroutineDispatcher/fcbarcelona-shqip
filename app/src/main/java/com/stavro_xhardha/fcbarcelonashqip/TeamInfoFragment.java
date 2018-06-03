@@ -14,13 +14,13 @@ import org.greenrobot.eventbus.EventBus;
 
 import static com.stavro_xhardha.fcbarcelonashqip.brain.Brain.FC_BARCELONA_PAGE_FRAGMENT_TAG;
 
-public class TeamInfo extends Fragment {
+public class TeamInfoFragment extends Fragment {
 
-    public TeamInfo() {
+    public TeamInfoFragment() {
     }
 
-    public static TeamInfo newInstance() {
-        return new TeamInfo();
+    public static TeamInfoFragment newInstance() {
+        return new TeamInfoFragment();
     }
 
     @Override

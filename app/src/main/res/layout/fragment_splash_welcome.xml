@@ -2,21 +2,31 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/splash_background"
     android:layout_height="match_parent"
+    android:background="@drawable/splash_background"
     tools:context=".SplashWelcomeFragment">
 
-    <TextView
-        android:id="@+id/fc_barcelona_text"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:fontFamily="@font/alfa_slab_one"
-        android:text="@string/app_name"
-        android:textAlignment="center"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_global_unit_bigger_xxxxxx" />
+        android:orientation="vertical">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/global_unit_smaller"
+            android:src="@drawable/albanian_eagle" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/alfa_slab_one"
+            android:padding="@dimen/text_global_unit_bigger_xxxxxx"
+            android:text="@string/app_name"
+            android:textAlignment="center"
+            android:textColor="@color/fcbarcelona_yellow"
+            android:textSize="@dimen/text_global_unit_bigger_xxxxxx" />
+    </LinearLayout>
 </RelativeLayout>
