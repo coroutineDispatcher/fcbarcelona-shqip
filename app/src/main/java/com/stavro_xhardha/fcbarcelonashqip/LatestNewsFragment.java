@@ -8,17 +8,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import com.stavro_xhardha.fcbarcelonashqip.adapters.TopicsAdapter;
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain;
+import com.stavro_xhardha.fcbarcelonashqip.adapters.TopicsAdapter;
 import com.stavro_xhardha.fcbarcelonashqip.events.CheckNetworkEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.ExpandNewsSelectedTopicEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.RefreshDataEvent;
@@ -46,6 +47,9 @@ public class LatestNewsFragment extends Fragment {
     private ArrayList<Topic> topcsArrayList = new ArrayList<>();
     private TopicsAdapter topicsAdapter;
     final RecyclerView.LayoutManager manageer = new LinearLayoutManager(getActivity());
+    private ExpandedNewsFragment expandedNewsFragment;
+    private MaterialDialog materialDialog;
+    private String newsBodyResponseString;
 
     public LatestNewsFragment() {
     }
@@ -76,11 +80,11 @@ public class LatestNewsFragment extends Fragment {
         recyclerView.setLayoutManager(manageer);
         topicsAdapter = new TopicsAdapter(topcsArrayList);
         recyclerView.setAdapter(topicsAdapter);
-        getApiData();
+        getNewsData();
         newsRefresher.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getApiData();
+                getNewsData();
             }
         });
     }
@@ -95,7 +99,7 @@ public class LatestNewsFragment extends Fragment {
         super.onResume();
         EventBus.getDefault().post(new SetFragmenTagEvent(Brain.LATEST_NEWS_FRAGMENT_TAG));
         EventBus.getDefault().post(new CheckNetworkEvent());
-        getApiData();
+        getNewsData();
     }
 
     @Override
@@ -113,29 +117,59 @@ public class LatestNewsFragment extends Fragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(RefreshDataEvent event) {
         if (event != null) {
-            getApiData();
+            getNewsData();
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(ExpandNewsSelectedTopicEvent event) {
-        if (event != null) {
-            updateViews(event.getId());
-            getApiData();
+        if (event != null && getActivity() != null) {
+            updateViews(event.getTopic());
+            getNewsData();
+            openExpandedNews(event.getTopic());
         }
     }
 
-    private void updateViews(int id) {
+    private void openExpandedNews(Topic topic) {
+        Brain.setNewsId(String.valueOf(topic.getId()));
+        closeCustomFragment();
+        boolean wrapInScrollView = true;
+        materialDialog = new MaterialDialog.Builder(getActivity())
+                .title(topic.getTitle())
+                .customView(R.layout.custom_dialog_news, wrapInScrollView)
+                .cancelable(false)
+                .positiveText(R.string.close_dialog)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                        closeCustomFragment();
+                    }
+                })
+                .show();
+        View view = materialDialog.getCustomView();
+        if (view != null) {
+            expandedNewsFragment = (ExpandedNewsFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.custom_dialog_fragment);
+        }
+    }
+
+    private void closeCustomFragment() {
+        if (expandedNewsFragment != null) {
+            getActivity().getSupportFragmentManager().beginTransaction().remove(expandedNewsFragment).commit();
+        }
+    }
+
+    private void updateViews(Topic topic) {
         if (getActivity() != null) {
             if (Brain.isNetworkAvailable(getActivity())) {
-                new UpdateViewTask().execute(Brain.VIEWS_URL + String.valueOf(id));
+                new UpdateViewTask().execute(Brain.VIEWS_URL + String.valueOf(topic.getId()));
             } else {
                 EventBus.getDefault().post(new CheckNetworkEvent());
             }
         }
     }
 
-    private void getApiData() {
+    private void getNewsData() {
         if (getActivity() != null) {
             if (Brain.isNetworkAvailable(getActivity())) {
                 new GetNewsContentTask().execute(Brain.NEWS_URL);
@@ -145,7 +179,7 @@ public class LatestNewsFragment extends Fragment {
         }
     }
 
-    class GetNewsContentTask extends AsyncTask<String , String , String>{
+    class GetNewsContentTask extends AsyncTask<String, String, String> {
 
         private ArrayList<Topic> topicResponse = null;
         int code;
@@ -176,12 +210,13 @@ public class LatestNewsFragment extends Fragment {
                 }
                 if (mInputStream != null) {
                     Reader reader = new InputStreamReader(mInputStream);
-                    Type responseType = new TypeToken<ArrayList<Topic>>(){}.getType();
+                    Type responseType = new TypeToken<ArrayList<Topic>>() {
+                    }.getType();
 
-                    topicResponse = gson.fromJson(reader , responseType);
+                    topicResponse = gson.fromJson(reader, responseType);
                 }
                 code = response.code();
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             return null;
@@ -190,19 +225,19 @@ public class LatestNewsFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (topicResponse != null){
+            if (topicResponse != null) {
                 newsRefresher.setRefreshing(false);
-                if (code == 200){
+                if (code == 200) {
                     topcsArrayList = topicResponse;
                     topicsAdapter.setItemsList(topcsArrayList);
                 }
-            }else{
-                Toast.makeText(getActivity() , "Nuk mund të merren të dhënat" , Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getActivity(), "Nuk mund të merren të dhënat", Toast.LENGTH_LONG).show();
             }
         }
     }
 
-    class UpdateViewTask extends AsyncTask<String , String , String>{
+    class UpdateViewTask extends AsyncTask<String, String, String> {
         int responseFlag = 0;
 
         @Override
@@ -215,7 +250,7 @@ public class LatestNewsFragment extends Fragment {
 
             try {
                 Response response = client.newCall(request).execute();
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     responseFlag = 1;
                 }
             } catch (IOException e) {
@@ -227,10 +262,8 @@ public class LatestNewsFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (responseFlag == 1){
-                Toast.makeText(getActivity(), "View Updated", Toast.LENGTH_SHORT).show();
+            if (responseFlag == 1) {
             }
         }
     }
-
 }

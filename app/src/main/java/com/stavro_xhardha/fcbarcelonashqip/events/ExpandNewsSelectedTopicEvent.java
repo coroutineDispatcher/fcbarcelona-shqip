@@ -1,13 +1,15 @@
 package com.stavro_xhardha.fcbarcelonashqip.events;
 
-public class ExpandNewsSelectedTopicEvent {
-    private int id;
+import com.stavro_xhardha.fcbarcelonashqip.model.Topic;
 
-    public ExpandNewsSelectedTopicEvent(int id){
-        this.id = id;
+public class ExpandNewsSelectedTopicEvent {
+    private Topic topic;
+
+    public ExpandNewsSelectedTopicEvent(Topic topic){
+        this.topic = topic;
     }
 
-    public int getId() {
-        return id;
+    public Topic getTopic() {
+        return topic;
     }
 }

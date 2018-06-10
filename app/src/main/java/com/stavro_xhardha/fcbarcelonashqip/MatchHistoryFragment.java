@@ -22,7 +22,6 @@ import com.stavro_xhardha.fcbarcelonashqip.adapters.HistoryMatchAdapter;
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain;
 import com.stavro_xhardha.fcbarcelonashqip.events.CheckNetworkEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.ConfirmEmptyMatchHistorySetEvent;
-import com.stavro_xhardha.fcbarcelonashqip.events.ConfirmEmptyMatchScheduleSetEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.RefreshDataEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.SetFragmenTagEvent;
 import com.stavro_xhardha.fcbarcelonashqip.model.MatchDetails;

@@ -95,7 +95,7 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.TopicsView
         holder.row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EventBus.getDefault().post(new ExpandNewsSelectedTopicEvent(newsTopic.getId()));
+                EventBus.getDefault().post(new ExpandNewsSelectedTopicEvent(newsTopic));
             }
         });
     }

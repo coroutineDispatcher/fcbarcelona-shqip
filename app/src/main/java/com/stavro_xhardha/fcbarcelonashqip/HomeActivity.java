@@ -1,6 +1,7 @@
 package com.stavro_xhardha.fcbarcelonashqip;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -13,15 +14,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.TextAppearanceSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain;
 import com.stavro_xhardha.fcbarcelonashqip.events.CheckNetworkEvent;
+import com.stavro_xhardha.fcbarcelonashqip.events.ExpandNewsSelectedTopicEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.OpenNewFragmentEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.RefreshDataEvent;
+import com.stavro_xhardha.fcbarcelonashqip.events.SendNewsBodyEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.SetFragmenTagEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -29,15 +37,26 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import com.crashlytics.android.Crashlytics;
+import com.stavro_xhardha.fcbarcelonashqip.model.NewsBody;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.lang.reflect.Type;
 
 import io.fabric.sdk.android.Fabric;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private String mCurrentFragmentTag;
     private NavigationView navigationView;
-    DrawerLayout drawer;
-    ActionBarDrawerToggle toggle;
+    private DrawerLayout drawer;
+    private ActionBarDrawerToggle toggle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,6 +167,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             openNetworkErrorDialog();
         }
     }
+//
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void onMessageEvent(ExpandNewsSelectedTopicEvent event) {
+//        if (event != null) {
+//        }
+//    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(SetFragmenTagEvent event) {
@@ -195,4 +220,5 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     .show();
         }
     }
+
 }

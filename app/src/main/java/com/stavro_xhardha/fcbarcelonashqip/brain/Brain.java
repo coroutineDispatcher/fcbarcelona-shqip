@@ -4,8 +4,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import java.security.PublicKey;
-
 /**
  * Created by stavro_xhardha on 21/04/2018.
  */
@@ -21,7 +19,7 @@ public class Brain {
     public static final String TOKEN = "88a3894f29564aa09808e373fca97d84";
 
     //Cashe data
-    public static int MODE;
+    private static String NEWS_ID = "";
 
     //Flags
 
@@ -45,6 +43,7 @@ public class Brain {
     public static final String PLAYERS_URL = "http://api.football-data.org/v1/teams/81/players";
     public static final String MATCH_URL = "http://api.football-data.org/v1/teams/81/fixtures";
     public static final String NEWS_URL = "http://press.snet-al.com/index_sport.php?/api/get_latest_news/";
+    public static final String NEWS_BODY = "http://press.snet-al.com/index_sport.php?/api/get/";
     public static final String VIEWS_URL = "http://press.snet-al.com/index_sport.php?/api/viewed/";
 
     //Player Names
@@ -96,6 +95,9 @@ public class Brain {
     public static final String URL_DIGNE = "https://images.performgroup.com/di/library/goal_de/88/7/lucas-digne-fc-barcelona-10082016_1htqbz1cmgt1g1ek31dngiae6w.jpg?t=-1479372730&w=940";
     public static final String URL_DEFAULT = "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png";
 
+    //Bundle KEYS
+    public static final String NEWS_BODY_KEY = "news_body_key";
+
     //URL
     public static final String NEWS_IMAGE_URL = "http://news.snet-al.com/app_press/public_html/uploads/";
 
@@ -105,11 +107,11 @@ public class Brain {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    public static int getMODE() {
-        return MODE;
+    public static String getNewsId() {
+        return NEWS_ID;
     }
 
-    public static void setMODE(int MODE) {
-        Brain.MODE = MODE;
+    public static void setNewsId(String STRINGBODY) {
+        Brain.NEWS_ID = STRINGBODY;
     }
 }
