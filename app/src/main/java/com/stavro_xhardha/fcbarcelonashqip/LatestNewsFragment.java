@@ -132,6 +132,7 @@ public class LatestNewsFragment extends Fragment {
 
     private void openExpandedNews(Topic topic) {
         Brain.setNewsId(String.valueOf(topic.getId()));
+        Brain.setImageEndpoint(String.valueOf(topic.getPhotoBase()));
         closeCustomFragment();
         boolean wrapInScrollView = true;
         materialDialog = new MaterialDialog.Builder(getActivity())

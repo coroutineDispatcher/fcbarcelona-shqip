@@ -20,6 +20,7 @@ public class Brain {
 
     //Cashe data
     private static String NEWS_ID = "";
+    private static String IMAGE_ENDPOINT = "";
 
     //Flags
 
@@ -99,7 +100,7 @@ public class Brain {
     public static final String NEWS_BODY_KEY = "news_body_key";
 
     //URL
-    public static final String NEWS_IMAGE_URL = "http://news.snet-al.com/app_press/public_html/uploads/";
+    public static final String NEWS_IMAGE_URL = "http://news.snet-al.com/store/uploads/sport/";
 
     public static boolean isNetworkAvailable(Context mContext) {
         ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -113,5 +114,13 @@ public class Brain {
 
     public static void setNewsId(String STRINGBODY) {
         Brain.NEWS_ID = STRINGBODY;
+    }
+
+    public static String getImageEndpoint() {
+        return IMAGE_ENDPOINT;
+    }
+
+    public static void setImageEndpoint(String endpoint){
+        Brain.IMAGE_ENDPOINT = endpoint;
     }
 }

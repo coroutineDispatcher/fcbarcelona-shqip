@@ -8,13 +8,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.squareup.picasso.Picasso;
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain;
+import com.stavro_xhardha.fcbarcelonashqip.events.CheckNetworkEvent;
 import com.stavro_xhardha.fcbarcelonashqip.model.NewsBody;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,10 +34,10 @@ import okhttp3.Response;
 public class ExpandedNewsFragment extends Fragment {
 
     private TextView newsBody;
+    private ImageView newsImage;
 
     public ExpandedNewsFragment() {
     }
-
 
     public static ExpandedNewsFragment newInstance() {
         return new ExpandedNewsFragment();
@@ -52,7 +57,15 @@ public class ExpandedNewsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         newsBody = view.findViewById(R.id.news_body);
-        new GetExpandedNewsTask().execute(Brain.NEWS_BODY + Brain.getNewsId());
+        newsImage = view.findViewById(R.id.imageViewCollapsing);
+        if (Brain.isNetworkAvailable(getActivity())){
+            Picasso.get()
+                    .load(Brain.NEWS_IMAGE_URL + Brain.getImageEndpoint())
+                    .into(newsImage);
+            new GetExpandedNewsTask().execute(Brain.NEWS_BODY + Brain.getNewsId());
+        }else{
+            EventBus.getDefault().post(new CheckNetworkEvent());
+        }
     }
 
     class GetExpandedNewsTask extends AsyncTask<String, String, String> {

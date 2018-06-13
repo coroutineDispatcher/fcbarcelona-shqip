@@ -82,11 +82,12 @@ public class TopicsAdapter extends RecyclerView.Adapter<TopicsAdapter.TopicsView
         holder.date.setText(newsTopic.getDate());
         holder.title.setText(newsTopic.getTitle());
 
+
         if (newsTopic.getViews().isEmpty()) {
             holder.viewsNumber.setText("0");
         }
 
-        if (!newsTopic.getPhotoBase().isEmpty()) {
+        if (!newsTopic.getPhotoBase().isEmpty() || newsTopic.getPhotoBase() != null) {
             Picasso.get()
                     .load(imageUrl + imageEndpoint)
                     .into(holder.photoBase);

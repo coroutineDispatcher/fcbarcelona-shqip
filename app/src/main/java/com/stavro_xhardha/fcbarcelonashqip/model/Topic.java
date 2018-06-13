@@ -23,6 +23,8 @@ public class Topic {
     private String views;
     @SerializedName("writer")
     private String author;
+    @SerializedName("section")
+    private String section;
 
     public String getAuthor() {
         return author;
@@ -102,5 +104,13 @@ public class Topic {
 
     public void setViews(String views) {
         this.views = views;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
     }
 }
