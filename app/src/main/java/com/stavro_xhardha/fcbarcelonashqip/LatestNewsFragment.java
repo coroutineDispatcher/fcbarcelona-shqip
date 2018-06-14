@@ -36,6 +36,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -230,6 +231,12 @@ public class LatestNewsFragment extends Fragment {
                 newsRefresher.setRefreshing(false);
                 if (code == 200) {
                     topcsArrayList = topicResponse;
+                    for (Iterator<Topic> iterator = topcsArrayList.iterator(); iterator.hasNext();){
+                        Topic topic = iterator.next();
+                        if (!topic.getSection().equalsIgnoreCase("Barcelona")){
+                            iterator.remove();
+                        }
+                    }
                     topicsAdapter.setItemsList(topcsArrayList);
                 }
             } else {
