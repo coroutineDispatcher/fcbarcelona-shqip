@@ -23,6 +23,7 @@
                 android:weightSum="6">
 
                 <TextView
+                    android:fontFamily="@font/adamina"
                     android:id="@+id/single_item_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -33,6 +34,7 @@
                     android:textSize="@dimen/text_global_unit_normal" />
 
                 <TextView
+                    android:fontFamily="@font/adamina"
                     android:id="@+id/single_item_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -43,6 +45,7 @@
                     android:textSize="@dimen/text_global_unit_normal" />
 
                 <TextView
+                    android:fontFamily="@font/adamina"
                     android:id="@+id/single_item_match"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -53,6 +56,7 @@
                     android:textSize="@dimen/text_global_unit_normal" />
 
                 <TextView
+                    android:fontFamily="@font/adamina"
                     android:id="@+id/single_item_goals"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -63,6 +67,7 @@
                     android:textSize="@dimen/text_global_unit_normal" />
 
                 <TextView
+                    android:fontFamily="@font/adamina"
                     android:id="@+id/single_item_points"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

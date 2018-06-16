@@ -25,7 +25,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersViewHolder> {
     private ArrayList<Player> playerList;
     private Context mContex;
-     class PlayersViewHolder extends RecyclerView.ViewHolder {
+
+    class PlayersViewHolder extends RecyclerView.ViewHolder {
         LinearLayout container;
         TextView playerName;
         TextView position;
@@ -80,17 +81,30 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersV
     public void onBindViewHolder(@NonNull PlayersViewHolder holder, int position) {
         final Player player = playerList.get(position);
 
-        holder.playerName.setText(player.getPlayerName());
-        holder.contract.setText(player.getContractUntil());
-        holder.nationality.setText(player.getNationality());
-        holder.birthday.setText(player.getDateOfBirth());
-        holder.shirtNumber.setText(String.valueOf(player.getShirtNumber()));
-        holder.position.setText(player.getPosition());
+        if (player.getPlayerName() == null) {
+            holder.playerName.setText("");
+        } else if (player.getContractUntil() == null) {
+            holder.contract.setText("");
+        } else if (player.getNationality() == null) {
+            holder.nationality.setText("");
+        } else if (player.getDateOfBirth() == null) {
+            holder.birthday.setText("");
+        } else if (player.getShirtNumber() == null) {
+            holder.shirtNumber.setText("");
+        } else if (player.getPosition() == null) {
+            holder.position.setText("");
+        } else {
+            holder.playerName.setText(player.getPlayerName());
+            holder.contract.setText(player.getContractUntil());
+            holder.nationality.setText(player.getNationality());
+            holder.birthday.setText(player.getDateOfBirth());
+            holder.shirtNumber.setText(String.valueOf(player.getShirtNumber()));
+            holder.position.setText(player.getPosition());
 
-        addPlayersToImage(player, holder);
-
-
+            addPlayersToImage(player, holder);
+        }
     }
+
 
     private void addPlayersToImage(Player player, PlayersViewHolder holder) {
         if (player.getPlayerName().equalsIgnoreCase(Brain.MESSI)) {
@@ -181,7 +195,7 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersV
             Picasso.get()
                     .load(Brain.URL_MINA)
                     .into(holder.playerImage);
-        }else{
+        } else {
             Picasso.get()
                     .load(Brain.URL_DEFAULT)
                     .into(holder.playerImage);

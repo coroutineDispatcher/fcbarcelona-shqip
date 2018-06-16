@@ -6,12 +6,13 @@
     <LinearLayout
         android:id="@+id/single_item_row"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
+        android:layout_height="@dimen/spacing_xmlarge"
         android:orientation="horizontal"
         android:padding="@dimen/global_unit_smaller_xxx"
         android:weightSum="6">
 
         <TextView
+            android:fontFamily="@font/adamina"
             android:id="@+id/single_item_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,6 +23,7 @@
             android:textSize="@dimen/text_global_unit_normal" />
 
         <TextView
+            android:fontFamily="@font/adamina"
             android:id="@+id/single_item_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,6 +34,7 @@
             android:textSize="@dimen/text_global_unit_normal" />
 
         <TextView
+            android:fontFamily="@font/adamina"
             android:id="@+id/single_item_match"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,6 +45,7 @@
             android:textSize="@dimen/text_global_unit_normal" />
 
         <TextView
+            android:fontFamily="@font/adamina"
             android:id="@+id/single_item_goals"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,6 +56,7 @@
             android:textSize="@dimen/text_global_unit_normal" />
 
         <TextView
+            android:fontFamily="@font/adamina"
             android:id="@+id/single_item_points"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,5 +69,5 @@
     <View
         android:background="@color/grey_500"
         android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+        android:layout_height="@dimen/global_unit_smallest_xxxxxx"/>
 </android.support.constraint.ConstraintLayout>

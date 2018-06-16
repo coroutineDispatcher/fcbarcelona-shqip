@@ -31,6 +31,7 @@
             android:layout_width="@dimen/empty_list_icon"
             android:layout_height="@dimen/empty_list_icon" />
         <TextView
+            android:fontFamily="@font/adamina"
             android:layout_marginTop="@dimen/global_unit_smaller_xx"
             android:textColor="@color/grey_700"
             android:textAlignment="center"

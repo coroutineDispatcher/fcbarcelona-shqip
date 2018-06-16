@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -270,7 +271,8 @@ public class LatestNewsFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (responseFlag == 1) {
+            if (!(responseFlag == 1)) {
+                Snackbar.make(getView() , getResources().getString(R.string.can_not_get_data) , Snackbar.LENGTH_LONG ).show();
             }
         }
     }

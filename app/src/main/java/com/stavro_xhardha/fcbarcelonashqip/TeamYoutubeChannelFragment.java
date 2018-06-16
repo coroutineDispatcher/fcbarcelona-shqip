@@ -220,10 +220,10 @@ public class TeamYoutubeChannelFragment extends Fragment {
                     videoAdapter.addArray(mYoutubeResponse.getItems());
                     nextPage = mYoutubeResponse.getNextPageToken();
                 } else {
-                    Toast.makeText(getActivity(), "Nuk mund te merren te dhenat", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(getView() , getResources().getString(R.string.can_not_get_data) , Snackbar.LENGTH_LONG ).show();
                 }
             } else
-                Snackbar.make(getView(), "Dicka Shkoi Gabim" , Snackbar.LENGTH_LONG).show();
+                Snackbar.make(getView() , getResources().getString(R.string.can_not_get_data) , Snackbar.LENGTH_LONG ).show();
         }
     }
 }

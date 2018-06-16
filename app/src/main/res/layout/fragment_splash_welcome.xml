@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash_background"
+    android:background="@color/colorPrimary"
     tools:context=".SplashWelcomeFragment">
 
     <LinearLayout
@@ -22,7 +22,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/alfa_slab_one"
+            android:fontFamily="@font/adamina"
             android:padding="@dimen/text_global_unit_bigger_xxxxxx"
             android:text="@string/app_name"
             android:textAlignment="center"

@@ -3,6 +3,7 @@ package com.stavro_xhardha.fcbarcelonashqip;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -198,10 +199,10 @@ public class TableFragment extends Fragment {
                     standings = mStandingsResponse.getStanding();
                     adapter.setItemsList(standings);
                 } else {
-                    Toast.makeText(getActivity(), "Can't get table data", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(getView() , getResources().getString(R.string.can_not_get_data) , Snackbar.LENGTH_LONG ).show();
                 }
             } else
-                Log.d(Brain.TAG, "Wrong");
+                Snackbar.make(getView() , getResources().getString(R.string.can_not_get_data) , Snackbar.LENGTH_LONG ).show();
         }
     }
 }

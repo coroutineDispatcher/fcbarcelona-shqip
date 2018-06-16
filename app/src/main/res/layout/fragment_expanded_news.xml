@@ -22,7 +22,7 @@
             <ImageView
                 android:id="@+id/imageViewCollapsing"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="@dimen/hundred_fifty_height"
                 android:scaleType="centerCrop"
                 android:src="@drawable/placeholder"
                 app:layout_collapseMode="parallax" />
@@ -35,12 +35,14 @@
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
+
     <TextView
-        android:paddingTop="@dimen/global_unit_smaller"
-        android:layout_below="@+id/appBarLayout"
         android:id="@+id/news_body"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/appBarLayout"
+        android:fontFamily="@font/adamina"
+        android:paddingTop="@dimen/global_unit_smaller"
         android:text="@string/dots"
         android:textColor="@color/grey_700" />
 </RelativeLayout>

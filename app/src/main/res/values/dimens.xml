@@ -21,7 +21,9 @@
     <dimen name="global_unit_smaller_xxx">8dp</dimen>
     <dimen name="global_unit_smaller_xxxx">6dp</dimen>
     <dimen name="global_unit_smaller_xxxxx">4dp</dimen>
+    <dimen name="global_unit_smallest_xxxxx">3dp</dimen>
     <dimen name="global_unit_smaller_xxxxxx">2dp</dimen>
+    <dimen name="global_unit_smallest_xxxxxx">1dp</dimen>
 
     <dimen name="bl_button_width">100dp</dimen>
     <dimen name="bl_button_height">35dp</dimen>
@@ -49,5 +51,11 @@
     <dimen name="spacing_large">15dp</dimen>
     <dimen name="spacing_xmlarge">40dp</dimen>
     <dimen name="empty_list_icon">50dp</dimen>
+    <dimen name="hundred_fifty_height">150dp</dimen>
+    <dimen name="two_hundred_fifty_height">250dp</dimen>
+    <dimen name="no_space">0dp</dimen>
+    <dimen name="image_view_width">60dp</dimen>
+    <dimen name="negative_space">-35dp</dimen>
+
 
 </resources>

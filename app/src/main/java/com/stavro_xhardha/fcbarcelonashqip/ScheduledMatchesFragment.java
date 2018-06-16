@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -112,7 +113,7 @@ public class ScheduledMatchesFragment extends Fragment {
     public void onMessageEvent(ConfirmEmptyMatchScheduleSetEvent event) {
         if (event != null) {
             isScheduleSetEmpty = event.isSetEmpty();
-            if (isScheduleSetEmpty){
+            if (isScheduleSetEmpty) {
                 emptyListContentContainer.setVisibility(View.VISIBLE);
             }
         }
@@ -182,18 +183,22 @@ public class ScheduledMatchesFragment extends Fragment {
             Response response = null;
             try {
                 response = client.newCall(request).execute();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            if (response.isSuccessful()) {
-                mInputStream = response.body().byteStream();
-            }
-            if (mInputStream != null) {
-                Reader reader = new InputStreamReader(mInputStream);
-                Type responseType = new TypeToken<ResultResponse<MatchDetails>>() {
-                }.getType();
-                mApiResponse = gson.fromJson(reader, responseType);
-                code = response.code();
+            if (response != null) {
+                if (response.isSuccessful()) {
+                    mInputStream = response.body().byteStream();
+                }
+
+                if (mInputStream != null) {
+                    Reader reader = new InputStreamReader(mInputStream);
+                    Type responseType = new TypeToken<ResultResponse<MatchDetails>>() {
+                    }.getType();
+                    mApiResponse = gson.fromJson(reader, responseType);
+                    code = response.code();
+                }
             }
             return null;
         }
@@ -205,16 +210,16 @@ public class ScheduledMatchesFragment extends Fragment {
                 swipeRefreshLayout.setRefreshing(false);
                 if (code == 200) {
                     details = mApiResponse.getFixtures();
-                    if (details.size() == 0){
+                    if (details.size() == 0) {
                         emptyListContentContainer.setVisibility(View.VISIBLE);
-                    }else {
-                         adapter.setItemList(details);
+                    } else {
+                        adapter.setItemList(details);
                     }
                 } else {
-                    Toast.makeText(getActivity(), "Can't get table data", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(getView() , getResources().getString(R.string.can_not_get_data) , Snackbar.LENGTH_LONG ).show();
                 }
             } else {
-                Log.d(Brain.TAG, "Wrong");
+                Snackbar.make(getView() , getResources().getString(R.string.can_not_get_data) , Snackbar.LENGTH_LONG ).show();
             }
         }
     }
