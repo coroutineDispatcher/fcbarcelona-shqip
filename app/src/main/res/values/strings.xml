@@ -16,7 +16,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="rank_number">Nr.</string>
+    <string name="rank_number">Nr. </string>
     <string name="team_Name">Emri i Ekipit</string>
     <string name="nr_matches">Ndeshje</string>
     <string name="points">Piket</string>
@@ -70,12 +70,12 @@
     <string name="agree">Hap Internetin</string>
     <string name="dissagree">Rifresko</string>
     <string name="fcb_barcelona_official_page">Faqja Zyrtare</string>
-    <string name="barcelona_history">Ekipi i FC Barcelona është një ekip futbollistik spanjoll.Një klub i madh si në ligën spanjolle ashtu edhe në Europë.E themeluar në vitin 1899 nga një grup zviceranësh, anglezësh dhe katalonezësh në krye me Joan Gamper klubi u bë simbol i kulturës katalunase dhe Katalunizmit, nga vjen edhe motoja Més que un club (Më shumë se klub).
-Bacelona ishte anëtare themeluese e ligës spanjolle La Liga në vitin 1928 dhe sëbashku me ekipet Madrid dhe Athletic Bilbao asnjëherë nuk kan qenë të larguara nga liga e parë. Klubi gjithashtu ishte klubi i parë kampion i ligës spanjolle duke fituar gjithësej 24 herë La Liga, 29 herë Copa del Rey, 12 herë Supercopa de España, 5 herë UEFA Liga e Kampionëve, 4 herë UEFA Kupa e Fituesve të Kupave, 3 herë Inter-Cities Fairs Cup dhe 3 UEFA Super Cup. Po ashtu ekipi ka lojtarin më të mirë në Botë Lionel Messi.
+    <string name="barcelona_history">Ekipi i FC Barcelona është një ekip futbollistik spanjoll. Një klub i madh si në ligën spanjolle ashtu edhe në Europë. E themeluar në vitin 1899 nga një grup zviceranësh, anglezësh dhe katalonezësh në krye me Joan Gamper klubi u bë simbol i kulturës katalunase dhe Katalunizmit, nga vjen edhe motoja Més que un club (Më shumë se klub). 
+Bacelona ishte anëtare themeluese e ligës spanjolle La Liga në vitin 1928 dhe sëbashku me ekipet Madrid dhe Athletic Bilbao asnjëherë nuk kan qenë të larguara nga liga e parë.  Klubi gjithashtu ishte klubi i parë kampion i ligës spanjolle duke fituar gjithësej 24 herë La Liga, 29 herë Copa del Rey, 12 herë Supercopa de España, 5 herë UEFA Liga e Kampionëve, 4 herë UEFA Kupa e Fituesve të Kupave, 3 herë Inter-Cities Fairs Cup dhe 3 UEFA Super Cup.  Po ashtu ekipi ka lojtarin më të mirë në Botë Lionel Messi. 
     </string>
     <string name="description_header">Pershkrimi</string>
     <string name="barcelona_header_location">Vendndodhja</string>
-    <string name="camp_nou_adress">C. d\'Aristides Maillol, 12, 08028 Barcelona, Spain</string>
+    <string name="camp_nou_adress">C.  d\'Aristides Maillol, 12, 08028 Barcelona, Spain</string>
     <string name="la_liga">La Liga : 25</string>
     <string name="champions_league">Champions League : 5</string>
     <string name="copa_del_rey">Copa Del Rey : 30</string>
@@ -88,7 +88,7 @@ Bacelona ishte anëtare themeluese e ligës spanjolle La Liga në vitin 1928 dhe
     <string name="news">Lajme</string>
     <string name="barca_news">Lajme</string>
     <string name="close_dialog">Mbyll</string>
-    <string name="dots">.....</string>
+    <string name="dots">. . . . . </string>
     <string name="can_not_get_data">Nuk mund të merren të dhënat</string>
 
 </resources>
