@@ -16,7 +16,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/fc_barcelona_shqip"
+        android:icon="@mipmap/fc_barcelona_shqip"
         android:logo="@drawable/fc_barcelona_shqip"
         android:label="@string/app_name"
         android:roundIcon="@drawable/fc_barcelona_shqip"
