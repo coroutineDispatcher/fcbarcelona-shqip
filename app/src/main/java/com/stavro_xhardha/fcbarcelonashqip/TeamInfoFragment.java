@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.stavro_xhardha.fcbarcelonashqip.events.ControlToolbarVisibilityevent;
 import com.stavro_xhardha.fcbarcelonashqip.events.SetFragmenTagEvent;
+import com.stavro_xhardha.fcbarcelonashqip.events.SetFragmentTitleEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -37,14 +39,9 @@ public class TeamInfoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (getActivity() != null) {
-            getActivity().setTitle(getResources().getString(R.string.barcelona_team_info));
+            EventBus.getDefault().post(new SetFragmentTitleEvent(getResources().getString(R.string.barcelona_team_info)));
         }
-        HomeActivity activity = (HomeActivity) getActivity();
-        if (activity != null) {
-            if (activity.getSupportActionBar() != null) {
-                activity.getSupportActionBar().show();
-            }
-        }
+        EventBus.getDefault().post(new ControlToolbarVisibilityevent(true));
     }
 
     @Override

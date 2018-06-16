@@ -20,8 +20,10 @@ import com.google.gson.reflect.TypeToken;
 import com.stavro_xhardha.fcbarcelonashqip.adapters.StandingsAdapter;
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain;
 import com.stavro_xhardha.fcbarcelonashqip.events.CheckNetworkEvent;
+import com.stavro_xhardha.fcbarcelonashqip.events.ControlToolbarVisibilityevent;
 import com.stavro_xhardha.fcbarcelonashqip.events.RefreshDataEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.SetFragmenTagEvent;
+import com.stavro_xhardha.fcbarcelonashqip.events.SetFragmentTitleEvent;
 import com.stavro_xhardha.fcbarcelonashqip.model.StandingsResponse;
 import com.stavro_xhardha.fcbarcelonashqip.model.Standing;
 
@@ -61,14 +63,9 @@ public class TableFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getActivity() != null) {
-            getActivity().setTitle(getResources().getString(R.string.title_ranking));
+            EventBus.getDefault().post(new SetFragmentTitleEvent(getResources().getString(R.string.title_ranking)));
         }
-        HomeActivity activity = (HomeActivity) getActivity();
-        if (activity != null) {
-            if (activity.getSupportActionBar() != null) {
-                activity.getSupportActionBar().show();
-            }
-        }
+        EventBus.getDefault().post(new ControlToolbarVisibilityevent(true));
     }
 
     @Override

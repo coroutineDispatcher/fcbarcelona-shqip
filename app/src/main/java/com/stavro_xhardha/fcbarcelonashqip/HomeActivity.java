@@ -20,6 +20,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain;
 import com.stavro_xhardha.fcbarcelonashqip.events.CheckNetworkEvent;
+import com.stavro_xhardha.fcbarcelonashqip.events.ControlToolbarVisibilityevent;
 import com.stavro_xhardha.fcbarcelonashqip.events.OpenNewFragmentEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.RefreshDataEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.SetFragmenTagEvent;
@@ -29,6 +30,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import com.crashlytics.android.Crashlytics;
+import com.stavro_xhardha.fcbarcelonashqip.events.SetFragmentTitleEvent;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -148,12 +150,26 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             openNetworkErrorDialog();
         }
     }
-//
-//    @Subscribe(threadMode = ThreadMode.MAIN)
-//    public void onMessageEvent(ExpandNewsSelectedTopicEvent event) {
-//        if (event != null) {
-//        }
-//    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(SetFragmentTitleEvent event) {
+        if (event != null) {
+            this.setTitle(event.getFragmentTitle());
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(ControlToolbarVisibilityevent event) {
+        if (event != null) {
+            if (getSupportActionBar() != null) {
+                if (event.isShowToolbar()) {
+                   this.getSupportActionBar().show();
+                } else {
+                    this.getSupportActionBar().hide();
+                }
+            }
+        }
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(SetFragmenTagEvent event) {

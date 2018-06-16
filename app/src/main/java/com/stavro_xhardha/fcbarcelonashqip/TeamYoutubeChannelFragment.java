@@ -21,8 +21,10 @@ import com.google.gson.GsonBuilder;
 import com.stavro_xhardha.fcbarcelonashqip.adapters.YoutubeVideoAdapter;
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain;
 import com.stavro_xhardha.fcbarcelonashqip.events.CheckNetworkEvent;
+import com.stavro_xhardha.fcbarcelonashqip.events.ControlToolbarVisibilityevent;
 import com.stavro_xhardha.fcbarcelonashqip.events.RefreshDataEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.SetFragmenTagEvent;
+import com.stavro_xhardha.fcbarcelonashqip.events.SetFragmentTitleEvent;
 import com.stavro_xhardha.fcbarcelonashqip.model.YouTubeResponse;
 import com.stavro_xhardha.fcbarcelonashqip.model.YoutubeVideo;
 
@@ -69,14 +71,9 @@ public class TeamYoutubeChannelFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getActivity() != null) {
-            getActivity().setTitle(R.string.barca_channel);
+            EventBus.getDefault().post(new SetFragmentTitleEvent(getResources().getString(R.string.barca_channel)));
         }
-        HomeActivity activity = (HomeActivity) getActivity();
-        if (activity != null) {
-            if (activity.getSupportActionBar() != null) {
-                activity.getSupportActionBar().show();
-            }
-        }
+        EventBus.getDefault().post(new ControlToolbarVisibilityevent(true));
     }
 
     @Override

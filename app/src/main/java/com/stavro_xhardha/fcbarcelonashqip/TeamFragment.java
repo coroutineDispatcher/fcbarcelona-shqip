@@ -18,8 +18,10 @@ import com.google.gson.reflect.TypeToken;
 import com.stavro_xhardha.fcbarcelonashqip.adapters.PlayersAdapter;
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain;
 import com.stavro_xhardha.fcbarcelonashqip.events.CheckNetworkEvent;
+import com.stavro_xhardha.fcbarcelonashqip.events.ControlToolbarVisibilityevent;
 import com.stavro_xhardha.fcbarcelonashqip.events.RefreshDataEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.SetFragmenTagEvent;
+import com.stavro_xhardha.fcbarcelonashqip.events.SetFragmentTitleEvent;
 import com.stavro_xhardha.fcbarcelonashqip.model.Player;
 import com.stavro_xhardha.fcbarcelonashqip.model.PlayerResponse;
 
@@ -63,15 +65,9 @@ public class TeamFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getActivity() != null) {
-            getActivity().setTitle(getResources().getString(R.string.title_team));
-            EventBus.getDefault().post(new CheckNetworkEvent());
+            EventBus.getDefault().post(new SetFragmentTitleEvent(getResources().getString(R.string.title_team)));
         }
-        HomeActivity activity = (HomeActivity) getActivity();
-        if (activity != null) {
-            if (activity.getSupportActionBar() != null) {
-                activity.getSupportActionBar().show();
-            }
-        }
+        EventBus.getDefault().post(new ControlToolbarVisibilityevent(true));
     }
 
     @Override

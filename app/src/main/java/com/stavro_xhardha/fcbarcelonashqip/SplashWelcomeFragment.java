@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.stavro_xhardha.fcbarcelonashqip.events.ControlToolbarVisibilityevent;
 import com.stavro_xhardha.fcbarcelonashqip.events.OpenNewFragmentEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.SetFragmenTagEvent;
 import com.stavro_xhardha.fcbarcelonashqip.events.StartCountDownEvent;
@@ -30,12 +31,6 @@ public class SplashWelcomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        HomeActivity activity = (HomeActivity) getActivity();
-        if (activity != null) {
-            if (activity.getSupportActionBar() != null) {
-                activity.getSupportActionBar().hide();
-            }
-        }
     }
 
     @Override
@@ -65,6 +60,7 @@ public class SplashWelcomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         EventBus.getDefault().post(new SetFragmenTagEvent(SPLASH_FRAGMENT_TAG));
+        EventBus.getDefault().post(new ControlToolbarVisibilityevent(false));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
