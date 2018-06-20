@@ -131,10 +131,9 @@ public class TableFragment extends Fragment {
     }
 
     private void getApiData() {
-        String url = "http://api.football-data.org/v1/competitions/455/leagueTable/";
         if (Brain.isNetworkAvailable(getActivity())) {
-            new GetRankingDataTask().execute(url);
-        }else{
+            new GetRankingDataTask().execute(Brain.TABLE_URL);
+        } else {
             EventBus.getDefault().post(new CheckNetworkEvent());
         }
     }
@@ -169,17 +168,19 @@ public class TableFragment extends Fragment {
 
                 InputStream mInputStream = null;
                 Response response = client.newCall(request).execute();
-                if (response.isSuccessful()) {
-                    mInputStream = response.body().byteStream();
-                }
-                if (mInputStream != null) {
-                    Reader reader = new InputStreamReader(mInputStream);
-                    Type responseType = new TypeToken<StandingsResponse<Standing>>() {
-                    }.getType();
+                if (response != null) {
+                    if (response.isSuccessful()) {
+                        mInputStream = response.body().byteStream();
+                    }
+                    if (mInputStream != null) {
+                        Reader reader = new InputStreamReader(mInputStream);
+                        Type responseType = new TypeToken<StandingsResponse<Standing>>() {
+                        }.getType();
 
-                    mStandingsResponse = gson.fromJson(reader, responseType);
+                        mStandingsResponse = gson.fromJson(reader, responseType);
+                    }
+                    code = response.code();
                 }
-                code = response.code();
             } catch (IOException e) {
                 e.printStackTrace();
                 mStandingsResponse = null;
@@ -190,16 +191,16 @@ public class TableFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            tableRefresh.setRefreshing(false);
             if (mStandingsResponse != null) {
-                tableRefresh.setRefreshing(false);
                 if (code == 200) {
                     standings = mStandingsResponse.getStanding();
                     adapter.setItemsList(standings);
                 } else {
-                    Snackbar.make(getView() , getResources().getString(R.string.can_not_get_data) , Snackbar.LENGTH_LONG ).show();
+                    Snackbar.make(getView(), getResources().getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show();
                 }
             } else
-                Snackbar.make(getView() , getResources().getString(R.string.can_not_get_data) , Snackbar.LENGTH_LONG ).show();
+                Snackbar.make(getView(), getResources().getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show();
         }
     }
 }

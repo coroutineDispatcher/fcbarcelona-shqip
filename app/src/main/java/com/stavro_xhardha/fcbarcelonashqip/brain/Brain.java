@@ -28,7 +28,7 @@ public class Brain {
     public static final String WHATS_NEW_ON_CLUB_FRAGMENT_TAG = "What's new on club";
     public static final String TABLE_FRAGMENT_TAG = "Table Fragment";
     public static final String TEAM_FRAGMENT_TAG = "Team Fragment";
-    public static final String SCHEDULED_MATCHES_FRAGMENT_TAG =  "Scheduled Matches";
+    public static final String SCHEDULED_MATCHES_FRAGMENT_TAG = "Scheduled Matches";
     public static final String HISTORY_MATCH_FRAGMENT_TAG = "History Matches";
     public static final String FC_BARCELONA_PAGE_FRAGMENT_TAG = "Barcelona Page Fragment";
     public static final String SPLASH_FRAGMENT_TAG = "Splash Fragment ";
@@ -46,6 +46,7 @@ public class Brain {
     public static final String NEWS_URL = "http://press.snet-al.com/index_sport.php?/api/get_latest_news/";
     public static final String NEWS_BODY = "http://press.snet-al.com/index_sport.php?/api/get/";
     public static final String VIEWS_URL = "http://press.snet-al.com/index_sport.php?/api/viewed/";
+    public static final String TABLE_URL = "http://api.football-data.org/v1/competitions/455/leagueTable/";
 
     //Player Names
     public static final String CUTINHO = "Philippe Coutinho";
@@ -120,7 +121,7 @@ public class Brain {
         return IMAGE_ENDPOINT;
     }
 
-    public static void setImageEndpoint(String endpoint){
+    public static void setImageEndpoint(String endpoint) {
         Brain.IMAGE_ENDPOINT = endpoint;
     }
 }

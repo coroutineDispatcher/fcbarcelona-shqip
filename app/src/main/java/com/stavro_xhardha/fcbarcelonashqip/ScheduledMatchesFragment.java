@@ -206,8 +206,8 @@ public class ScheduledMatchesFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            swipeRefreshLayout.setRefreshing(false);
             if (mApiResponse != null) {
-                swipeRefreshLayout.setRefreshing(false);
                 if (code == 200) {
                     details = mApiResponse.getFixtures();
                     if (details.size() == 0) {
@@ -216,10 +216,10 @@ public class ScheduledMatchesFragment extends Fragment {
                         adapter.setItemList(details);
                     }
                 } else {
-                    Snackbar.make(getView() , getResources().getString(R.string.can_not_get_data) , Snackbar.LENGTH_LONG ).show();
+                    Snackbar.make(getView(), getResources().getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show();
                 }
             } else {
-                Snackbar.make(getView() , getResources().getString(R.string.can_not_get_data) , Snackbar.LENGTH_LONG ).show();
+                Snackbar.make(getView(), getResources().getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show();
             }
         }
     }

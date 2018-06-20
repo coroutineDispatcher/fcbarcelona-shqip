@@ -164,30 +164,33 @@ public class MatchHistoryFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... strings) {
-            OkHttpClient client = new OkHttpClient();
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            Gson gson = gsonBuilder.create();
-            Request request = new Request.Builder()
-                    .addHeader(Brain.HEADER_RESPONSE_CONTROL, Brain.RESPONSE_HEADER_VALUE)
-                    .addHeader(Brain.AUTHORIZATION, Brain.TOKEN)
-                    .url(strings[0])
-                    .build();
-            InputStream mInputStream = null;
-            Response response = null;
             try {
+                OkHttpClient client = new OkHttpClient();
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                Gson gson = gsonBuilder.create();
+                Request request = new Request.Builder()
+                        .addHeader(Brain.HEADER_RESPONSE_CONTROL, Brain.RESPONSE_HEADER_VALUE)
+                        .addHeader(Brain.AUTHORIZATION, Brain.TOKEN)
+                        .url(strings[0])
+                        .build();
+                InputStream mInputStream = null;
+                Response response = null;
+
                 response = client.newCall(request).execute();
+                if (response != null) {
+                    if (response.isSuccessful()) {
+                        mInputStream = response.body().byteStream();
+                    }
+                }
+                if (mInputStream != null) {
+                    Reader reader = new InputStreamReader(mInputStream);
+                    Type responseType = new TypeToken<ResultResponse<MatchDetails>>() {
+                    }.getType();
+                    mApiResponse = gson.fromJson(reader, responseType);
+                    code = response.code();
+                }
             } catch (IOException e) {
                 e.printStackTrace();
-            }
-            if (response.isSuccessful()) {
-                mInputStream = response.body().byteStream();
-            }
-            if (mInputStream != null) {
-                Reader reader = new InputStreamReader(mInputStream);
-                Type responseType = new TypeToken<ResultResponse<MatchDetails>>() {
-                }.getType();
-                mApiResponse = gson.fromJson(reader, responseType);
-                code = response.code();
             }
             return null;
         }
@@ -195,8 +198,8 @@ public class MatchHistoryFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            historyRefresh.setRefreshing(false);
             if (mApiResponse != null) {
-                historyRefresh.setRefreshing(false);
                 if (code == 200) {
                     details = mApiResponse.getFixtures();
                     if (details.size() == 0) {
@@ -206,10 +209,10 @@ public class MatchHistoryFragment extends Fragment {
                         Collections.reverse(details);
                     }
                 } else {
-                    Snackbar.make(getView() , getResources().getString(R.string.can_not_get_data) , Snackbar.LENGTH_LONG ).show();
+                    Snackbar.make(getView(), getResources().getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show();
                 }
             } else {
-                Snackbar.make(getView() , getResources().getString(R.string.can_not_get_data) , Snackbar.LENGTH_LONG ).show();
+                Snackbar.make(getView(), getResources().getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show();
             }
         }
     }

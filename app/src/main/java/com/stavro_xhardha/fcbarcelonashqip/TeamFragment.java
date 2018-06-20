@@ -187,17 +187,19 @@ public class TeamFragment extends Fragment {
 
                 InputStream mInputStream = null;
                 Response response = client.newCall(request).execute();
-                if (response.isSuccessful()) {
-                    mInputStream = response.body().byteStream();
-                }
-                if (mInputStream != null) {
-                    Reader reader = new InputStreamReader(mInputStream);
-                    Type responseType = new TypeToken<PlayerResponse<Player>>() {
-                    }.getType();
+                if (response != null) {
+                    if (response.isSuccessful()) {
+                        mInputStream = response.body().byteStream();
+                    }
+                    if (mInputStream != null) {
+                        Reader reader = new InputStreamReader(mInputStream);
+                        Type responseType = new TypeToken<PlayerResponse<Player>>() {
+                        }.getType();
 
-                    mStandingsResponse = gson.fromJson(reader, responseType);
+                        mStandingsResponse = gson.fromJson(reader, responseType);
+                    }
+                    code = response.code();
                 }
-                code = response.code();
             } catch (IOException e) {
                 e.printStackTrace();
                 mStandingsResponse = null;
@@ -208,16 +210,16 @@ public class TeamFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            teamRefresh.setRefreshing(false);
             if (mStandingsResponse != null) {
-                teamRefresh.setRefreshing(false);
                 if (code == 200) {
                     playerArrayList = mStandingsResponse.getPlayers();
                     playersAdapter.setItemList(playerArrayList);
                 } else {
-                    Snackbar.make(getView() , getResources().getString(R.string.can_not_get_data) , Snackbar.LENGTH_LONG ).show();
+                    Snackbar.make(getView(), getResources().getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show();
                 }
             } else {
-                Snackbar.make(getView() , getResources().getString(R.string.can_not_get_data) , Snackbar.LENGTH_LONG ).show();
+                Snackbar.make(getView(), getResources().getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show();
             }
         }
     }
