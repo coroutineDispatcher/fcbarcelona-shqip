@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.stavro_xhardha.fcbarcelonashqip.brain.Brain
 
 import com.stavro_xhardha.fcbarcelonashqip.events.ControlToolbarVisibilityevent
 import com.stavro_xhardha.fcbarcelonashqip.events.OpenNewFragmentEvent
@@ -44,7 +45,7 @@ class SplashWelcomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        EventBus.getDefault().post(SetFragmenTagEvent(INSTANCE.getSPLASH_FRAGMENT_TAG()))
+        EventBus.getDefault().post(SetFragmenTagEvent(Brain.SPLASH_FRAGMENT_TAG))
         EventBus.getDefault().post(ControlToolbarVisibilityevent(false))
     }
 

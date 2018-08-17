@@ -44,13 +44,15 @@ import swipeable.com.layoutmanager.touchelper.ItemTouchHelper
 
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain.Companion.PLAYERS_URL
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain.Companion.TEAM_FRAGMENT_TAG
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 
 class TeamFragment : Fragment() {
-    private var recyclerView: RecyclerView? = null
-    private var playerArrayList: ArrayList<Player>? = ArrayList()
-    private var playersAdapter: PlayersAdapter? = null
-    private var teamRefresh: SwipeRefreshLayout? = null
+    lateinit var recyclerView: RecyclerView
+    var playerArrayList: ArrayList<Player> = ArrayList()
+    lateinit var playersAdapter: PlayersAdapter
+    lateinit var teamRefresh: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +70,6 @@ class TeamFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initializeConponents(view)
         afterInitialize()
-
     }
 
     override fun onResume() {
@@ -103,21 +104,73 @@ class TeamFragment : Fragment() {
     private fun afterInitialize() {
         prepareRecyclerView()
         getApiData()
-        teamRefresh!!.setOnRefreshListener { getApiData() }
+        teamRefresh.setOnRefreshListener {
+            getApiData()
+        }
     }
 
     private fun getApiData() {
-        if (Brain.isNetworkAvailable(activity)) {
-            GetPlayersAsync().execute(Brain.PLAYERS_URL)
-        } else {
-            EventBus.getDefault().post(CheckNetworkEvent())
+        doAsync {
+            if (Brain.isNetworkAvailable(context as HomeActivity)) {
+                var mStandingsResponse: PlayerResponse<*>? = null
+                var code = 0
+                if (activity != null) {
+                    teamRefresh.isRefreshing = true
+                }
+                try {
+                    val client = OkHttpClient()
+                    val gsonBuilder = GsonBuilder()
+                    val gson = gsonBuilder.create()
+
+                    val request = Request.Builder()
+                            .addHeader(Brain.HEADER_RESPONSE_CONTROL, Brain.RESPONSE_HEADER_VALUE)
+                            .addHeader(Brain.AUTHORIZATION, Brain.TOKEN)
+                            .url(Brain.PLAYERS_URL)
+                            .build()
+
+                    var mInputStream: InputStream? = null
+                    val response = client.newCall(request).execute()
+                    if (response != null) {
+                        if (response.isSuccessful) {
+                            mInputStream = response.body()!!.byteStream()
+                        }
+                        if (mInputStream != null) {
+                            val reader = InputStreamReader(mInputStream)
+                            val responseType = object : TypeToken<PlayerResponse<Player>>() {
+
+                            }.type
+
+                            mStandingsResponse = gson.fromJson<PlayerResponse<Player>>(reader, responseType)
+                        }
+                        code = response.code()
+                    }
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    mStandingsResponse = null
+                }
+                uiThread {
+                    teamRefresh.isRefreshing = false
+                    if (mStandingsResponse != null) {
+                        if (code == 200) {
+                            playerArrayList = mStandingsResponse.players as ArrayList<Player>
+                            playersAdapter.setItemList(playerArrayList)
+                        } else {
+                            Snackbar.make(view!!, resources.getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show()
+                        }
+                    } else {
+                        Snackbar.make(view!!, resources.getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show()
+                    }
+                }
+            } else {
+                EventBus.getDefault().post(CheckNetworkEvent())
+            }
         }
     }
 
     private fun prepareRecyclerView() {
         val callback = SwipeableTouchHelperCallback(object : OnItemSwiped {
             override fun onItemSwiped() {
-                playersAdapter!!.removeTopElement()
+                playersAdapter.removeTopElement()
                 EventBus.getDefault().post(CheckNetworkEvent())
             }
 
@@ -132,73 +185,75 @@ class TeamFragment : Fragment() {
 
         val itemTouchHelper = ItemTouchHelper(callback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
-        recyclerView!!.layoutManager = SwipeableLayoutManager().setAngle(20).setAnimationDuratuion(1000).setMaxShowCount(6).setScaleGap(-10f).setTransYGap(20)
-        recyclerView!!.setAdapter(playersAdapter = PlayersAdapter(playerArrayList))
+        recyclerView.layoutManager = SwipeableLayoutManager().setAngle(20)
+                .setAnimationDuratuion(1000).setMaxShowCount(6).setScaleGap(-10f).setTransYGap(20)
+        playersAdapter = PlayersAdapter(playerArrayList)
+        recyclerView.adapter = playersAdapter
     }
 
-    internal inner class GetPlayersAsync : AsyncTask<String, String, String>() {
-        private var mStandingsResponse: PlayerResponse<*>? = null
-        var code: Int = 0
-
-        override fun onPreExecute() {
-            super.onPreExecute()
-            if (activity != null) {
-                teamRefresh!!.isRefreshing = true
-            }
-        }
-
-        override fun doInBackground(vararg strings: String): String? {
-            try {
-
-                val client = OkHttpClient()
-                val gsonBuilder = GsonBuilder()
-                val gson = gsonBuilder.create()
-
-                val request = Request.Builder()
-                        .addHeader(Brain.INSTANCE.getHEADER_RESPONSE_CONTROL(), Brain.INSTANCE.getRESPONSE_HEADER_VALUE())
-                        .addHeader(Brain.INSTANCE.getAUTHORIZATION(), Brain.INSTANCE.getTOKEN())
-                        .url(strings[0])
-                        .build()
-
-                var mInputStream: InputStream? = null
-                val response = client.newCall(request).execute()
-                if (response != null) {
-                    if (response.isSuccessful) {
-                        mInputStream = response.body()!!.byteStream()
-                    }
-                    if (mInputStream != null) {
-                        val reader = InputStreamReader(mInputStream)
-                        val responseType = object : TypeToken<PlayerResponse<Player>>() {
-
-                        }.type
-
-                        mStandingsResponse = gson.fromJson<PlayerResponse>(reader, responseType)
-                    }
-                    code = response.code()
-                }
-            } catch (e: IOException) {
-                e.printStackTrace()
-                mStandingsResponse = null
-            }
-
-            return null
-        }
-
-        override fun onPostExecute(s: String) {
-            super.onPostExecute(s)
-            teamRefresh!!.isRefreshing = false
-            if (mStandingsResponse != null) {
-                if (code == 200) {
-                    playerArrayList = mStandingsResponse!!.players
-                    playersAdapter!!.setItemList(playerArrayList!!)
-                } else {
-                    Snackbar.make(view!!, resources.getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show()
-                }
-            } else {
-                Snackbar.make(view!!, resources.getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show()
-            }
-        }
-    }
+//    inner class GetPlayersAsync : AsyncTask<String, String, String>() {
+//        private var mStandingsResponse: PlayerResponse<*>? = null
+//        var code: Int = 0
+//
+//        override fun onPreExecute() {
+//            super.onPreExecute()
+//            if (activity != null) {
+//                teamRefresh!!.isRefreshing = true
+//            }
+//        }
+//
+//        override fun doInBackground(vararg strings: String): String? {
+//            try {
+//
+//                val client = OkHttpClient()
+//                val gsonBuilder = GsonBuilder()
+//                val gson = gsonBuilder.create()
+//
+//                val request = Request.Builder()
+//                        .addHeader(Brain.HEADER_RESPONSE_CONTROL, Brain.RESPONSE_HEADER_VALUE)
+//                        .addHeader(Brain.AUTHORIZATION, Brain.TOKEN)
+//                        .url(strings[0])
+//                        .build()
+//
+//                var mInputStream: InputStream? = null
+//                val response = client.newCall(request).execute()
+//                if (response != null) {
+//                    if (response.isSuccessful) {
+//                        mInputStream = response.body()!!.byteStream()
+//                    }
+//                    if (mInputStream != null) {
+//                        val reader = InputStreamReader(mInputStream)
+//                        val responseType = object : TypeToken<PlayerResponse<Player>>() {
+//
+//                        }.type
+//
+//                        mStandingsResponse = gson.fromJson<PlayerResponse<Player>>(reader, responseType)
+//                    }
+//                    code = response.code()
+//                }
+//            } catch (e: IOException) {
+//                e.printStackTrace()
+//                mStandingsResponse = null
+//            }
+//
+//            return null
+//        }
+//
+//        override fun onPostExecute(s: String) {
+//            super.onPostExecute(s)
+//            teamRefresh!!.isRefreshing = false
+//            if (mStandingsResponse != null) {
+//                if (code == 200) {
+//                    playerArrayList = mStandingsResponse!!.players as ArrayList<Player>
+//                    playersAdapter!!.setItemList(playerArrayList!!)
+//                } else {
+//                    Snackbar.make(view!!, resources.getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show()
+//                }
+//            } else {
+//                Snackbar.make(view!!, resources.getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show()
+//            }
+//        }
+//    }
 
     companion object {
 

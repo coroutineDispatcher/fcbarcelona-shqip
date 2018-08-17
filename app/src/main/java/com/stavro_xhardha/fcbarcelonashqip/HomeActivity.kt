@@ -57,7 +57,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val tools = menu.findItem(R.id.tools)
         val s = SpannableString(tools.title)
-        s.setSpan(TextAppearanceSpan(this, R.style.menu_item_color), 0, s.length(), 0)
+        s.setSpan(TextAppearanceSpan(this, R.style.menu_item_color), 0, s.length, 0)
         tools.title = s
         navigationView!!.setNavigationItemSelectedListener(this)
         openFragment(SplashWelcomeFragment.newInstance())
@@ -68,12 +68,12 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START)
         } else {
-            if (mCurrentFragmentTag!!.equals(Brain.INSTANCE.getTABLE_FRAGMENT_TAG(), ignoreCase = true)
-                    || mCurrentFragmentTag!!.equals(Brain.INSTANCE.getTEAM_FRAGMENT_TAG(), ignoreCase = true)
-                    || mCurrentFragmentTag!!.equals(Brain.INSTANCE.getSCHEDULED_MATCHES_FRAGMENT_TAG(), ignoreCase = true)
-                    || mCurrentFragmentTag!!.equals(Brain.INSTANCE.getHISTORY_MATCH_FRAGMENT_TAG(), ignoreCase = true)
-                    || mCurrentFragmentTag!!.equals(Brain.INSTANCE.getLATEST_NEWS_FRAGMENT_TAG(), ignoreCase = true)
-                    || mCurrentFragmentTag!!.equals(Brain.INSTANCE.getWHATS_NEW_ON_CLUB_FRAGMENT_TAG(), ignoreCase = true)) {
+            if (mCurrentFragmentTag!!.equals(Brain.TABLE_FRAGMENT_TAG, ignoreCase = true)
+                    || mCurrentFragmentTag!!.equals(Brain.TEAM_FRAGMENT_TAG, ignoreCase = true)
+                    || mCurrentFragmentTag!!.equals(Brain.SCHEDULED_MATCHES_FRAGMENT_TAG, ignoreCase = true)
+                    || mCurrentFragmentTag!!.equals(Brain.HISTORY_MATCH_FRAGMENT_TAG, ignoreCase = true)
+                    || mCurrentFragmentTag!!.equals(Brain.LATEST_NEWS_FRAGMENT_TAG, ignoreCase = true)
+                    || mCurrentFragmentTag!!.equals(Brain.WHATS_NEW_ON_CLUB_FRAGMENT_TAG, ignoreCase = true)) {
 
                 openFragment(TeamInfoFragment.newInstance())
 
@@ -169,7 +169,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (event != null) {
             mCurrentFragmentTag = event.fragmentTag
         }
-        if (mCurrentFragmentTag!!.equals(Brain.INSTANCE.getSPLASH_FRAGMENT_TAG(), ignoreCase = true)) {
+        if (mCurrentFragmentTag!!.equals(Brain.SPLASH_FRAGMENT_TAG, ignoreCase = true)) {
             toggle!!.isDrawerIndicatorEnabled = false
             drawer!!.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         } else {
@@ -186,7 +186,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun openNetworkErrorDialog() {
-        if (!Brain.INSTANCE.isNetworkAvailable(this)) {
+        if (!Brain.isNetworkAvailable(this)) {
             MaterialDialog.Builder(this)
                     .title(R.string.error_network_title)
                     .content(R.string.check_internet_connection)

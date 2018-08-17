@@ -1,19 +1,15 @@
 package com.stavro_xhardha.fcbarcelonashqip
 
-import android.os.AsyncTask
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.stavro_xhardha.fcbarcelonashqip.adapters.StandingsAdapter
@@ -33,15 +29,15 @@ import org.greenrobot.eventbus.ThreadMode
 import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
-import java.io.Reader
-import java.lang.reflect.Type
+
 import java.util.ArrayList
 
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.Response
 
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain.Companion.TABLE_FRAGMENT_TAG
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 
 class TableFragment : Fragment() {
@@ -70,7 +66,7 @@ class TableFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        EventBus.getDefault().post(SetFragmenTagEvent(INSTANCE.getTABLE_FRAGMENT_TAG()))
+        EventBus.getDefault().post(SetFragmenTagEvent(TABLE_FRAGMENT_TAG))
         EventBus.getDefault().post(CheckNetworkEvent())
         getApiData()
     }
@@ -111,27 +107,22 @@ class TableFragment : Fragment() {
     }
 
     private fun getApiData() {
-        if (Brain.INSTANCE.isNetworkAvailable(activity)) {
-            GetRankingDataTask().execute(Brain.INSTANCE.getTABLE_URL())
+        if (Brain.isNetworkAvailable(context as HomeActivity)) {
+            makeTableRankingApiCall(Brain.TABLE_URL)
+            //GetRankingDataTask().execute()
         } else {
             EventBus.getDefault().post(CheckNetworkEvent())
         }
     }
 
+    private fun makeTableRankingApiCall(tableUrl: String) {
+        doAsync {
+            var mStandingsResponse: StandingsResponse<*>? = null
+            var code: Int = 0
 
-    internal inner class GetRankingDataTask : AsyncTask<String, String, String>() {
-
-        private var mStandingsResponse: StandingsResponse<*>? = null
-        var code: Int = 0
-
-        override fun onPreExecute() {
-            super.onPreExecute()
             if (activity != null) {
                 tableRefresh!!.isRefreshing = true
             }
-        }
-
-        override fun doInBackground(vararg strings: String): String? {
             try {
 
                 val client = OkHttpClient()
@@ -139,9 +130,9 @@ class TableFragment : Fragment() {
                 val gson = gsonBuilder.create()
 
                 val request = Request.Builder()
-                        .addHeader(Brain.INSTANCE.getHEADER_RESPONSE_CONTROL(), Brain.INSTANCE.getRESPONSE_HEADER_VALUE())
-                        .addHeader(Brain.INSTANCE.getAUTHORIZATION(), Brain.INSTANCE.getTOKEN())
-                        .url(strings[0])
+                        .addHeader(Brain.HEADER_RESPONSE_CONTROL, Brain.RESPONSE_HEADER_VALUE)
+                        .addHeader(Brain.AUTHORIZATION, Brain.TOKEN)
+                        .url(tableUrl)
                         .build()
 
                 var mInputStream: InputStream? = null
@@ -156,7 +147,7 @@ class TableFragment : Fragment() {
 
                         }.type
 
-                        mStandingsResponse = gson.fromJson<StandingsResponse>(reader, responseType)
+                        mStandingsResponse = gson.fromJson<StandingsResponse<Standing>>(reader, responseType)
                     }
                     code = response.code()
                 }
@@ -164,22 +155,18 @@ class TableFragment : Fragment() {
                 e.printStackTrace()
                 mStandingsResponse = null
             }
-
-            return null
-        }
-
-        override fun onPostExecute(s: String) {
-            super.onPostExecute(s)
-            tableRefresh!!.isRefreshing = false
-            if (mStandingsResponse != null) {
-                if (code == 200) {
-                    standings = mStandingsResponse!!.standing
-                    adapter!!.setItemsList(standings!!)
-                } else {
+            uiThread {
+                tableRefresh!!.isRefreshing = false
+                if (mStandingsResponse != null) {
+                    if (code == 200) {
+                        standings = mStandingsResponse!!.standing as ArrayList<Standing>
+                        adapter!!.setItemsList(standings!!)
+                    } else {
+                        Snackbar.make(view!!, resources.getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show()
+                    }
+                } else
                     Snackbar.make(view!!, resources.getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show()
-                }
-            } else
-                Snackbar.make(view!!, resources.getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show()
+            }
         }
     }
 

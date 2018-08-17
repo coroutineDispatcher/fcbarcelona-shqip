@@ -1,8 +1,10 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 apply plugin: 'io.fabric'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+    mavenCentral()
 }
 
 android {
@@ -61,6 +63,9 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.9.2@aar') {
         transitive = true
     }
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    compile 'org.jetbrains.anko:anko-common:0.9'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

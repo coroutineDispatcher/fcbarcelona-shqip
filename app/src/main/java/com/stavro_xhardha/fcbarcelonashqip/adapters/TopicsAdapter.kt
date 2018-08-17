@@ -24,23 +24,14 @@ class TopicsAdapter(private var latestNewsList: ArrayList<Topic>?) : RecyclerVie
     private var mContext: Context? = null
 
     inner class TopicsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        internal var row: CardView
-        internal var title: TextView
-        internal var date: TextView
-        internal var description: TextView
-        internal var photoBase: ImageView
-        internal var viewsNumber: TextView
-        internal var author: TextView
-
+        internal var row: CardView = itemView.findViewById(R.id.news_row)
+        internal var title: TextView = itemView.findViewById(R.id.news_title)
+        internal var date: TextView = itemView.findViewById(R.id.news_date)
+        internal var description: TextView = itemView.findViewById(R.id.news_description)
+        internal var photoBase: ImageView = itemView.findViewById(R.id.news_photo_base)
+        internal var viewsNumber: TextView = itemView.findViewById(R.id.news_views)
+        internal var author: TextView = itemView.findViewById(R.id.news_writer)
         init {
-            row = itemView.findViewById(R.id.news_row)
-            title = itemView.findViewById(R.id.news_title)
-            date = itemView.findViewById(R.id.news_date)
-            description = itemView.findViewById(R.id.news_description)
-            photoBase = itemView.findViewById(R.id.news_photo_base)
-            viewsNumber = itemView.findViewById(R.id.news_views)
-            author = itemView.findViewById(R.id.news_writer)
-
             mContext = itemView.context
         }
     }

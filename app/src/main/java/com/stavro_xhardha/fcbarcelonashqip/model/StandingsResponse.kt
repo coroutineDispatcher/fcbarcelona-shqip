@@ -8,11 +8,10 @@ import java.util.ArrayList
  * Created by stavro_xhardha on 21/04/2018.
  */
 
-class StandingsResponse<T> {
-    @SerializedName("leagueCaption")
-    var leagueName: String? = null
-    @SerializedName("matchday")
-    var matchDay: Int = 0
-    @SerializedName("standing")
-    var standing: ArrayList<T>? = null
-}
+class StandingsResponse<T>(@SerializedName("leagueCaption")
+                           var leagueName: String? = null,
+                           @SerializedName("matchday")
+                           var matchDay: Int = 0,
+                           @SerializedName("standing")
+                           var standing: ArrayList<T>? = null)
+

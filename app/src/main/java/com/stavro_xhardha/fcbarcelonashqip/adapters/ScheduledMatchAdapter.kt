@@ -27,7 +27,7 @@ class ScheduledMatchAdapter(private var detailsList: ArrayList<MatchDetails>?) :
     internal var awayResultArrayList = ArrayList<String>()
 
 
-    internal inner class MatchResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class MatchResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var row: LinearLayout
         var homeTeam: TextView
         var awayTeam: TextView

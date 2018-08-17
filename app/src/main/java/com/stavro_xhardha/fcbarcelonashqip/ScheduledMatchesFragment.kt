@@ -44,6 +44,8 @@ import okhttp3.Response
 
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain.Companion.MATCH_URL
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain.Companion.SCHEDULED_MATCHES_FRAGMENT_TAG
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 
 class ScheduledMatchesFragment : Fragment() {
@@ -72,7 +74,7 @@ class ScheduledMatchesFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        EventBus.getDefault().post(SetFragmenTagEvent(INSTANCE.getSCHEDULED_MATCHES_FRAGMENT_TAG()))
+        EventBus.getDefault().post(SetFragmenTagEvent(Brain.SCHEDULED_MATCHES_FRAGMENT_TAG))
         EventBus.getDefault().post(CheckNetworkEvent())
         getApiData()
     }
@@ -126,35 +128,32 @@ class ScheduledMatchesFragment : Fragment() {
 
     private fun getApiData() {
         if (context != null) {
-            if (Brain.INSTANCE.isNetworkAvailable(context)) {
-                GetMatchesAsync().execute(INSTANCE.getMATCH_URL())
+            if (Brain.isNetworkAvailable(context as HomeActivity)) {
+                makeFixturesApiCall(Brain.MATCH_URL)
+                //     GetMatchesAsync().execute(Brain.MATCH_URL)
             } else {
                 EventBus.getDefault().post(CheckNetworkEvent())
             }
         }
     }
 
-    @SuppressLint("StaticFieldLeak")
-    internal inner class GetMatchesAsync : AsyncTask<String, String, String>() {
-        private var mApiResponse: ResultResponse<*>? = null
-        private var code: Int = 0
+    private fun makeFixturesApiCall(matchURL: String) {
+        doAsync {
+            var mApiResponse: ResultResponse<*>? = null
+            var code: Int = 0
 
-        override fun onPreExecute() {
-            super.onPreExecute()
             if (activity != null) {
                 swipeRefreshLayout!!.isRefreshing = true
             }
-        }
 
-        override fun doInBackground(vararg strings: String): String? {
             val client = OkHttpClient()
             val gsonBuilder = GsonBuilder()
             val gson = gsonBuilder.create()
 
             val request = Request.Builder()
-                    .addHeader(Brain.INSTANCE.getHEADER_RESPONSE_CONTROL(), Brain.INSTANCE.getRESPONSE_HEADER_VALUE())
-                    .addHeader(Brain.INSTANCE.getAUTHORIZATION(), Brain.INSTANCE.getTOKEN())
-                    .url(strings[0])
+                    .addHeader(Brain.HEADER_RESPONSE_CONTROL, Brain.RESPONSE_HEADER_VALUE)
+                    .addHeader(Brain.AUTHORIZATION, Brain.TOKEN)
+                    .url(matchURL)
                     .build()
 
             var mInputStream: InputStream? = null
@@ -176,29 +175,26 @@ class ScheduledMatchesFragment : Fragment() {
                     val responseType = object : TypeToken<ResultResponse<MatchDetails>>() {
 
                     }.type
-                    mApiResponse = gson.fromJson<ResultResponse>(reader, responseType)
+                    mApiResponse = gson.fromJson<ResultResponse<MatchDetails>>(reader, responseType)
                     code = response.code()
                 }
             }
-            return null
-        }
-
-        override fun onPostExecute(s: String) {
-            super.onPostExecute(s)
-            swipeRefreshLayout!!.isRefreshing = false
-            if (mApiResponse != null) {
-                if (code == 200) {
-                    details = mApiResponse!!.fixtures
-                    if (details!!.size == 0) {
-                        emptyListContentContainer!!.visibility = View.VISIBLE
+            uiThread {
+                swipeRefreshLayout!!.isRefreshing = false
+                if (mApiResponse != null) {
+                    if (code == 200) {
+                        details = mApiResponse!!.fixtures as ArrayList<MatchDetails>
+                        if (details!!.size == 0) {
+                            emptyListContentContainer!!.visibility = View.VISIBLE
+                        } else {
+                            adapter!!.setItemList(details!!)
+                        }
                     } else {
-                        adapter!!.setItemList(details!!)
+                        Snackbar.make(view!!, resources.getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show()
                     }
                 } else {
                     Snackbar.make(view!!, resources.getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show()
                 }
-            } else {
-                Snackbar.make(view!!, resources.getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show()
             }
         }
     }

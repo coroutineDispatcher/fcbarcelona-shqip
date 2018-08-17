@@ -2,6 +2,7 @@ package com.stavro_xhardha.fcbarcelonashqip
 
 import android.os.AsyncTask
 import android.os.Bundle
+import android.support.design.widget.BottomSheetDialogFragment
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -28,9 +29,10 @@ import java.lang.reflect.Type
 
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.Response
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
-class ExpandedNewsFragment : Fragment() {
+class ExpandedNewsFragment : BottomSheetDialogFragment() {
 
     private var newsBody: TextView? = null
     private var newsImage: ImageView? = null
@@ -47,31 +49,26 @@ class ExpandedNewsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         newsBody = view.findViewById(R.id.news_body)
         newsImage = view.findViewById(R.id.imageViewCollapsing)
-        if (Brain.INSTANCE.isNetworkAvailable(activity)) {
+        if (Brain.isNetworkAvailable(context as HomeActivity)) {
             Picasso.get()
-                    .load(Brain.INSTANCE.getNEWS_IMAGE_URL() + Brain.getImageEndpoint())
+                    .load(Brain.NEWS_IMAGE_URL + Brain.imageEndpoint)
                     .into(newsImage)
-            GetExpandedNewsTask().execute(Brain.INSTANCE.getNEWS_BODY() + Brain.getNewsId())
+            makeExpandedNewsApiCall(Brain.NEWS_BODY + Brain.newsId)
         } else {
             EventBus.getDefault().post(CheckNetworkEvent())
         }
     }
 
-    internal inner class GetExpandedNewsTask : AsyncTask<String, String, String>() {
-        private var newsBodyResponce: NewsBody? = null
-
-        override fun onPreExecute() {
-            super.onPreExecute()
-        }
-
-        override fun doInBackground(vararg strings: String): String? {
+    private fun makeExpandedNewsApiCall(newsBodyAndId: String) {
+        doAsync {
+            var newsBodyResponce: NewsBody? = null
             try {
                 val client = OkHttpClient()
                 val gsonBuilder = GsonBuilder()
                 val gson = gsonBuilder.create()
 
                 val request = Request.Builder()
-                        .url(strings[0])
+                        .url(newsBodyAndId)
                         .build()
                 var mInputStream: InputStream? = null
                 val response = client.newCall(request).execute()
@@ -81,25 +78,19 @@ class ExpandedNewsFragment : Fragment() {
                 if (mInputStream != null) {
                     val reader = InputStreamReader(mInputStream)
                     val responseType = object : TypeToken<NewsBody>() {
-
                     }.type
-
                     newsBodyResponce = gson.fromJson<NewsBody>(reader, responseType)
                 }
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-
-            return null
-        }
-
-        override fun onPostExecute(s: String) {
-            super.onPostExecute(s)
-            if (newsBodyResponce != null) {
-                val newsBodyResponseString = newsBodyResponce!!.body
-                newsBody!!.text = newsBodyResponseString
-            } else {
-                Snackbar.make(view!!, resources.getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show()
+            uiThread {
+                if (newsBodyResponce != null) {
+                    val newsBodyResponseString = newsBodyResponce.body
+                    newsBody!!.text = newsBodyResponseString
+                } else {
+                    Snackbar.make(view!!, resources.getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show()
+                }
             }
         }
     }

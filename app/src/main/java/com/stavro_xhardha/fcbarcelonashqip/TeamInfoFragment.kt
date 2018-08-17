@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.stavro_xhardha.fcbarcelonashqip.brain.Brain
 
 import com.stavro_xhardha.fcbarcelonashqip.events.ControlToolbarVisibilityevent
 import com.stavro_xhardha.fcbarcelonashqip.events.SetFragmenTagEvent
@@ -34,7 +35,7 @@ class TeamInfoFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        EventBus.getDefault().post(SetFragmenTagEvent(INSTANCE.getFC_BARCELONA_PAGE_FRAGMENT_TAG()))
+        EventBus.getDefault().post(SetFragmenTagEvent(Brain.FC_BARCELONA_PAGE_FRAGMENT_TAG))
     }
 
     companion object {

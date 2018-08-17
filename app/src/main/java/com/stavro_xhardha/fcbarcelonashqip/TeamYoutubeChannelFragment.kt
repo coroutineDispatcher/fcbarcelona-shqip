@@ -1,5 +1,6 @@
 package com.stavro_xhardha.fcbarcelonashqip
 
+import android.app.Activity
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -47,6 +48,8 @@ import com.stavro_xhardha.fcbarcelonashqip.brain.Brain.Companion.YOUTUBE_BASE_UR
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain.Companion.YOUTUBE_DETAILS
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain.Companion.YOUTUBE_PAGE_TOKEN
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain.Companion.YOUTUBE_URL
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 
 class TeamYoutubeChannelFragment : Fragment() {
@@ -77,7 +80,7 @@ class TeamYoutubeChannelFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        EventBus.getDefault().post(SetFragmenTagEvent(INSTANCE.getWHATS_NEW_ON_CLUB_FRAGMENT_TAG()))
+        EventBus.getDefault().post(SetFragmenTagEvent(Brain.WHATS_NEW_ON_CLUB_FRAGMENT_TAG))
         EventBus.getDefault().post(CheckNetworkEvent())
         getApiData()
     }
@@ -117,8 +120,9 @@ class TeamYoutubeChannelFragment : Fragment() {
     }
 
     private fun getApiData() {
-        if (Brain.INSTANCE.isNetworkAvailable(activity)) {
-            GetYoutubeContentTask().execute(INSTANCE.getYOUTUBE_URL() + INSTANCE.getYOUTUBE_API_KEY())
+        if (Brain.isNetworkAvailable(context as HomeActivity)) {
+            makeYoutubeApiCall(Brain.YOUTUBE_URL + Brain.YOUTUBE_API_KEY)
+            // GetYoutubeContentTask().execute(Brain.YOUTUBE_URL + Brain.YOUTUBE_API_KEY)
         } else {
             EventBus.getDefault().post(CheckNetworkEvent())
         }
@@ -126,8 +130,9 @@ class TeamYoutubeChannelFragment : Fragment() {
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView!!.canScrollVertically(1)) {
-                    if (Brain.INSTANCE.isNetworkAvailable(activity)) {
-                        GetYoutubeContentTask().execute(INSTANCE.getYOUTUBE_BASE_URL() + INSTANCE.getYOUTUBE_PAGE_TOKEN() + nextPage + "&" + INSTANCE.getYOUTUBE_DETAILS() + INSTANCE.getYOUTUBE_API_KEY())
+                    if (Brain.isNetworkAvailable(context as HomeActivity)) {
+                        makeYoutubeApiCall(Brain.YOUTUBE_BASE_URL + Brain.YOUTUBE_PAGE_TOKEN + nextPage + "&" + Brain.YOUTUBE_DETAILS + Brain.YOUTUBE_API_KEY)
+                        //      GetYoutubeContentTask().execute(Brain.YOUTUBE_BASE_URL + Brain.YOUTUBE_PAGE_TOKEN + nextPage + "&" + Brain.YOUTUBE_DETAILS + Brain.YOUTUBE_API_KEY)
                     } else {
                         EventBus.getDefault().post(CheckNetworkEvent())
                     }
@@ -140,19 +145,13 @@ class TeamYoutubeChannelFragment : Fragment() {
         })
     }
 
-    internal inner class GetYoutubeContentTask : AsyncTask<String, String, String>() {
-
-        private var mYoutubeResponse: YouTubeResponse<*>? = null
-        var code: Int = 0
-
-        override fun onPreExecute() {
-            super.onPreExecute()
+    private fun makeYoutubeApiCall(youtubeParameter: String) {
+        doAsync {
+            var mYoutubeResponse: YouTubeResponse<*>? = null
+            var code: Int = 0
             if (activity != null) {
                 swipeRefreshLayout!!.isRefreshing = true
             }
-        }
-
-        override fun doInBackground(vararg strings: String): String? {
             try {
 
                 val client = OkHttpClient()
@@ -160,7 +159,7 @@ class TeamYoutubeChannelFragment : Fragment() {
                 val gson = gsonBuilder.create()
 
                 val request = Request.Builder()
-                        .url(strings[0])
+                        .url(youtubeParameter)
                         .build()
 
                 var mInputStream: InputStream? = null
@@ -174,29 +173,26 @@ class TeamYoutubeChannelFragment : Fragment() {
 
                     }.type
 
-                    mYoutubeResponse = gson.fromJson<YouTubeResponse>(reader, responseType)
+                    mYoutubeResponse = gson.fromJson<YouTubeResponse<YoutubeVideo>>(reader, responseType)
                 }
                 code = response.code()
             } catch (e: IOException) {
                 e.printStackTrace()
                 mYoutubeResponse = null
             }
-
-            return null
-        }
-
-        override fun onPostExecute(s: String) {
-            super.onPostExecute(s)
-            swipeRefreshLayout!!.isRefreshing = false
-            if (mYoutubeResponse != null) {
-                if (code == 200) {
-                    videoAdapter!!.addArray(mYoutubeResponse!!.items!!)
-                    nextPage = mYoutubeResponse!!.nextPageToken
+            uiThread {
+                swipeRefreshLayout!!.isRefreshing = false
+                if (mYoutubeResponse != null) {
+                    if (code == 200) {
+                        videoAdapter!!.addArray((mYoutubeResponse!!.items as ArrayList<YoutubeVideo>?)!!)
+                        nextPage = mYoutubeResponse!!.nextPageToken
+                    } else {
+                        Snackbar.make(view!!, resources.getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show()
+                    }
                 } else {
                     Snackbar.make(view!!, resources.getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show()
                 }
-            } else
-                Snackbar.make(view!!, resources.getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show()
+            }
         }
     }
 

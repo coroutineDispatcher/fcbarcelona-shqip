@@ -24,7 +24,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 class PlayersAdapter(private var playerList: ArrayList<Player>?) : RecyclerView.Adapter<PlayersAdapter.PlayersViewHolder>() {
     private var mContex: Context? = null
 
-    internal inner class PlayersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class PlayersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var container: LinearLayout
         var playerName: TextView
         var position: TextView
@@ -193,8 +193,8 @@ class PlayersAdapter(private var playerList: ArrayList<Player>?) : RecyclerView.
     }
 
     override fun getItemCount(): Int {
-        return if (playerList != null && playerList!!.size != 0) {
-            playerList!!.size
-        } else 0
+        if (playerList != null && playerList!!.size != 0) {
+            return playerList!!.size
+        } else return 0
     }
 }

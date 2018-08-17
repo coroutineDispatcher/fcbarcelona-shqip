@@ -19,7 +19,7 @@ import java.util.ArrayList
 
 class StandingsAdapter(private var standingsList: ArrayList<Standing>?) : RecyclerView.Adapter<StandingsAdapter.StandingsViewHolder>() {
 
-    internal inner class StandingsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class StandingsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var row: LinearLayout
         var rank: TextView
         var teamName: TextView
