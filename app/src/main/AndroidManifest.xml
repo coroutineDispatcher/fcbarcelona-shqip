@@ -14,6 +14,7 @@
 
 
     <application
+        android:name=".FCBarcelonaApp"
         android:allowBackup="true"
         android:icon="@mipmap/fc_barcelona_shqip_updated_mip"
         android:logo="@drawable/fc_barcelona_shqip"
