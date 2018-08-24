@@ -5,8 +5,4 @@ package com.stavro_xhardha.fcbarcelonashqip.ui.base.interactor
  */
 interface MVPInteractor {
 
-    fun isUserLoggedIn(): Boolean
-
-    fun performUserLogout()
-
 }

@@ -8,22 +8,28 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <include
-        layout="@layout/app_bar_home"
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/cl_root_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content">
+
+        <include
+            layout="@layout/app_bar_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.design.widget.CoordinatorLayout>
+
 
     <android.support.design.widget.NavigationView
-        android:fontFamily="@font/adamina"
-        android:background="@color/colorAccent"
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="@color/colorAccent"
         android:fitsSystemWindows="true"
+        android:fontFamily="@font/adamina"
+        app:headerLayout="@layout/nav_header_home"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
-        app:headerLayout="@layout/nav_header_home"
         app:menu="@menu/activity_home_drawer" />
-
 </android.support.v4.widget.DrawerLayout>
