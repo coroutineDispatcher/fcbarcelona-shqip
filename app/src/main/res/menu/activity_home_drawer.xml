@@ -11,7 +11,7 @@
             android:title="@string/news" />
         <item
             android:fontFamily="@font/adamina"
-            android:id="@+id/nav_home"
+            android:id="@+id/barcelona_youtube_channel"
             android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/barca_channel" />
         <item

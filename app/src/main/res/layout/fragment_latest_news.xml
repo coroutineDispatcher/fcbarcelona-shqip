@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:paddingTop="@dimen/global_unit_smaller_xx"
     android:paddingLeft="@dimen/global_unit_smaller_xx"
     android:paddingRight="@dimen/global_unit_smaller_xx"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_300"
-    tools:context=".LatestNewsFragment">
+    android:background="@color/grey_300">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/news_refresh"
@@ -15,7 +13,7 @@
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/latest_news_id"
+            android:id="@+id/latest_news_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </android.support.v4.widget.SwipeRefreshLayout>

@@ -14,3 +14,13 @@ internal fun FragmentManager.addFragment(containerViewId: Int,
             .add(containerViewId, fragment, tag)
             .commit()
 }
+
+internal fun FragmentManager.removeFragment(tag: String,
+                                            slideIn: Int = R.anim.fade_in,
+                                            slideOut: Int = R.anim.fade_out) {
+    this.beginTransaction()
+            .disallowAddToBackStack()
+            .setCustomAnimations(slideIn, slideOut)
+            .remove(this.findFragmentByTag(tag))
+            .commitNow()
+}

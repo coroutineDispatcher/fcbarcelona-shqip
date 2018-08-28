@@ -9,5 +9,14 @@ import javax.inject.Inject
 
 class HomePresenter<V : HomeMVPView, I : HomeMVPInteractor>
 @Inject internal constructor(interactor: I, schedulerProvider: SchedulerProvider, disposable: CompositeDisposable)
-    : BasePresenter<V, I>(interactor = interactor, schedulerProvider = schedulerProvider, compositeDisposable = disposable), HomeMVPPresenter<HomeMVPView, HomeMVPInteractor> {
+    : BasePresenter<V, I>(interactor = interactor, schedulerProvider = schedulerProvider, compositeDisposable = disposable), HomeMVPPresenter<V, I> {
+
+    override fun onAttach(view: V?) {
+        super.onAttach(view)
+    }
+
+
+    override fun onNavNewsItemClick() = getView()?.openNewsFragment()
+
+
 }
