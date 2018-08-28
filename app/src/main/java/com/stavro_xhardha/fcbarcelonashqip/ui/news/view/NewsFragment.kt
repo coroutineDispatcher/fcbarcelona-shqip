@@ -9,10 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.stavro_xhardha.fcbarcelonashqip.R
 import com.stavro_xhardha.fcbarcelonashqip.adapters.TopicsAdapter
+import com.stavro_xhardha.fcbarcelonashqip.model.Topic
 import com.stavro_xhardha.fcbarcelonashqip.ui.base.view.BaseFragment
 import com.stavro_xhardha.fcbarcelonashqip.ui.news.interactor.NewsMVPInteractor
 import com.stavro_xhardha.fcbarcelonashqip.ui.news.presenter.NewsPresenter
 import kotlinx.android.synthetic.main.fragment_latest_news.*
+import java.util.ArrayList
 import javax.inject.Inject
 
 class NewsFragment : BaseFragment(), NewsMVPView {
@@ -46,6 +48,15 @@ class NewsFragment : BaseFragment(), NewsMVPView {
         latest_news_rv.itemAnimator = DefaultItemAnimator()
         latest_news_rv.adapter = topicsAdapter
         presenter.onViewPrepared()
+    }
+
+    override fun displayTopicsList(topicsList: List<Topic>) {
+        topicsAdapter.setItemsList(topicsList as ArrayList<Topic>)
+    }
+
+    override fun onDestroyView() {
+        presenter.onDetach()
+        super.onDestroyView()
     }
 
 }

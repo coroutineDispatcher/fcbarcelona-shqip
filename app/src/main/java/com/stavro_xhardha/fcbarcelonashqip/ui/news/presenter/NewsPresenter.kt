@@ -11,7 +11,12 @@ class NewsPresenter<V : NewsMVPView, I : NewsMVPInteractor>
 @Inject constructor(interactor: I, schedulerProvider: SchedulerProvider, compositeDisposable: CompositeDisposable)
     : BasePresenter<V, I>(interactor = interactor, schedulerProvider = schedulerProvider, compositeDisposable = compositeDisposable),
         NewsMVPPresenter<V, I> {
-    
+
     override fun onViewPrepared() {
+        interactor.let {
+            it?.getTopicsList()?.compose(schedulerProvider.ioToMainObservableScheduler())?.subscribe{ topic ->
+                getView()?.displayTopicsList(topic)
+            }
+        }
     }
 }
