@@ -106,5 +106,6 @@ class Brain {
         //Cashe data
         var newsId = ""
         var imageEndpoint = ""
+
     }
 }

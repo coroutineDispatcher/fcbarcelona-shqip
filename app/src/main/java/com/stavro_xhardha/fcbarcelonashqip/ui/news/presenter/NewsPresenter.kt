@@ -1,6 +1,7 @@
 package com.stavro_xhardha.fcbarcelonashqip.ui.news.presenter
 
 import com.stavro_xhardha.fcbarcelonashqip.brain.SchedulerProvider
+import com.stavro_xhardha.fcbarcelonashqip.model.Topic
 import com.stavro_xhardha.fcbarcelonashqip.ui.base.presenter.BasePresenter
 import com.stavro_xhardha.fcbarcelonashqip.ui.news.interactor.NewsMVPInteractor
 import com.stavro_xhardha.fcbarcelonashqip.ui.news.view.NewsMVPView

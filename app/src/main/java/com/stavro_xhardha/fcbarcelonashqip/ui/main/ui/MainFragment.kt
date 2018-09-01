@@ -24,6 +24,6 @@ class MainFragment : BaseFragment() {
     }
 
     override fun setUp() {
-        Log.d("fc_barcelona_shqip" , "code_enters_here")
+
     }
 }

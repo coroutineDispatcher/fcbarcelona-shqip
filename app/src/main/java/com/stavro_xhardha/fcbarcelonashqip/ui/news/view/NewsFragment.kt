@@ -1,6 +1,5 @@
 package com.stavro_xhardha.fcbarcelonashqip.ui.news.view
 
-
 import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
@@ -17,6 +16,7 @@ import kotlinx.android.synthetic.main.fragment_latest_news.*
 import java.util.ArrayList
 import javax.inject.Inject
 
+
 class NewsFragment : BaseFragment(), NewsMVPView {
 
     companion object {
@@ -31,7 +31,7 @@ class NewsFragment : BaseFragment(), NewsMVPView {
     @Inject
     internal lateinit var linearLayoutManager: LinearLayoutManager
     @Inject
-    internal lateinit var presenter: NewsPresenter<NewsMVPView , NewsMVPInteractor>
+    internal lateinit var presenter: NewsPresenter<NewsMVPView, NewsMVPInteractor>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_latest_news, container, false)

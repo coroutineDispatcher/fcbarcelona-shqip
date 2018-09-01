@@ -31,6 +31,7 @@ class TopicsAdapter(private var latestNewsList: ArrayList<Topic>?) : RecyclerVie
         internal var photoBase: ImageView = itemView.findViewById(R.id.news_photo_base)
         internal var viewsNumber: TextView = itemView.findViewById(R.id.news_views)
         internal var author: TextView = itemView.findViewById(R.id.news_writer)
+
         init {
             mContext = itemView.context
         }
@@ -74,7 +75,9 @@ class TopicsAdapter(private var latestNewsList: ArrayList<Topic>?) : RecyclerVie
                     .into(holder.photoBase)
         }
 
-        holder.row.setOnClickListener { EventBus.getDefault().post(ExpandNewsSelectedTopicEvent(newsTopic)) }
+        holder.row.setOnClickListener { view ->
+            EventBus.getDefault().post(ExpandNewsSelectedTopicEvent(newsTopic))
+        }
     }
 
     override fun getItemCount(): Int {

@@ -11,7 +11,7 @@ internal fun FragmentManager.addFragment(containerViewId: Int,
                                          slideOut: Int = R.anim.fade_out) {
     this.beginTransaction().disallowAddToBackStack()
             .setCustomAnimations(slideIn, slideOut)
-            .add(containerViewId, fragment, tag)
+            .replace(containerViewId, fragment, tag)
             .commit()
 }
 

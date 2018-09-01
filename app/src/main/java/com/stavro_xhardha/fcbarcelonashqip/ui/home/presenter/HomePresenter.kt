@@ -1,6 +1,8 @@
 package com.stavro_xhardha.fcbarcelonashqip.ui.home.presenter
 
+import com.stavro_xhardha.fcbarcelonashqip.brain.Brain
 import com.stavro_xhardha.fcbarcelonashqip.brain.SchedulerProvider
+import com.stavro_xhardha.fcbarcelonashqip.events.ExpandNewsSelectedTopicEvent
 import com.stavro_xhardha.fcbarcelonashqip.ui.base.presenter.BasePresenter
 import com.stavro_xhardha.fcbarcelonashqip.ui.home.interactor.HomeMVPInteractor
 import com.stavro_xhardha.fcbarcelonashqip.ui.home.view.HomeMVPView
@@ -18,5 +20,12 @@ class HomePresenter<V : HomeMVPView, I : HomeMVPInteractor>
 
     override fun onNavNewsItemClick() = getView()?.openNewsFragment()
 
+
+    override fun onNewsTopicsItemCardClick() = getView()?.openBottomSheetFragment()
+
+    override fun updateCacheData(event: ExpandNewsSelectedTopicEvent) {
+        Brain.newsId = event.topic.id.toString()
+        Brain.imageEndpoint = event.topic.photoBase!!
+    }
 
 }
