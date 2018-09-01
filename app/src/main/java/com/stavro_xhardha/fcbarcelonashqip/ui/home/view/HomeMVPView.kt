@@ -7,4 +7,5 @@ interface HomeMVPView : MVPView {
     fun unlockDrawer(): Unit?
     fun openNewsFragment()
     fun openBottomSheetFragment()
+    fun openTableFragment()
 }

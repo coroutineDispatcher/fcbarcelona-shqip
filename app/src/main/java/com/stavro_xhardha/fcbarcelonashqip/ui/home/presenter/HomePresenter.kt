@@ -28,4 +28,6 @@ class HomePresenter<V : HomeMVPView, I : HomeMVPInteractor>
         Brain.imageEndpoint = event.topic.photoBase!!
     }
 
+    override fun onNavTableItemClick() = getView()?.openTableFragment()
+
 }

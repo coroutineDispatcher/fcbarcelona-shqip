@@ -9,4 +9,5 @@ interface HomeMVPPresenter<V : HomeMVPView, I : HomeMVPInteractor> : MVPPresente
     fun onNavNewsItemClick(): Unit?
     fun onNewsTopicsItemCardClick(): Unit?
     fun updateCacheData(event: ExpandNewsSelectedTopicEvent)
+    fun onNavTableItemClick(): Unit?
 }

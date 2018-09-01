@@ -13,7 +13,7 @@ class Brain {
         const val TAG = "BrainTag"
 
         //Api
-        const val HEADER_RESPONSE_CONTROL = "X-Response-Control"
+        const val HEADER_RESPONSE_CONTROL = "X-StandingResponse-Control"
         const val AUTHORIZATION = "X-Auth-Token"
         const val RESPONSE_HEADER_VALUE = "full"
         const val TOKEN = "88a3894f29564aa09808e373fca97d84"
@@ -41,6 +41,7 @@ class Brain {
         const val NEWS_BODY = "http://press.snet-al.com/index_sport.php?/api/get/"
         const val VIEWS_URL = "http://press.snet-al.com/index_sport.php?/api/viewed/"
         const val TABLE_URL = "http://api.football-data.org/v1/competitions/455/leagueTable/"
+        const val TABLE_URL_V2 = "http://api.football-data.org/v2/competitions/2014/standings"
 
         //Player Names
         const val CUTINHO = "Philippe Coutinho"

@@ -18,6 +18,7 @@ import com.stavro_xhardha.fcbarcelonashqip.ui.home.interactor.HomeMVPInteractor
 import com.stavro_xhardha.fcbarcelonashqip.ui.home.presenter.HomePresenter
 import com.stavro_xhardha.fcbarcelonashqip.ui.main.ui.MainFragment
 import com.stavro_xhardha.fcbarcelonashqip.ui.news.view.NewsFragment
+import com.stavro_xhardha.fcbarcelonashqip.ui.ranking.view.RankingFragment
 import com.stavro_xhardha.fcbarcelonashqip.ui.topic_details.view.NewsTopicDetailsFragment
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -62,7 +63,7 @@ class HomeActivity : BaseActivity(), HomeMVPView, NavigationView.OnNavigationIte
 
             }
             R.id.nav_table -> {
-
+                homePresenter.onNavTableItemClick()
             }
             R.id.nav_match -> {
 
@@ -133,10 +134,16 @@ class HomeActivity : BaseActivity(), HomeMVPView, NavigationView.OnNavigationIte
     override fun onBackPressed() {
         if (supportFragmentManager.findFragmentByTag(MainFragment.TAG) != null) {
             super.onBackPressed()
-        } else if (supportFragmentManager.findFragmentByTag(NewsFragment.TAG) != null) {
+        } else if ((supportFragmentManager.findFragmentByTag(NewsFragment.TAG) != null) ||
+                supportFragmentManager.findFragmentByTag(RankingFragment.TAG) != null) {
             openNewFragment(MainFragment.newInstance(), MainFragment.TAG)
         } else if (supportFragmentManager.findFragmentByTag(NewsTopicDetailsFragment.TAG) != null) {
             openNewFragment(NewsFragment.newInstance(), NewsFragment.TAG)
         }
     }
+
+    override fun openTableFragment() {
+        openNewFragment(RankingFragment.newInstance(), RankingFragment.TAG)
+    }
+
 }

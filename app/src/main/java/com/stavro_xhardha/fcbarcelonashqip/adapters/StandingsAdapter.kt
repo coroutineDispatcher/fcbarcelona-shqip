@@ -9,7 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 
 import com.stavro_xhardha.fcbarcelonashqip.R
-import com.stavro_xhardha.fcbarcelonashqip.model.Standing
+import com.stavro_xhardha.fcbarcelonashqip.model.TableItem
 
 import java.util.ArrayList
 
@@ -17,35 +17,28 @@ import java.util.ArrayList
  * Created by stavro_xhardha on 22/04/2018.
  */
 
-class StandingsAdapter(private var standingsList: ArrayList<Standing>?) : RecyclerView.Adapter<StandingsAdapter.StandingsViewHolder>() {
+class StandingsAdapter(private var standingsList: ArrayList<TableItem>?) : RecyclerView.Adapter<StandingsAdapter.StandingsViewHolder>() {
+    private var mContext: Context? = null
 
     inner class StandingsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var row: LinearLayout
-        var rank: TextView
-        var teamName: TextView
-        var match: TextView
-        var goal: TextView
-        var points: TextView
-        var time: TextView? = null
+        var row: LinearLayout = itemView.findViewById(R.id.single_item_row)
+        var rank: TextView = itemView.findViewById(R.id.single_item_number)
+        var teamName: TextView = itemView.findViewById(R.id.single_item_name)
+        var match: TextView = itemView.findViewById(R.id.single_item_match)
+        var goal: TextView = itemView.findViewById(R.id.single_item_goals)
+        var points: TextView = itemView.findViewById(R.id.single_item_points)
 
         init {
-            row = itemView.findViewById(R.id.single_item_row)
-            rank = itemView.findViewById(R.id.single_item_number)
-            teamName = itemView.findViewById(R.id.single_item_name)
-            match = itemView.findViewById(R.id.single_item_match)
-            goal = itemView.findViewById(R.id.single_item_goals)
-            points = itemView.findViewById(R.id.single_item_points)
-
-            val mContex = itemView.context
+            mContext = itemView.context
         }
     }
 
-    fun setItemsList(list: ArrayList<Standing>) {
+    fun setItemsList(list: ArrayList<TableItem>) {
         this.standingsList = list
         notifyDataSetChanged()
     }
 
-    fun add(standing: Standing) {
+    fun add(standing: TableItem) {
         standingsList!!.add(standing)
         notifyDataSetChanged()
     }
@@ -56,13 +49,13 @@ class StandingsAdapter(private var standingsList: ArrayList<Standing>?) : Recycl
     }
 
     override fun onBindViewHolder(holder: StandingsAdapter.StandingsViewHolder, position: Int) {
-        val standing = standingsList!![position]
+        val tableItem = standingsList!![position]
 
-        holder.points.text = standing.points.toString()
-        holder.rank.text = standing.position.toString()
-        holder.teamName.text = standing.teamName
-        holder.match.text = standing.matchesPlayed.toString()
-        holder.goal.text = standing.goalDifference.toString()
+        holder.points.text = tableItem.points.toString()
+        holder.rank.text = tableItem.position.toString()
+        holder.teamName.text = tableItem.team?.name
+        holder.match.text = tableItem.playedGames.toString()
+        holder.goal.text = tableItem.goalDifference.toString()
 
     }
 
