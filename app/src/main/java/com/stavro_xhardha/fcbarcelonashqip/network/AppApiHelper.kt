@@ -20,6 +20,7 @@ class AppApiHelper @Inject constructor() : ApiHelper {
     override fun makeNewsBodyApiCall(): Observable<NewsBody> =
             Rx2AndroidNetworking.get(Brain.NEWS_BODY + Brain.newsId)
                     .build()
+                    
                     .getObjectObservable(NewsBody::class.java)
 
     override fun makeRankingApiCall(): Observable<Standing> =
