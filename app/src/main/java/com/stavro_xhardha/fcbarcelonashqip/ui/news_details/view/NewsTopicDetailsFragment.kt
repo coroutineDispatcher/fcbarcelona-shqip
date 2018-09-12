@@ -1,4 +1,4 @@
-package com.stavro_xhardha.fcbarcelonashqip.ui.topic_details.view
+package com.stavro_xhardha.fcbarcelonashqip.ui.news_details.view
 
 import android.os.Bundle
 import android.support.design.widget.BottomSheetDialogFragment
@@ -9,8 +9,8 @@ import com.squareup.picasso.Picasso
 import com.stavro_xhardha.fcbarcelonashqip.R
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain
 import com.stavro_xhardha.fcbarcelonashqip.ui.base.view.BaseFragment
-import com.stavro_xhardha.fcbarcelonashqip.ui.topic_details.interactor.NewsTopicDetailsMVPInteractor
-import com.stavro_xhardha.fcbarcelonashqip.ui.topic_details.presenter.NewsDetailsTopicPresenter
+import com.stavro_xhardha.fcbarcelonashqip.ui.news_details.interactor.NewsTopicDetailsMVPInteractor
+import com.stavro_xhardha.fcbarcelonashqip.ui.news_details.presenter.NewsDetailsTopicPresenter
 import kotlinx.android.synthetic.main.fragment_expanded_news.*
 import javax.inject.Inject
 

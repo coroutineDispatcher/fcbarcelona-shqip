@@ -1,7 +1,6 @@
 package com.stavro_xhardha.fcbarcelonashqip.ui.news.presenter
 
 import com.stavro_xhardha.fcbarcelonashqip.brain.SchedulerProvider
-import com.stavro_xhardha.fcbarcelonashqip.model.Topic
 import com.stavro_xhardha.fcbarcelonashqip.ui.base.presenter.BasePresenter
 import com.stavro_xhardha.fcbarcelonashqip.ui.news.interactor.NewsMVPInteractor
 import com.stavro_xhardha.fcbarcelonashqip.ui.news.view.NewsMVPView
@@ -15,9 +14,17 @@ class NewsPresenter<V : NewsMVPView, I : NewsMVPInteractor>
 
     override fun onViewPrepared() {
         interactor.let {
-            it?.getTopicsList()?.compose(schedulerProvider.ioToMainObservableScheduler())?.subscribe{ topic ->
-                getView()?.displayTopicsList(topic)
-            }
+            compositeDisposable.add(it!!.getTopicsList()
+                    .compose(schedulerProvider.ioToMainObservableScheduler())
+                    .subscribe({ topic ->
+                        getView()?.let {
+                            it.displayTopicsList(topic)
+                        }
+                    }, { err ->
+                        getView()?.let {
+                            it.showConnectionError()
+                        }
+                    }))
         }
     }
 }

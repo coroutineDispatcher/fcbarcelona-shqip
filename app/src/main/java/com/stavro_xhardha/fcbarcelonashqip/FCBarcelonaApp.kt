@@ -22,5 +22,4 @@ class FCBarcelonaApp : Application(), HasActivityInjector {
                 .build()
                 .inject(this)
     }
-
 }

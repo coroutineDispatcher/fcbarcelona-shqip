@@ -1,4 +1,4 @@
-package com.stavro_xhardha.fcbarcelonashqip.ui.topic_details.view
+package com.stavro_xhardha.fcbarcelonashqip.ui.news_details.view
 
 import com.stavro_xhardha.fcbarcelonashqip.ui.base.view.MVPView
 

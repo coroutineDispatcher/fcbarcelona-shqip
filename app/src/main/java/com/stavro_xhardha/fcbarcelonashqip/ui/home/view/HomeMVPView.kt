@@ -6,6 +6,9 @@ interface HomeMVPView : MVPView {
     fun lockDrawer(): Unit?
     fun unlockDrawer(): Unit?
     fun openNewsFragment()
-    fun openBottomSheetFragment()
+    fun openExpandedNewsFragmentAndUpdateView()
     fun openTableFragment()
+    fun openMatchesFragment()
+    fun openTeamFragment()
+    fun showUpdateViewErrorSnackBar()
 }

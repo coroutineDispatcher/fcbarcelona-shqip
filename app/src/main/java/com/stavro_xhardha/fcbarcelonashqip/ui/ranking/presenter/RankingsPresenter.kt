@@ -1,7 +1,6 @@
 package com.stavro_xhardha.fcbarcelonashqip.ui.ranking.presenter
 
 import com.stavro_xhardha.fcbarcelonashqip.brain.SchedulerProvider
-import com.stavro_xhardha.fcbarcelonashqip.model.TableItem
 import com.stavro_xhardha.fcbarcelonashqip.ui.base.presenter.BasePresenter
 import com.stavro_xhardha.fcbarcelonashqip.ui.ranking.interactor.RankingMVPInteractor
 import com.stavro_xhardha.fcbarcelonashqip.ui.ranking.view.RankingMVPView

@@ -1,4 +1,4 @@
-package com.stavro_xhardha.fcbarcelonashqip.ui.topic_details.interactor
+package com.stavro_xhardha.fcbarcelonashqip.ui.news_details.interactor
 
 import com.stavro_xhardha.fcbarcelonashqip.model.NewsBody
 import com.stavro_xhardha.fcbarcelonashqip.network.ApiHelper

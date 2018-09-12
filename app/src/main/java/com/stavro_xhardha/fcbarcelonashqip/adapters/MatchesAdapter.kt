@@ -1,6 +1,5 @@
 package com.stavro_xhardha.fcbarcelonashqip.adapters
 
-import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,7 @@ import android.widget.TextView
 
 import com.stavro_xhardha.fcbarcelonashqip.R
 import com.stavro_xhardha.fcbarcelonashqip.events.ConfirmEmptyMatchScheduleSetEvent
-import com.stavro_xhardha.fcbarcelonashqip.model.MatchDetails
+import com.stavro_xhardha.fcbarcelonashqip.model.match.MatchesItem
 
 import org.greenrobot.eventbus.EventBus
 
@@ -21,10 +20,8 @@ import java.util.ArrayList
  * Created by stavro_xhardha on 23/04/2018.
  */
 
-class ScheduledMatchAdapter(private var detailsList: ArrayList<MatchDetails>?) : RecyclerView.Adapter<ScheduledMatchAdapter.MatchResultViewHolder>() {
+class MatchesAdapter(private var detailsList: ArrayList<MatchesItem>?) : RecyclerView.Adapter<MatchesAdapter.MatchResultViewHolder>() {
     private var mExpandedPosition = -1
-    internal var homeResultsArrayList = ArrayList<String>()
-    internal var awayResultArrayList = ArrayList<String>()
 
 
     inner class MatchResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -49,35 +46,33 @@ class ScheduledMatchAdapter(private var detailsList: ArrayList<MatchDetails>?) :
         }
     }
 
-    fun setItemList(list: ArrayList<MatchDetails>) {
+    fun setItemList(list: ArrayList<MatchesItem>) {
         this.detailsList = list
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduledMatchAdapter.MatchResultViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchesAdapter.MatchResultViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.single_item_result, parent, false)
         return MatchResultViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: ScheduledMatchAdapter.MatchResultViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MatchesAdapter.MatchResultViewHolder, position: Int) {
         val details = detailsList!![position]
-        val date = details.date.substring(0, 10)
-        val time = details.date.substring(11, 16)
+        val date = details.utcDate?.substring(0, 10)
+        val time = details.utcDate?.substring(11, 16)
 
         holder.dateAndTime.text = "$date    $time"
-        holder.homeTeam.text = details.homeTeamNanme
-        holder.awayTeam.text = details.awayTeamName
-        holder.homeResult.text = details.result!!.goalsHometeam.toString()
-        holder.awayResult.text = details.result!!.goalsAwayTeam.toString()
+        holder.homeTeam.text = details.homeTeam!!.name
+        holder.awayTeam.text = details.awayTeam!!.name
+        holder.homeResult.text = details.score?.fullTime!!.homeTeam.toString()
+        holder.awayResult.text = details.score?.fullTime!!.awayTeam.toString()
 
         setFadeAnimation(holder.row)
 
 
-        if (details.result!!.goalsAwayTeam == null || details.result!!.goalsHometeam == null) {
+        if (details.score?.fullTime!!.awayTeam == null || details.score?.fullTime!!.homeTeam == null) {
             holder.homeResult.text = "?"
             holder.awayResult.text = "?"
-        } else {
-            holder.row.visibility = View.GONE
         }
 
         val isExpanded = position == mExpandedPosition
@@ -95,10 +90,10 @@ class ScheduledMatchAdapter(private var detailsList: ArrayList<MatchDetails>?) :
         }
     }
 
-    private fun countNumberOfScheduledMatches(details: MatchDetails): Int {
+    private fun countNumberOfScheduledMatches(details: MatchesItem): Int {
         var count = 0
         for (i in detailsList!!.indices) {
-            if (details.result!!.goalsAwayTeam == null || details.result!!.goalsHometeam == null) {
+            if (details.score?.fullTime!!.awayTeam == null || details.score?.fullTime!!.homeTeam == null) {
                 count++
             }
         }
@@ -111,7 +106,7 @@ class ScheduledMatchAdapter(private var detailsList: ArrayList<MatchDetails>?) :
         } else 0
     }
 
-    fun add(details: MatchDetails) {
+    fun add(details: MatchesItem) {
         detailsList!!.add(details)
         notifyDataSetChanged()
     }

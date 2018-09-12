@@ -6,22 +6,23 @@ import com.stavro_xhardha.fcbarcelonashqip.events.ExpandNewsSelectedTopicEvent
 import com.stavro_xhardha.fcbarcelonashqip.ui.base.presenter.BasePresenter
 import com.stavro_xhardha.fcbarcelonashqip.ui.home.interactor.HomeMVPInteractor
 import com.stavro_xhardha.fcbarcelonashqip.ui.home.view.HomeMVPView
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
 class HomePresenter<V : HomeMVPView, I : HomeMVPInteractor>
 @Inject internal constructor(interactor: I, schedulerProvider: SchedulerProvider, disposable: CompositeDisposable)
-    : BasePresenter<V, I>(interactor = interactor, schedulerProvider = schedulerProvider, compositeDisposable = disposable), HomeMVPPresenter<V, I> {
+    : BasePresenter<V, I>(interactor = interactor, schedulerProvider = schedulerProvider, compositeDisposable = disposable)
+        , HomeMVPPresenter<V, I> {
 
     override fun onAttach(view: V?) {
         super.onAttach(view)
     }
 
-
     override fun onNavNewsItemClick() = getView()?.openNewsFragment()
 
 
-    override fun onNewsTopicsItemCardClick() = getView()?.openBottomSheetFragment()
+    override fun onNewsTopicsItemCardClick() = getView()?.openExpandedNewsFragmentAndUpdateView()
 
     override fun updateCacheData(event: ExpandNewsSelectedTopicEvent) {
         Brain.newsId = event.topic.id.toString()
@@ -29,5 +30,21 @@ class HomePresenter<V : HomeMVPView, I : HomeMVPInteractor>
     }
 
     override fun onNavTableItemClick() = getView()?.openTableFragment()
+
+    override fun onNavFixturesItemClick(): Unit? = getView()?.openMatchesFragment()
+
+    override fun onNavTeamItemClick(): Unit? = getView()?.openTeamFragment()
+
+    override fun updateNewsView() {
+        interactor.let {
+            compositeDisposable.add(it!!.makeUpdateViewsCall()
+                    .compose(schedulerProvider.ioToMainObservableScheduler())
+                    .subscribe { response ->
+                        if (!response.equals("1", ignoreCase = true)) {
+                            getView()?.showUpdateViewErrorSnackBar()
+                        }
+                    })
+        }
+    }
 
 }

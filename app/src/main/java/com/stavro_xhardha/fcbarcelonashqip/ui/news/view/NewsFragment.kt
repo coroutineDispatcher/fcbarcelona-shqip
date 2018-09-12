@@ -1,6 +1,7 @@
 package com.stavro_xhardha.fcbarcelonashqip.ui.news.view
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -59,4 +60,7 @@ class NewsFragment : BaseFragment(), NewsMVPView {
         super.onDestroyView()
     }
 
+    override fun showConnectionError() {
+        Snackbar.make(this.view!!, R.string.can_not_get_data, Snackbar.LENGTH_LONG).show()
+    }
 }

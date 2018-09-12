@@ -11,7 +11,7 @@ import android.widget.TextView
 import com.squareup.picasso.Picasso
 import com.stavro_xhardha.fcbarcelonashqip.R
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain
-import com.stavro_xhardha.fcbarcelonashqip.model.Player
+import com.stavro_xhardha.fcbarcelonashqip.model.team.SquadItem
 
 import java.util.ArrayList
 
@@ -21,7 +21,7 @@ import de.hdodenhof.circleimageview.CircleImageView
  * Created by stavro_xhardha on 22/04/2018.
  */
 
-class PlayersAdapter(private var playerList: ArrayList<Player>?) : RecyclerView.Adapter<PlayersAdapter.PlayersViewHolder>() {
+class PlayersAdapter(private var playerList: ArrayList<SquadItem>?) : RecyclerView.Adapter<PlayersAdapter.PlayersViewHolder>() {
     private var mContex: Context? = null
 
     inner class PlayersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -48,12 +48,12 @@ class PlayersAdapter(private var playerList: ArrayList<Player>?) : RecyclerView.
         }
     }
 
-    fun setItemList(list: ArrayList<Player>) {
+    fun setItemList(list: ArrayList<SquadItem>) {
         this.playerList = list
         notifyDataSetChanged()
     }
 
-    fun add(player: Player) {
+    fun add(player: SquadItem) {
         playerList!!.add(player)
         notifyDataSetChanged()
     }
@@ -71,117 +71,115 @@ class PlayersAdapter(private var playerList: ArrayList<Player>?) : RecyclerView.
     override fun onBindViewHolder(holder: PlayersViewHolder, position: Int) {
         val player = playerList!![position]
 
-        if (player.playerName == null) {
+        if (player.name == null) {
             holder.playerName.text = ""
-        } else if (player.contractUntil == null) {
-            holder.contract.text = ""
         } else if (player.nationality == null) {
             holder.nationality.text = ""
         } else if (player.dateOfBirth == null) {
             holder.birthday.text = ""
-        } else if (player.shirtNumber == null) {
-            holder.shirtNumber.text = ""
         } else if (player.position == null) {
             holder.position.text = ""
         } else {
-            holder.playerName.text = player.playerName
-            holder.contract.text = player.contractUntil
+            holder.playerName.text = player.name
             holder.nationality.text = player.nationality
             holder.birthday.text = player.dateOfBirth
-            holder.shirtNumber.text = player.shirtNumber.toString()
-            holder.position.text = player.position
+            when (player.position) {
+                "Defender" -> holder.position.text = "Mbrojtës"
+                "Midfielder" -> holder.position.text = "Mesfushor"
+                "Attacker" -> holder.position.text = "Sulmues"
+            }
 
             addPlayersToImage(player, holder)
         }
     }
 
 
-    private fun addPlayersToImage(player: Player, holder: PlayersViewHolder) {
-        if (player.playerName!!.equals(Brain.MESSI, ignoreCase = true)) {
+    private fun addPlayersToImage(player: SquadItem, holder: PlayersViewHolder) {
+        if (player.name!!.equals(Brain.MESSI, ignoreCase = true)) {
             Picasso.get()
                     .load(Brain.URL_MESSI)
                     .into(holder.playerImage)
-        } else if (player.playerName!!.equals(Brain.INIESTA, ignoreCase = true)) {
+        } else if (player.name.equals(Brain.INIESTA, ignoreCase = true)) {
             Picasso.get()
                     .load(Brain.URL_INIESTA)
                     .into(holder.playerImage)
-        } else if (player.playerName!!.equals(Brain.CUTINHO, ignoreCase = true)) {
+        } else if (player.name.equals(Brain.CUTINHO, ignoreCase = true)) {
             Picasso.get()
                     .load(Brain.URL_CUTINHO)
                     .into(holder.playerImage)
-        } else if (player.playerName!!.equals(Brain.DEMBELE, ignoreCase = true)) {
+        } else if (player.name.equals(Brain.DEMBELE, ignoreCase = true)) {
             Picasso.get()
                     .load(Brain.URL_DEMBELE)
                     .into(holder.playerImage)
-        } else if (player.playerName!!.equals(Brain.TER_STEGEN, ignoreCase = true)) {
+        } else if (player.name.equals(Brain.TER_STEGEN, ignoreCase = true)) {
             Picasso.get()
                     .load(Brain.URL_TER_STEGEN)
                     .into(holder.playerImage)
-        } else if (player.playerName!!.equals(Brain.CILLESEN, ignoreCase = true)) {
+        } else if (player.name.equals(Brain.CILLESEN, ignoreCase = true)) {
             Picasso.get()
                     .load(Brain.URL_CILLESEN)
                     .into(holder.playerImage)
-        } else if (player.playerName!!.equals(Brain.PIQUE, ignoreCase = true)) {
+        } else if (player.name.equals(Brain.PIQUE, ignoreCase = true)) {
             Picasso.get()
                     .load(Brain.URL_PIQUE)
                     .into(holder.playerImage)
-        } else if (player.playerName!!.equals(Brain.UMTITI, ignoreCase = true)) {
+        } else if (player.name.equals(Brain.UMTITI, ignoreCase = true)) {
             Picasso.get()
                     .load(Brain.URL_UMTITI)
                     .into(holder.playerImage)
-        } else if (player.playerName!!.equals(Brain.JORDI_ALBA, ignoreCase = true)) {
+        } else if (player.name.equals(Brain.JORDI_ALBA, ignoreCase = true)) {
             Picasso.get()
                     .load(Brain.URL_JORDI)
                     .into(holder.playerImage)
-        } else if (player.playerName!!.equals(Brain.DIGNE, ignoreCase = true)) {
+        } else if (player.name.equals(Brain.DIGNE, ignoreCase = true)) {
             Picasso.get()
                     .load(Brain.URL_DIGNE)
                     .into(holder.playerImage)
-        } else if (player.playerName!!.equals(Brain.ROBERTO, ignoreCase = true)) {
+        } else if (player.name.equals(Brain.ROBERTO, ignoreCase = true)) {
             Picasso.get()
                     .load(Brain.URL_ROBERTO)
                     .into(holder.playerImage)
-        } else if (player.playerName!!.equals(Brain.VIDAL, ignoreCase = true)) {
+        } else if (player.name.equals(Brain.VIDAL, ignoreCase = true)) {
             Picasso.get()
                     .load(Brain.URL_VIDAL)
                     .into(holder.playerImage)
-        } else if (player.playerName!!.equals(Brain.BUSQUETS, ignoreCase = true)) {
+        } else if (player.name.equals(Brain.BUSQUETS, ignoreCase = true)) {
             Picasso.get()
                     .load(Brain.URL_BUSQUETS)
                     .into(holder.playerImage)
-        } else if (player.playerName!!.equals(Brain.RAKITIC, ignoreCase = true)) {
+        } else if (player.name.equals(Brain.RAKITIC, ignoreCase = true)) {
             Picasso.get()
                     .load(Brain.URL_RAKITIC)
                     .into(holder.playerImage)
-        } else if (player.playerName!!.equals(Brain.ANDRE_GOMES, ignoreCase = true)) {
+        } else if (player.name.equals(Brain.ANDRE_GOMES, ignoreCase = true)) {
             Picasso.get()
                     .load(Brain.URL_GOMEZ)
                     .into(holder.playerImage)
-        } else if (player.playerName!!.equals(Brain.DENIS_SUAREZ, ignoreCase = true)) {
+        } else if (player.name.equals(Brain.DENIS_SUAREZ, ignoreCase = true)) {
             Picasso.get()
                     .load(Brain.URL_DENIS_SUAREZ)
                     .into(holder.playerImage)
-        } else if (player.playerName!!.equals(Brain.LUIS_SUAREZ, ignoreCase = true)) {
+        } else if (player.name.equals(Brain.LUIS_SUAREZ, ignoreCase = true)) {
             Picasso.get()
                     .load(Brain.URL_SUAREZ)
                     .into(holder.playerImage)
-        } else if (player.playerName!!.equals(Brain.ALCACER, ignoreCase = true)) {
+        } else if (player.name.equals(Brain.ALCACER, ignoreCase = true)) {
             Picasso.get()
                     .load(Brain.URL_ALCACER)
                     .into(holder.playerImage)
-        } else if (player.playerName!!.equals(Brain.SAMPER, ignoreCase = true)) {
+        } else if (player.name.equals(Brain.SAMPER, ignoreCase = true)) {
             Picasso.get()
                     .load(Brain.URL_SAMPER)
                     .into(holder.playerImage)
-        } else if (player.playerName!!.equals(Brain.VERMALEN, ignoreCase = true)) {
+        } else if (player.name.equals(Brain.VERMALEN, ignoreCase = true)) {
             Picasso.get()
                     .load(Brain.URL_VERMAELEN)
                     .into(holder.playerImage)
-        } else if (player.playerName!!.equals(Brain.SEMEDO, ignoreCase = true)) {
+        } else if (player.name.equals(Brain.SEMEDO, ignoreCase = true)) {
             Picasso.get()
                     .load(Brain.URL_SEMEDO)
                     .into(holder.playerImage)
-        } else if (player.playerName!!.equals(Brain.MINA, ignoreCase = true)) {
+        } else if (player.name.equals(Brain.MINA, ignoreCase = true)) {
             Picasso.get()
                     .load(Brain.URL_MINA)
                     .into(holder.playerImage)

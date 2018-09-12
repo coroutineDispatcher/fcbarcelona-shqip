@@ -5,28 +5,28 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:fontFamily="@font/adamina"
             android:id="@+id/nav_news"
+            android:fontFamily="@font/adamina"
             android:icon="@drawable/ic_news"
             android:title="@string/news" />
         <item
-            android:fontFamily="@font/adamina"
             android:id="@+id/barcelona_youtube_channel"
+            android:fontFamily="@font/adamina"
             android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/barca_channel" />
         <item
-            android:fontFamily="@font/adamina"
             android:id="@+id/nav_table"
+            android:fontFamily="@font/adamina"
             android:icon="@drawable/ic_view_list_black_24dp"
             android:title="@string/table" />
         <item
-            android:fontFamily="@font/adamina"
             android:id="@+id/nav_match"
+            android:fontFamily="@font/adamina"
             android:icon="@drawable/ic_soccer"
             android:title="@string/matches" />
         <item
-            android:fontFamily="@font/adamina"
             android:id="@+id/nav_team"
+            android:fontFamily="@font/adamina"
             android:icon="@drawable/ic_team"
             android:title="@string/team" />
     </group>
@@ -36,13 +36,13 @@
         android:title="@string/other">
         <menu>
             <item
-                android:fontFamily="@font/adamina"
                 android:id="@+id/nav_team_info"
+                android:fontFamily="@font/adamina"
                 android:icon="@drawable/globe"
                 android:title="@string/fcb_barcelona_info" />
             <item
-                android:fontFamily="@font/adamina"
                 android:id="@+id/nav_exit"
+                android:fontFamily="@font/adamina"
                 android:icon="@drawable/ic_clear_black_24dp"
                 android:title="@string/exit_app" />
         </menu>

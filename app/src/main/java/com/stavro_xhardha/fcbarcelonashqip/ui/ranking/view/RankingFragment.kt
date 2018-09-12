@@ -9,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.stavro_xhardha.fcbarcelonashqip.R
 import com.stavro_xhardha.fcbarcelonashqip.adapters.StandingsAdapter
-import com.stavro_xhardha.fcbarcelonashqip.model.Standing
-import com.stavro_xhardha.fcbarcelonashqip.model.TableItem
+import com.stavro_xhardha.fcbarcelonashqip.model.ranking.Standing
+import com.stavro_xhardha.fcbarcelonashqip.model.ranking.TableItem
 import com.stavro_xhardha.fcbarcelonashqip.ui.base.view.BaseFragment
 import com.stavro_xhardha.fcbarcelonashqip.ui.ranking.interactor.RankingMVPInteractor
 import com.stavro_xhardha.fcbarcelonashqip.ui.ranking.presenter.RankingsPresenter

@@ -9,7 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 
 import com.stavro_xhardha.fcbarcelonashqip.R
-import com.stavro_xhardha.fcbarcelonashqip.model.TableItem
+import com.stavro_xhardha.fcbarcelonashqip.model.ranking.TableItem
 
 import java.util.ArrayList
 

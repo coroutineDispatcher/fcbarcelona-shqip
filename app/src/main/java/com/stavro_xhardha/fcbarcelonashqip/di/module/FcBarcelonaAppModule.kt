@@ -2,6 +2,7 @@ package com.stavro_xhardha.fcbarcelonashqip.di.module
 
 import android.app.Application
 import android.content.Context
+import com.afollestad.materialdialogs.MaterialDialog
 import com.crashlytics.android.Crashlytics
 import com.stavro_xhardha.fcbarcelonashqip.brain.SchedulerProvider
 import com.stavro_xhardha.fcbarcelonashqip.network.ApiHelper
@@ -30,6 +31,6 @@ class FcBarcelonaAppModule {
     internal fun provideCrushLytics(): Fabric = Fabric.with(provideContext(application = Application()), Crashlytics())
 
     @Provides
-    internal fun provideApiHelper(apiHelper: AppApiHelper) : ApiHelper = apiHelper
+    internal fun provideApiHelper(apiHelper: AppApiHelper): ApiHelper = apiHelper
 
 }

@@ -1,4 +1,4 @@
-package com.stavro_xhardha.fcbarcelonashqip.model
+package com.stavro_xhardha.fcbarcelonashqip.model.ranking
 
 import com.google.gson.annotations.SerializedName
 

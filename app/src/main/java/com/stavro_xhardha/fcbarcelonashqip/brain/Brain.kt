@@ -42,6 +42,8 @@ class Brain {
         const val VIEWS_URL = "http://press.snet-al.com/index_sport.php?/api/viewed/"
         const val TABLE_URL = "http://api.football-data.org/v1/competitions/455/leagueTable/"
         const val TABLE_URL_V2 = "http://api.football-data.org/v2/competitions/2014/standings"
+        const val MATCHES_URL_V2 = "http://api.football-data.org//v2/teams/81/matches/"
+        const val TEAM_URL_V2 = "http://api.football-data.org/v2/teams/81/"
 
         //Player Names
         const val CUTINHO = "Philippe Coutinho"

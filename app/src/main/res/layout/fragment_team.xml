@@ -1,22 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_75"
-    android:paddingTop="@dimen/global_unit_smaller_xx"
-    android:paddingBottom="@dimen/global_unit_smaller_xx"
-    tools:context="com.stavro_xhardha.fcbarcelonashqip.TeamFragment">
+    android:background="@color/black_75">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/team_refresh"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_players"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_players"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </android.support.v4.widget.SwipeRefreshLayout>
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

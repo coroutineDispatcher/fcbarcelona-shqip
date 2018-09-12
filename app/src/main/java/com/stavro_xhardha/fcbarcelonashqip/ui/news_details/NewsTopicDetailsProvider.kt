@@ -1,7 +1,7 @@
-package com.stavro_xhardha.fcbarcelonashqip.ui.topic_details
+package com.stavro_xhardha.fcbarcelonashqip.ui.news_details
 
 import com.stavro_xhardha.fcbarcelonashqip.ui.news.view.NewsFragment
-import com.stavro_xhardha.fcbarcelonashqip.ui.topic_details.view.NewsTopicDetailsFragment
+import com.stavro_xhardha.fcbarcelonashqip.ui.news_details.view.NewsTopicDetailsFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

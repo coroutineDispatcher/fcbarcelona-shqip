@@ -1,11 +1,10 @@
-package com.stavro_xhardha.fcbarcelonashqip.ui.topic_details.presenter
+package com.stavro_xhardha.fcbarcelonashqip.ui.news_details.presenter
 
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain
 import com.stavro_xhardha.fcbarcelonashqip.brain.SchedulerProvider
-import com.stavro_xhardha.fcbarcelonashqip.model.NewsBody
 import com.stavro_xhardha.fcbarcelonashqip.ui.base.presenter.BasePresenter
-import com.stavro_xhardha.fcbarcelonashqip.ui.topic_details.interactor.NewsTopicDetailsMVPInteractor
-import com.stavro_xhardha.fcbarcelonashqip.ui.topic_details.view.NewsTopicDetailsMVPView
+import com.stavro_xhardha.fcbarcelonashqip.ui.news_details.interactor.NewsTopicDetailsMVPInteractor
+import com.stavro_xhardha.fcbarcelonashqip.ui.news_details.view.NewsTopicDetailsMVPView
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 
