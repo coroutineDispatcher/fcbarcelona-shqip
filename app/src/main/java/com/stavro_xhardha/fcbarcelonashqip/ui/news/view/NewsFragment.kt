@@ -29,8 +29,10 @@ class NewsFragment : BaseFragment(), NewsMVPView {
 
     @Inject
     internal lateinit var topicsAdapter: TopicsAdapter
+
     @Inject
     internal lateinit var linearLayoutManager: LinearLayoutManager
+
     @Inject
     internal lateinit var presenter: NewsPresenter<NewsMVPView, NewsMVPInteractor>
 

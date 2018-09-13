@@ -7,7 +7,7 @@ import com.stavro_xhardha.fcbarcelonashqip.ui.base.interactor.MVPInteractor
 import io.reactivex.Observable
 import javax.inject.Inject
 
-class TeamInteractor @Inject constructor(apiHelper: AppApiHelper) : BaseInteractor(apiHelper = apiHelper), MVPInteractor
+class TeamInteractor @Inject constructor(apiHelper: AppApiHelper) : BaseInteractor(apiHelper = apiHelper)
         , TeamMvpInteractor {
 
     override fun getPlayersList(): Observable<TeamResponse> = apiHelper.makeTeamApiCall()
