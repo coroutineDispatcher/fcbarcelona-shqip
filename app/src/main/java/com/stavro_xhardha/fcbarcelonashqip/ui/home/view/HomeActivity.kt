@@ -1,5 +1,8 @@
 package com.stavro_xhardha.fcbarcelonashqip.ui.home.view
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
@@ -47,7 +50,6 @@ class HomeActivity : BaseActivity(), HomeMVPView, NavigationView.OnNavigationIte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        //todo check internet connection
         setupDrawer()
         changeMenuItemColor()
         homePresenter.onAttach(this)
@@ -65,9 +67,6 @@ class HomeActivity : BaseActivity(), HomeMVPView, NavigationView.OnNavigationIte
         when (item.itemId) {
             R.id.nav_news -> {
                 homePresenter.onNavNewsItemClick()
-            }
-            R.id.barcelona_youtube_channel -> {
-
             }
             R.id.nav_table -> {
                 homePresenter.onNavTableItemClick()
@@ -175,4 +174,12 @@ class HomeActivity : BaseActivity(), HomeMVPView, NavigationView.OnNavigationIte
     override fun showUpdateViewErrorSnackBar() {
         Snackbar.make(drawer_layout, resources.getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show()
     }
+
+//    private fun isNetworkAvailable(): Boolean {
+//        val connectivityManager = this.getSystemService(Context.CONNECTIVITY_SERVICE)
+//        return if (connectivityManager is ConnectivityManager) {
+//            val networkInfo: NetworkInfo? = connectivityManager.activeNetworkInfo
+//            networkInfo?.isConnected ?: false
+//        } else false
+//    }
 }

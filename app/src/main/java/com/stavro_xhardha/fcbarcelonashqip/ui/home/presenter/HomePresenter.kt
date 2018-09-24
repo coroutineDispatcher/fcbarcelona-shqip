@@ -1,19 +1,26 @@
 package com.stavro_xhardha.fcbarcelonashqip.ui.home.presenter
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import com.stavro_xhardha.fcbarcelonashqip.brain.Brain
 import com.stavro_xhardha.fcbarcelonashqip.brain.SchedulerProvider
 import com.stavro_xhardha.fcbarcelonashqip.events.ExpandNewsSelectedTopicEvent
 import com.stavro_xhardha.fcbarcelonashqip.ui.base.presenter.BasePresenter
 import com.stavro_xhardha.fcbarcelonashqip.ui.home.interactor.HomeMVPInteractor
 import com.stavro_xhardha.fcbarcelonashqip.ui.home.view.HomeMVPView
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
+
 
 class HomePresenter<V : HomeMVPView, I : HomeMVPInteractor>
 @Inject internal constructor(interactor: I, schedulerProvider: SchedulerProvider, disposable: CompositeDisposable)
     : BasePresenter<V, I>(interactor = interactor, schedulerProvider = schedulerProvider, compositeDisposable = disposable)
         , HomeMVPPresenter<V, I> {
+
+    override fun checkInternetConnection() {
+
+    }
 
     override fun onAttach(view: V?) {
         super.onAttach(view)
@@ -46,5 +53,4 @@ class HomePresenter<V : HomeMVPView, I : HomeMVPInteractor>
                     })
         }
     }
-
 }

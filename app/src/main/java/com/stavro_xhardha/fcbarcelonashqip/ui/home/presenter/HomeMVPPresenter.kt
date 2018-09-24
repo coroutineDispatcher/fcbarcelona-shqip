@@ -13,4 +13,5 @@ interface HomeMVPPresenter<V : HomeMVPView, I : HomeMVPInteractor> : MVPPresente
     fun onNavFixturesItemClick(): Unit?
     fun onNavTeamItemClick(): Unit?
     fun updateNewsView(): Unit?
+    fun checkInternetConnection(): Unit?
 }

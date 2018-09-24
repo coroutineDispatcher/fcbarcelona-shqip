@@ -50,10 +50,12 @@ class NewsFragment : BaseFragment(), NewsMVPView {
         latest_news_rv.layoutManager = linearLayoutManager
         latest_news_rv.itemAnimator = DefaultItemAnimator()
         latest_news_rv.adapter = topicsAdapter
+        showProgress()
         presenter.onViewPrepared()
     }
 
     override fun displayTopicsList(topicsList: List<Topic>) {
+        hideProgress()
         topicsAdapter.setItemsList(topicsList as ArrayList<Topic>)
     }
 
@@ -63,6 +65,7 @@ class NewsFragment : BaseFragment(), NewsMVPView {
     }
 
     override fun showConnectionError() {
+        hideProgress()
         Snackbar.make(this.view!!, R.string.can_not_get_data, Snackbar.LENGTH_LONG).show()
     }
 }

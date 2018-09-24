@@ -6,7 +6,6 @@ import com.stavro_xhardha.fcbarcelonashqip.ui.main.MainFragmentProvider
 import com.stavro_xhardha.fcbarcelonashqip.ui.matches.MatchesFragmentProvider
 import com.stavro_xhardha.fcbarcelonashqip.ui.news.NewsFragmentProvider
 import com.stavro_xhardha.fcbarcelonashqip.ui.ranking.RankingsProvider
-import com.stavro_xhardha.fcbarcelonashqip.ui.splash.SplashFragmentProvider
 import com.stavro_xhardha.fcbarcelonashqip.ui.team.TeamFragmentProvider
 import com.stavro_xhardha.fcbarcelonashqip.ui.news_details.NewsTopicDetailsProvider
 import com.stavro_xhardha.fcbarcelonashqip.ui.youtube_info.YoutubeFragmentProvider
@@ -17,9 +16,9 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [(HomeActivityModule::class),
-        (SplashFragmentProvider::class), (NewsFragmentProvider::class),
-        (MainFragmentProvider::class), (NewsTopicDetailsProvider::class),
-        (RankingsProvider::class), (MatchesFragmentProvider::class),
-        (TeamFragmentProvider::class), (YoutubeFragmentProvider::class)])
+        (NewsFragmentProvider::class), (MainFragmentProvider::class),
+        (NewsTopicDetailsProvider::class), (RankingsProvider::class),
+        (MatchesFragmentProvider::class), (TeamFragmentProvider::class),
+        (YoutubeFragmentProvider::class)])
     abstract fun bindHomeActivity(): HomeActivity
 }

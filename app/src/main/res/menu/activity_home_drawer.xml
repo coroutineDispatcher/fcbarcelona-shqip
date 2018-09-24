@@ -9,11 +9,6 @@
             android:fontFamily="@font/adamina"
             android:icon="@drawable/ic_news"
             android:title="@string/news" />
-        <!--<item-->
-            <!--android:id="@+id/barcelona_youtube_channel"-->
-            <!--android:fontFamily="@font/adamina"-->
-            <!--android:icon="@drawable/ic_home_black_24dp"-->
-            <!--android:title="@string/barca_channel" />-->
         <item
             android:id="@+id/nav_table"
             android:fontFamily="@font/adamina"
