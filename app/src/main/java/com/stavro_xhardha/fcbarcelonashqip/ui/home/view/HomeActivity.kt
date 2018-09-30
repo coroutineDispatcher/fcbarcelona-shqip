@@ -35,7 +35,7 @@ import org.greenrobot.eventbus.ThreadMode
 import javax.inject.Inject
 import android.text.style.TextAppearanceSpan
 import android.text.SpannableString
-import io.reactivex.Observable
+import org.jetbrains.anko.contentView
 
 
 class HomeActivity : BaseActivity(), HomeMVPView, NavigationView.OnNavigationItemSelectedListener,
@@ -151,6 +151,14 @@ class HomeActivity : BaseActivity(), HomeMVPView, NavigationView.OnNavigationIte
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (!isNetworkAvailable()) {
+            Snackbar.make(drawer_layout, R.string.check_internet_connection, Snackbar.LENGTH_LONG).show()
+            return
+        }
+    }
+
     override fun openTableFragment() {
         openNewFragment(RankingFragment.newInstance(), RankingFragment.TAG)
     }
@@ -175,11 +183,11 @@ class HomeActivity : BaseActivity(), HomeMVPView, NavigationView.OnNavigationIte
         Snackbar.make(drawer_layout, resources.getString(R.string.can_not_get_data), Snackbar.LENGTH_LONG).show()
     }
 
-//    private fun isNetworkAvailable(): Boolean {
-//        val connectivityManager = this.getSystemService(Context.CONNECTIVITY_SERVICE)
-//        return if (connectivityManager is ConnectivityManager) {
-//            val networkInfo: NetworkInfo? = connectivityManager.activeNetworkInfo
-//            networkInfo?.isConnected ?: false
-//        } else false
-//    }
+    private fun isNetworkAvailable(): Boolean {
+        val connectivityManager = this.getSystemService(Context.CONNECTIVITY_SERVICE)
+        return if (connectivityManager is ConnectivityManager) {
+            val networkInfo: NetworkInfo? = connectivityManager.activeNetworkInfo
+            networkInfo?.isConnected ?: false
+        } else false
+    }
 }

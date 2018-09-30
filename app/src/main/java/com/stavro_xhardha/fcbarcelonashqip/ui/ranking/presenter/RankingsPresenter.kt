@@ -15,10 +15,15 @@ class RankingsPresenter<V : RankingMVPView, I : RankingMVPInteractor>
 
     override fun onViewPrepared() {
         interactor.let {
-            it?.getLaLigaRanking()?.compose(schedulerProvider.ioToMainObservableScheduler())
-                    ?.subscribe{
-                     getView()?.onRankingResponse(it)
-                    }
+            compositeDisposable.add(it!!.getLaLigaRanking()
+                    .compose(schedulerProvider.ioToMainObservableScheduler())
+                    .subscribe({ standing ->
+                        getView()?.onRankingResponse(standing)
+                    }, { err ->
+                        getView()?.let {
+                            it.showConnectionError()
+                        }
+                    }))
         }
     }
 

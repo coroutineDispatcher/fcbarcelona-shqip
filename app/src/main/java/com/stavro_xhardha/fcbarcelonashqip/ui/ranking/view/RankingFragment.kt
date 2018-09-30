@@ -2,6 +2,7 @@ package com.stavro_xhardha.fcbarcelonashqip.ui.ranking.view
 
 import android.app.Application
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -65,4 +66,10 @@ class RankingFragment : BaseFragment(), RankingMVPView {
         }
         standingsAdapter.setItemsList(standingList)
     }
+
+    override fun showConnectionError() {
+        hideProgress()
+        Snackbar.make(this.view!!, R.string.can_not_get_data, Snackbar.LENGTH_LONG).show()
+    }
+
 }
